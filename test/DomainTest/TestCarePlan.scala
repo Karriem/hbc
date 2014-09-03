@@ -1,6 +1,8 @@
+package DomainTest
+
 import domain.CarePlan
 import org.joda.time.DateTime
-import org.scalatest.{GivenWhenThen, FeatureSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.

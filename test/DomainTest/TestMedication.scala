@@ -1,21 +1,22 @@
-import domain.Name
+package DomainTest
+
+import domain.Medication
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestName extends FeatureSpec with GivenWhenThen {
-  feature(" Save Name") {
-    info("As a Caregiver")
+class TestMedication extends FeatureSpec with GivenWhenThen {
+  feature(" Save Medication") {
+    info("As a Coordinatior")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Respository")
-      val demo = Name("Tonata", "Nakashololo", Some(""),
-        Some(""), Some(""), Some("C454"))
+      val meds = Medication("Antibiotics" , "Drink 3 times a day", "P2435")
 
-      assert(demo.caregiverId == Some("C454"))
+      assert(meds.instructions == "Drink 3 times a day")
 
     }
   }

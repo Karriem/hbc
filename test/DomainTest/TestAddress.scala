@@ -1,3 +1,5 @@
+package DomainTest
+
 import domain.Address
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
