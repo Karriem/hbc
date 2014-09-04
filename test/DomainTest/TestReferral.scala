@@ -17,7 +17,7 @@ class TestReferral extends FeatureSpec with GivenWhenThen {
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
-      Given("Given a Connection to the Database Through a Respository")
+      Given("Given a Connection to the Database Through a Repository")
       val ref = new Referral("R1001", rd, Some(""))
 
       assert(ref.referralDate == rd)

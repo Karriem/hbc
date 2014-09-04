@@ -17,7 +17,7 @@ class TestVisit extends FeatureSpec with GivenWhenThen {
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
-      Given("Given a Connection to the Database Through a Respository")
+      Given("Given a Connection to the Database Through a Repository")
       val vi = new Visit("V1001", nv, "C10001")
 
       assert(vi.nextVisit == nv)

@@ -13,7 +13,7 @@ class TestUser extends FeatureSpec with GivenWhenThen {
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
-      Given("Given a Connection to the Database Through a Respository")
+      Given("Given a Connection to the Database Through a Repository")
       val usr = new User("U1002", "Phakama", "12345", Some(""), Some(""))
 
       assert(usr.password == "12345")

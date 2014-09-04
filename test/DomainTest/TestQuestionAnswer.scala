@@ -13,7 +13,7 @@ class TestQuestionAnswer extends FeatureSpec with GivenWhenThen {
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
-      Given("Given a Connection to the Database Through a Respository")
+      Given("Given a Connection to the Database Through a Repository")
       val qa = new QuestionAnswer("When did you start coughing", Some(""), "Dia40054")
 
       assert(qa.diagnosisId == "Dia40054")
