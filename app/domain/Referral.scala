@@ -1,17 +1,18 @@
 package domain
 
-import org.joda.time.DateTime
+import java.sql.Date
+
 import play.api.libs.json.Json
 
 /**
  * Created by karriem on 8/28/14.
  */
 case class Referral (
-                      referralId:String,
-                      referralDate:DateTime,
-                      monthlyReportId:Option[String]
+                      referralId:Long,
+                      referralDate:Date,
+                      monthlyReportId:Option[Long]
                       )
 
-object Referral{
+object Referrals{
   implicit lazy val referralFmt = Json.format[Referral]
 }

@@ -6,11 +6,13 @@ import play.api.libs.json.Json
  * Created by karriem on 8/28/14.
  */
 case class Caregiver (
-                       caregiverId:String,
-                       scheduleId:String,
-                       dailyReportId:String
+                          caregiverId:Long,
+                          patientId:Long,
+                          coordinator:Long,
+                          firstName:String,
+                          LastName:String
                        )
 
-object Caregiver{
+object Caregivers{
   implicit lazy val caregiverFmt = Json.format[Caregiver]
 }

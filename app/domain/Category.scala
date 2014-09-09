@@ -8,10 +8,10 @@ import play.api.libs.json.Json
 case class Category (
                       description:String,
                       level:String,
-                      dailyReportId:String
+                      dailyReportId:Long
                       )
 
-object Category{
+object Categorys{
   implicit lazy val categoryFmt = Json.format[Category]
 }
 

@@ -1,17 +1,18 @@
 package domain
 
-import org.joda.time.DateTime
+import java.sql.Date
+
 import play.api.libs.json.Json
 
 /**
  * Created by karriem on 8/28/14.
  */
 case class Visit (
-                   visitId:String,
-                   nextVisit:DateTime,
-                   carePlanId:String
+                   visitId:Long,
+                   nextVisit:Date,
+                   carePlanId:Long
                    )
 
-object Visit{
+object Visits{
   implicit lazy val visitFmt = Json.format[Visit]
 }

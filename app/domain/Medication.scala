@@ -8,9 +8,9 @@ import play.api.libs.json.Json
 case class Medication(
                        mType:String,
                        instructions:String,
-                       patientId:String
+                       patientId:Long
                        )
 
-object Medication{
+object Medications{
   implicit lazy val medicationFmt = Json.format[Medication]
 }

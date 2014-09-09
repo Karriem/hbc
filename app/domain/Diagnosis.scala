@@ -1,19 +1,20 @@
 package domain
 
-import org.joda.time.DateTime
+import java.sql.Date
+
 import play.api.libs.json.Json
 
 /**
  * Created by karriem on 8/28/14.
  */
 case class Diagnosis (
-                       diagnosisId:String,
+                       diagnosisId:Long,
                        diagnosisType:String,
                        treatment:String,
-                       followUpDate:DateTime,
-                       dailyReportID:String
+                       followUpDate:Date,
+                       dailyReportId:Long
                        )
 
-object Diagnosis{
+object Diagnosises{
   implicit lazy val diagnosisFmt = Json.format[Diagnosis]
 }

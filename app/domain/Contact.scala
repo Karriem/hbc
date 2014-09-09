@@ -9,13 +9,14 @@ case class Contact (
                      homeTel:Option[String],
                      cellNumber:String,
                      email:String,
-                     personId:Option[String],
-                     coordinatorId:Option[String],
-                     patientId:Option[String],
-                     caregiverId:Option[String]
+                     personId:Option[Long],
+                     instituteId:Option[Long],
+                     coordinatorId:Option[Long],
+                     patientId:Option[Long],
+                     caregiverId:Option[Long]
                      )
 
-object Contact{
+object Contacts{
   implicit lazy val contactFmt = Json.format[Contact]
 }
 

@@ -1,6 +1,7 @@
 package domain
 
-import org.joda.time.DateTime
+import java.sql.Date
+
 import play.api.libs.json.Json
 
 /**
@@ -9,13 +10,13 @@ import play.api.libs.json.Json
 case class Demographic (
                          age:Int,
                          gender:String,
-                         dateOfBirth:DateTime,
-                         coordinatorId:Option[String],
-                         personId:Option[String],
-                         patientId:Option[String],
-                         caregiverId:Option[String]
+                         dateOfBirth:Date,
+                         coordinatorId:Option[Long],
+                         personId:Option[Long],
+                         patientId:Option[Long],
+                         caregiverId:Option[Long]
                          )
 
-object Demographic{
+object Demographics{
   implicit lazy val demographicFmt = Json.format[Demographic]
 }

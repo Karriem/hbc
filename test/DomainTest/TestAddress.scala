@@ -15,9 +15,9 @@ class TestAddress extends FeatureSpec with GivenWhenThen {
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
       val add = Address("301 Alley Road", "301 Alley Road", "8080",
-                          Some(""), Some(""), Some("P1001"), Some(""), Some(""))
+                          Some(0), Some(0), Some(1001), Some(0), Some(0))
 
-      assert(add.patientId == Some("P1001"))
+      assert(add.patientId == Some(1001))
       assert(add.postalAddress == "301 Alley Road")
     }
   }

@@ -6,13 +6,13 @@ import play.api.libs.json.Json
  * Created by karriem on 8/28/14.
  */
 case class Disease (
-                     diseaseId:String,
+                     diseaseId:Long,
                      diseaseType:String,
                      symptoms:String,
-                     diagnosisId:String
+                     diagnosisId:Long
                      )
 
-object Disease{
+object Diseases{
   implicit lazy val diseaseFmt = Json.format[Disease]
 }
 

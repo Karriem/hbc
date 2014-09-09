@@ -9,13 +9,13 @@ case class Address (
                      streetAddress:String,
                      postalAddress:String,
                      postalCode:String,
-                     personId:Option[String],
-                     instituteId:Option[String],
-                     patientId:Option[String],
-                     caregiverId:Option[String],
-                     coordinatorId:Option[String]
+                     personId:Option[Long],
+                     instituteId:Option[Long],
+                     patientId:Option[Long],
+                     caregiverId:Option[Long],
+                     coordinatorId:Option[Long]
                      )
 
-object Address{
+object Addresses{
   implicit lazy val addressFmt = Json.format[Address]
 }
