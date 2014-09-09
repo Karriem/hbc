@@ -1,7 +1,6 @@
 package DomainTest
 
 import domain.TimeSheet
-import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
@@ -10,9 +9,9 @@ import org.scalatest.{FeatureSpec, GivenWhenThen}
 class TestTimeSheet extends FeatureSpec with GivenWhenThen {
   feature(" Save Time Sheet") {
 
-    val wd = new DateTime(2014, 8, 3, 0, 0)
-    val ti = new DateTime(2014, 8, 3, 5, 30)
-    val to = new DateTime(2014, 8, 3, 10, 0)
+    val wd = "8/2/2014"
+    val ti = "15:00:00"
+    val to = "17:00:00"
 
     info("As a Derived")
     info(" I want to Set up Tables")
@@ -20,9 +19,9 @@ class TestTimeSheet extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val tm = new TimeSheet(wd, ti, to, "T10001", Some(""), Some(""))
+      val tm = new TimeSheet(wd,ti,to,1,Some(4),Some(8))
 
-      assert(tm.visitId == "T10001")
+      assert(tm.visitId == 1)
     }
   }
 

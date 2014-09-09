@@ -1,7 +1,5 @@
 package repository
 
-import java.sql.Date
-
 import domain.Demographic
 import repository.CaregiverModel.CaregiverRepo
 import repository.ContactPersonModel.ContactPersonRepo
@@ -19,7 +17,7 @@ object DemographicModel {
 
     def age = column[Int]("AGE")
     def gender = column[String]("GENDER")
-    def dateOfBirth = column[Date]("DoB")
+    def dateOfBirth = column[String]("DoB")
     def coordinatorId = column[Option[Long]]("COORDINATOR_ID")
     def personId = column[Option[Long]]("PERSON_ID")
     def patientId = column[Option[Long]]("PATIENT_ID")

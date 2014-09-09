@@ -14,10 +14,9 @@ class TestCaregiver  extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val care = Caregiver("C1001", "S1001", "DR1001")
+      val care = Caregiver(10001, 10001, 10001, "Micheal", "Lou")
 
-      assert(care.caregiverId == "C1001")
-      assert(care.dailyReportId == "DR1001")
+      assert(care.caregiverId == 10001)
     }
   }
 

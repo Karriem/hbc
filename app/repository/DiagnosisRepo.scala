@@ -1,7 +1,5 @@
 package repository
 
-import java.sql.Date
-
 import domain.Diagnosis
 import repository.DailyReportModel.DailyReportRepo
 
@@ -17,7 +15,7 @@ object DiagnosisModel {
     def diagnosisId = column[Long]("DIAGNOSIS_ID", O.PrimaryKey, O.AutoInc)
     def diagnosisType = column[String]("DIAGNOSIS_TYPE")
     def treatment = column[String]("TREATMENT_DESCRIPTION")
-    def followUpDate = column[Date]("FOLLOW_UP_DATE")
+    def followUpDate = column[String]("FOLLOW_UP_DATE")
     def dailyReportId = column[Long]("DAILY_REPORT_ID")
     def * = (diagnosisId, diagnosisType, treatment, followUpDate, dailyReportId) <> (Diagnosis.tupled, Diagnosis.unapply)
 

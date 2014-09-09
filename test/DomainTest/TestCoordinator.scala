@@ -14,9 +14,9 @@ class TestCoordinator extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val coO = Coordinator("CO124" , "CP2454")
+      val coO = Coordinator(7400, "LALA", "Hippo")
 
-      assert(coO.coId == "CO124")
+      assert(coO.coId == 7400)
 
     }
   }

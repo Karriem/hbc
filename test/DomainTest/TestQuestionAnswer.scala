@@ -14,9 +14,9 @@ class TestQuestionAnswer extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val qa = new QuestionAnswer("When did you start coughing", Some(""), "Dia40054")
+      val qa = new QuestionAnswer("When did you start coughing", Some(""), 8)
 
-      assert(qa.diagnosisId == "Dia40054")
+      assert(qa.diagnosisId == 8)
     }
   }
 

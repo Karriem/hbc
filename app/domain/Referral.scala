@@ -1,7 +1,5 @@
 package domain
 
-import java.sql.Date
-
 import play.api.libs.json.Json
 
 /**
@@ -9,7 +7,7 @@ import play.api.libs.json.Json
  */
 case class Referral (
                       referralId:Long,
-                      referralDate:Date,
+                      referralDate:String,
                       monthlyReportId:Option[Long]
                       )
 

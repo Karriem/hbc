@@ -1,6 +1,5 @@
 package repository
 
-import java.sql.Date
 
 import domain.CarePlan
 import repository.CoordinatorModel.CoordinatorRepo
@@ -17,8 +16,8 @@ object CarePlanModel {
 
       def planId = column[Long]("CAREPLAN_ID", O.PrimaryKey, O.AutoInc)
       def description  = column[String]("DESCRIPTION")
-      def startDate = column[Date]("START_DATE")
-      def endDate = column[Date]("END_DATE")
+      def startDate = column[String]("START_DATE")
+      def endDate = column[String]("END_DATE")
       def patientId = column[Long]("PATIENT_ID")
       def coordinatorId = column[Long]("COORDINATOR_ID")
       def * = (planId, description, startDate, endDate, patientId, coordinatorId) <> (CarePlan.tupled, CarePlan.unapply)

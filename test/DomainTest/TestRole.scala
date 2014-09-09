@@ -14,7 +14,7 @@ class TestRole extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val rol = new Role("RL01254", "Caregiver", Some(""))
+      val rol = new Role(4, "Caregiver", Some(0))
 
       assert(rol.description == "Caregiver")
 

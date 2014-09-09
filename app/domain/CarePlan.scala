@@ -1,7 +1,5 @@
 package domain
 
-import java.sql.Date
-
 import play.api.libs.json.Json
 
 /**
@@ -10,10 +8,10 @@ import play.api.libs.json.Json
 case class CarePlan (
                         planId:Long,
                         description:String,
-                        startDate:Date,
-                        endDate:Date,
+                        startDate:String,
+                        endDate:String,
                         patientId:Long,
-                        coordinatorId:Long
+                        coordinator:Long
                       )
 
 object CarePlans{

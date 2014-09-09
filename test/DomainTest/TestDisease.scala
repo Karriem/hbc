@@ -14,7 +14,7 @@ class TestDisease extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val disease = Disease("DE234", "TB" , "Coughing" , "Dia1233")
+      val disease = Disease(450, "TB", "Coughing", 45)
 
       assert(disease.diseaseType == "TB")
 

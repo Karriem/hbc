@@ -14,7 +14,7 @@ class TestMedication extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val meds = Medication("Antibiotics" , "Drink 3 times a day", "P2435")
+      val meds = Medication("Antibiotics" , "Drink 3 times a day", 85)
 
       assert(meds.instructions == "Drink 3 times a day")
 

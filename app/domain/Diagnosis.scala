@@ -1,7 +1,5 @@
 package domain
 
-import java.sql.Date
-
 import play.api.libs.json.Json
 
 /**
@@ -11,7 +9,7 @@ case class Diagnosis (
                        diagnosisId:Long,
                        diagnosisType:String,
                        treatment:String,
-                       followUpDate:Date,
+                       followUpDate:String,
                        dailyReportId:Long
                        )
 

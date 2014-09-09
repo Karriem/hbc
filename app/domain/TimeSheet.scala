@@ -1,16 +1,14 @@
 package domain
 
-import java.sql.Date
-
 import play.api.libs.json.Json
 
 /**
  * Created by karriem on 8/28/14.
  */
 case class TimeSheet (
-                       workDay:Date,
-                       timeIn:Date,
-                       timeOut:Date,
+                       workDay:String,
+                       timeIn:String,
+                       timeOut:String,
                        visitId:Long,
                        dailyReportId:Option[Long],
                        scheduleId:Option[Long]

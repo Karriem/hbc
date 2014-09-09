@@ -1,7 +1,5 @@
 package domain
 
-import java.sql.Date
-
 import play.api.libs.json.Json
 
 /**
@@ -9,7 +7,7 @@ import play.api.libs.json.Json
  */
 case class Visit (
                    visitId:Long,
-                   nextVisit:Date,
+                   nextVisit:String,
                    carePlanId:Long
                    )
 

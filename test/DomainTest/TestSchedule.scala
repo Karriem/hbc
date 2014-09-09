@@ -14,9 +14,9 @@ class TestSchedule extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val sch = new Schedule("SD1001")
+      val sch = new Schedule(4,5,8)
 
-      assert(sch.scheduleId == "SD1001")
+      assert(sch.scheduleId == 4)
     }
   }
 

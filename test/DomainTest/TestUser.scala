@@ -14,7 +14,7 @@ class TestUser extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val usr = new User("U1002", "Phakama", "12345", Some(""), Some(""))
+      val usr = new User(121, "Phakama", "12345", Some(0), Some(0))
 
       assert(usr.password == "12345")
     }
