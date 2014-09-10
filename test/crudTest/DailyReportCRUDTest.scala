@@ -27,54 +27,63 @@ feature("Save Daily Report") {
     val caregiver = TableQuery[CaregiverRepo]
     val patient = TableQuery[PatientRepo]
 
-    Database.forURL("jdbc:mysql://localhost:3306/mysql", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      info("Creating Daily Report")
+      //(monthlyReport.ddl).create
+      //(dailyReport.ddl).create
+      //(caregiver.ddl).create
+      //(patient.ddl).create
 
-      val dreportRecord = DailyReport(1, "Cleaned the patient", 14, 95, 21)
-      val dReportID = dailyReport.returning(dailyReport.map(_.dailyReportId)).insert(dreportRecord)
-
-      val monthlyRecord = MonthlyReport(12L, 5)
+      val monthlyRecord = MonthlyReport(1, 10)
       val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
-      //monthlyReport.insert(monthly)
 
-      val caregiverRecord = Caregiver(147, "Nobu", "Tyokozo")
-    //  val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
+      val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
+      val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
 
-      val patientRecord = Patient(74, "25/12/2014", "25/12/2014", "Phakama", "Ntshewula")
+      val patientRecord = Patient(1, "25/12/2014", "25/12/2014", "Phakama", "Ntshewula")
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
-      def Read(services:String, id:Long) = {
+      info("Creating Daily Report")
+      val dreportRecord = DailyReport(1, "Cleaned the patient", mReportID, careID, patID)
+      val dReportID = dailyReport.returning(dailyReport.map(_.dailyReportId)).insert(dreportRecord)
+
+      def Read(patientName:String, id:Long) = {
         dailyReport foreach { case (report: DailyReport) =>
           if (report.dailyReportId == id) {
             patient foreach { case (pat: Patient) =>
-              if (pat.patientId == id) {
-                assert(pat.patientId == id)
+              if (pat.patientId == report.patientId) {
+                assert(pat.firstName == patientName)
               }
+            }
+
+            monthlyReport foreach { case (monthly: MonthlyReport) =>
+              if(monthly.monthlyReportId == report.monthlyReportId)
+                assert(monthly.visits == 10)
             }
           }
         }
-         monthlyReport foreach { case (monthly: MonthlyReport) =>
-          if(monthly.monthlyReportId == mReportID)
-            assert(monthly.visits == 5)
-        }
+
       }
       def Update(services:String, id:Long) = {
         dailyReport.filter(_.dailyReportId === id).map(_.servicesRendered).update(services)
-        Read(services, id)
+        dailyReport foreach { case (report: DailyReport) =>
+            if(report.dailyReportId == id){
+              assert(report.servicesRendered == services)
+            }
+        }
+
       }
 
       def Delete(id:Long) = {
-
-        monthlyReport.filter(_.monthlyReportId === dReportID).delete
-        patient.filter(_.patientId === patID).delete
+        dailyReport.filter(_.dailyReportId === id).delete
       }
       info("Reading Daily Report")
-      Read("Cleaned the patient", dReportID)
-      info("Updating Patient")
+      Read("Phakama", dReportID)
+
+      info("Updating Daily Report")
       Update("Cooking for the patient", dReportID)
-      info("Deleting Patient")
-      //Delete(patID)
+
+      info("Deleting Daily Report")
       Delete(dReportID)
     }
   }

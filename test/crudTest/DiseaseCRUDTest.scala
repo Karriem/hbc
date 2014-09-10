@@ -26,7 +26,7 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
       val diag = TableQuery[DiagnosisRepo]
       val daily = TableQuery[DailyReportRepo]
 
-      Database.forURL("jdbc:mysql://localhost:3306/mysql", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         //(dis.ddl).create
 

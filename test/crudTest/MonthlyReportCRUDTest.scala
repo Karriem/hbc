@@ -1,8 +1,9 @@
 package crudTest
 
-import domain.MonthlyReport
+import domain.{Referral, MonthlyReport}
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.MonthlyReportModel.MonthlyReportRepo
+import repository.ReferralModel.ReferralRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -19,17 +20,31 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
       Given("Given a Connection to the Database through a repository")
 
       val monthlyReport = TableQuery[MonthlyReportRepo]
+      val referalRepo = TableQuery[ReferralRepo]
 
-      Database.forURL("jdbc:mysql://localhost:3306/mysql", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+
+        //(monthlyReport.ddl).create
+        //(referalRepo.ddl).create
 
         info("Creating a Monthly Report")
-        val monthlyRecord = MonthlyReport(12L, 5)
+        val monthlyRecord = MonthlyReport(1, 5)
         val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
+
+        val refRecord = Referral(1, "2014/05/23", Some(mReportID))
+        val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         def Read(visits: Int, id: Long) = {
           monthlyReport foreach { case (report: MonthlyReport) =>
             if (report.monthlyReportId == id) {
-              assert(report.monthlyReportId == id)
+              assert(report.visits == visits)
+
+              referalRepo foreach{case (ref: Referral) =>
+                  if(ref.monthlyReportId == Option(id)){
+                    assert(ref.referralDate == "2014/05/23")
+                  }
+              }
             }
           }
         }
@@ -39,12 +54,11 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         def Delete(id:Long) = {
-
           monthlyReport.filter(_.monthlyReportId === id).delete
         }
 
         info("Reading Monthly Report")
-        Read(12, mReportID)
+        Read(5, mReportID)
         info("Updating Monthly Report")
         Update(17, mReportID)
         info("Deleting Monthly Report")

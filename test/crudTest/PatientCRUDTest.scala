@@ -23,11 +23,13 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
       val pat = TableQuery[PatientRepo]
       val med  = TableQuery[MedicationRepo]
 
-      Database.forURL("jdbc:mysql://localhost:3306/mysql", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         //if (pat.exists === false) {
          // (pat.ddl).create
         //}
+        (med.ddl).create
+
         info("Creating Patient")
         val patRecord = Patient(1, "20/05/2014", "2/08/2014", "tonata", "nak")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)

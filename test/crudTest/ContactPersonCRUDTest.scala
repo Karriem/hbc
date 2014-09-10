@@ -21,9 +21,9 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
 
       val con = TableQuery[ContactPersonRepo]
 
-      Database.forURL("jdbc:mysql://localhost:3306/mysql", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        //(con.ddl).create
+        (con.ddl).create
 
         val contact = ContactPerson(1, "Lola", "Fords")
 
