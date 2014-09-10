@@ -19,9 +19,9 @@ class TestTimeSheet extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val tm = new TimeSheet(wd,ti,to,1,Some(4),Some(8))
+      val tm = new TimeSheet(wd,ti,to,Some(1),Some(4),Some(8))
 
-      assert(tm.visitId == 1)
+      assert(tm.visitId == 1L)
     }
   }
 

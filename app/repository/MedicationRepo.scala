@@ -18,7 +18,7 @@ object MedicationModel {
       def patientId = column[Long]("PATIENT_ID")
       def * = (mType, instructions, patientId) <> (Medication.tupled, Medication.unapply)
 
-      def patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
+      val patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
   }
 
 }

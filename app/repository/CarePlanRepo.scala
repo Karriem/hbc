@@ -22,8 +22,8 @@ object CarePlanModel {
       def coordinatorId = column[Long]("COORDINATOR_ID")
       def * = (planId, description, startDate, endDate, patientId, coordinatorId) <> (CarePlan.tupled, CarePlan.unapply)
 
-      def patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
-      def coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
+      val patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
+      val coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
   }
 
 }

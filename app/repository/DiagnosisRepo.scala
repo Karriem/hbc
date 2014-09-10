@@ -19,7 +19,7 @@ object DiagnosisModel {
     def dailyReportId = column[Long]("DAILY_REPORT_ID")
     def * = (diagnosisId, diagnosisType, treatment, followUpDate, dailyReportId) <> (Diagnosis.tupled, Diagnosis.unapply)
 
-    def dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
+    val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
   }
 
 }

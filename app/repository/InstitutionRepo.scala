@@ -20,8 +20,8 @@ object InstituteModel {
     def referralId = column[Long]("REFERRAL_ID")
     def * = (instituteId, instituteType, instituteName, coordinatorId, referralId) <> (Institution.tupled, Institution.unapply)
 
-    def coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
-    def referral = foreignKey("REFERRAL_FK", referralId, TableQuery[ReferralRepo])(_.referralId)
+    val coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
+    val referral = foreignKey("REFERRAL_FK", referralId, TableQuery[ReferralRepo])(_.referralId)
   }
 
 }

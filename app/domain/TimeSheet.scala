@@ -9,7 +9,7 @@ case class TimeSheet (
                        workDay:String,
                        timeIn:String,
                        timeOut:String,
-                       visitId:Long,
+                       visitId:Option[Long],
                        dailyReportId:Option[Long],
                        scheduleId:Option[Long]
                        )

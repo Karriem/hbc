@@ -20,8 +20,8 @@ object UserModel {
       def coordinatorId = column[Option[Long]]("COORDINATOR_ID")
       def * = (userId, username, password, caregiverId, coordinatorId) <> (User.tupled, User.unapply)
 
-      def caregiver = foreignKey("CAREGIVER_FK", caregiverId, TableQuery[CaregiverRepo])(_.caregiverId)
-      def coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
+      val caregiver = foreignKey("CAREGIVER_FK", caregiverId, TableQuery[CaregiverRepo])(_.caregiverId)
+      val coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
   }
 
 }

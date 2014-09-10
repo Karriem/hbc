@@ -17,7 +17,7 @@ object RoleModel {
       def userId = column[Option[Long]]("USER_ID")
       def * = (roleId, description, userId) <> (Role.tupled, Role.unapply)
 
-      def user = foreignKey("USER_FK", userId, TableQuery[UserRepo])(_.userId)
+      val user = foreignKey("USER_FK", userId, TableQuery[UserRepo])(_.userId)
   }
 
 }

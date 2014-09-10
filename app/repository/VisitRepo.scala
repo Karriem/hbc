@@ -17,7 +17,7 @@ object VisitModel {
       def carePlanId = column[Long]("CAREPLAN_ID")
       def * = (visitId, nextVisit, carePlanId) <> (Visit.tupled, Visit.unapply)
 
-      def carePlan = foreignKey("CAREPLAN_FK", carePlanId, TableQuery[CarePlanRepo])(_.planId)
+      val carePlan = foreignKey("CAREPLAN_FK", carePlanId, TableQuery[CarePlanRepo])(_.planId)
   }
 
 }

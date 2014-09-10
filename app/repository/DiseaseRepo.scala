@@ -18,7 +18,7 @@ object DiseaseModel {
       def diagnosisId = column[Long]("DIAGNOSIS_ID")
       def * = (diseaseId, diseaseType, symptoms, diagnosisId) <> (Disease.tupled, Disease.unapply)
 
-      def diagnosis = foreignKey("DIAGNOSIS_FK", diagnosisId, TableQuery[DiagnosisRepo])(_.diagnosisId)
+      val diagnosis = foreignKey("DIAGNOSIS_FK", diagnosisId, TableQuery[DiagnosisRepo])(_.diagnosisId)
   }
 
 }

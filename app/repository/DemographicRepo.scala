@@ -24,10 +24,10 @@ object DemographicModel {
     def caregiverId = column[Option[Long]]("CAREGIVER_ID")
     def * = (age, gender, dateOfBirth, coordinatorId, personId, patientId, caregiverId) <> (Demographic.tupled, Demographic.unapply)
 
-    def contactPerson = foreignKey("PERSON_FK", personId, TableQuery[ContactPersonRepo])(_.personId)
-    def coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
-    def patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
-    def caregiver = foreignKey("CAREGIVER_FK", caregiverId, TableQuery[CaregiverRepo])(_.caregiverId)
+    val contactPerson = foreignKey("PERSON_FK", personId, TableQuery[ContactPersonRepo])(_.personId)
+    val coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
+    val patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
+    val caregiver = foreignKey("CAREGIVER_FK", caregiverId, TableQuery[CaregiverRepo])(_.caregiverId)
   }
 
 }
