@@ -26,39 +26,49 @@ class patientCRUDTest extends FeatureSpec with GivenWhenThen {
         //if (pat.exists === false) {
          // (pat.ddl).create
         //}
+        info("Creating Patient")
+        val patRecord = Patient (1, "20/05/2014", "2/08/2014", "tonata", "nak")
 
-        val patRecord = Patient(1, "20/05/2014", "2/08/2014", "tonata", "nak")
+        val id = pat.returning (pat.map (_.patientId) ).insert (patRecord)
 
-        //val id = pat.returning(pat.map(_.patientId)).insert(patRecord)
 
-        def Read =
+        def Read(name: String, id : Long) =
           pat foreach { case (patient : Patient) =>
-          //println( "Name: " + patient.firstName)
-          if (patient.patientId == 17){
-            assert(patient.firstName == "fght")
-            println(patient.firstName)
-            println(patient.patientId)
+          if (patient.patientId == id){
+            assert(patient.firstName == name)
           }
         }
 
+        def Update(name:String, id:Long) = {
+          pat.filter(_.patientId === id).map(_.firstName).update(name)
+          Read(name, id)
+        }
+
+        def searchDelete(id:Long) = {
+          pat foreach { case (patient: Patient) =>
+            println("/////" + id)
+            assertResult(true) {
+
+              if (patient.patientId == id) {
+                true
+              }
+              else
+                false
+            }
+          }
+        }
+
+        def Delete(id:Long) = {
+          pat.filter(_.patientId === id).delete
+          searchDelete(id)
+        }
 
         info("Reading Patient")
-        Read
-
-
-        //info("Update Patient")
-
-        //info("Delete Patient")
-        //println(value)
-        //assert(pat.where(_.patientId == value).map(_.firstName == "Karriem"))
-
-        //for {
-         // p <- pat
-          //p <- pat.filter(_.patientId === value)
-          //assertResult((p.lastName === "Kurosaki"), true)
-          //assert(p.lastName == "Kurosaki")
-        //} yield p
-        //val addresses: Seq[Address] = people.map(_.address)
+        Read("tonata", id)
+        info("Updating Patient")
+        Update("Helvi", id)
+        info("Deleting Patient")
+        Delete(id)
       }
     }
   }
