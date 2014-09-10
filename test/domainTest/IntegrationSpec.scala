@@ -1,4 +1,4 @@
-package DomainTest
+package domainTest
 
 import org.junit.runner._
 import org.specs2.mutable._

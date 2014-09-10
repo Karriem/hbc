@@ -1,25 +1,23 @@
-package DomainTest
+package domainTest
 
-import domain.Visit
+import domain.Institution
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestVisit extends FeatureSpec with GivenWhenThen {
-  feature(" Save Visit") {
-
-    val nv = "4/5/2014"
-
-    info("As a Caregiver")
+class TestInstitution extends FeatureSpec with GivenWhenThen {
+  feature(" Save Institution") {
+    info("As a Institution")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val vi = new Visit(45, nv, 8)
+      val institue = Institution(8, "Clinic" , "Grabouw Clinic" , Some(0), 4)
 
-      assert(vi.nextVisit == nv)
+      assert(institue.instituteName == "Grabouw Clinic")
+
     }
   }
 

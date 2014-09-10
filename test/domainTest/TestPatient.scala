@@ -1,25 +1,26 @@
-package DomainTest
+package domainTest
 
-import domain.Referral
+import domain.Patient
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestReferral extends FeatureSpec with GivenWhenThen {
-  feature("Save Referral") {
+class TestPatient extends FeatureSpec with GivenWhenThen {
+  feature(" Save Patient") {
 
-    val rd = "8/12/2014"
+    val doc = "4/05/12"
+    val dov = "5/05/12"
 
-    info("As a Institution")
+    info("As a Caregiver")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val ref = new Referral(4, rd, Some(0))
+      val pat = Patient(1, doc, dov, "Jaul", "Pam")
 
-      assert(ref.referralDate == rd)
+      assert(pat.dateOfEvaluation == dov)
 
     }
   }

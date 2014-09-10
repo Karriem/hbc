@@ -1,22 +1,22 @@
-package DomainTest
+package domainTest
 
-import domain.Medication
+import domain.Category
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestMedication extends FeatureSpec with GivenWhenThen {
-  feature(" Save Medication") {
-    info("As a Coordinatior")
+class TestCategory extends FeatureSpec with GivenWhenThen {
+  feature(" Save Category") {
+    info("As a User")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val meds = Medication("Antibiotics" , "Drink 3 times a day", 85)
+      val cat = Category("Cat 1" , "1" , 8000)
 
-      assert(meds.instructions == "Drink 3 times a day")
+      assert(cat.description == "Cat 1")
 
     }
   }

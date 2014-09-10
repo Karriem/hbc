@@ -1,23 +1,23 @@
-package DomainTest
+package domainTest
 
-import domain.Diagnosis
+import domain.DailyReport
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestDiagnosis extends FeatureSpec with GivenWhenThen {
-  feature(" Save Diagnosis") {
-    val followUpDate = "4/05/2014"
-    info("As a Patient")
+class TestDailyReport extends FeatureSpec with GivenWhenThen {
+  feature(" Save Daily Report") {
+    info("As a Coordinator")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val add = Diagnosis(78, "TB", "Medication", followUpDate, 7)
+      val dReport = DailyReport(7100, "Immunization", 74444, 784569, 222)
 
-      assert(add.followUpDate == followUpDate)
+      assert(dReport.servicesRendered == "Immunization")
+
     }
   }
 

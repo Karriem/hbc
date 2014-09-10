@@ -1,22 +1,22 @@
-package DomainTest
+package domainTest
 
-import domain.Category
+import domain.MonthlyReport
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestCategory extends FeatureSpec with GivenWhenThen {
-  feature(" Save Category") {
-    info("As a User")
+class TestMonthlyReport extends FeatureSpec with GivenWhenThen {
+  feature(" Save Monthly Report") {
+    info("As a Coordinatior")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val cat = Category("Cat 1" , "1" , 8000)
+      val monthlyReport = MonthlyReport(4 , 5)
 
-      assert(cat.description == "Cat 1")
+      assert(monthlyReport.visits == 5)
 
     }
   }

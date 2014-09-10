@@ -1,4 +1,4 @@
-package DomainTest
+package domainTest
 
 import domain.User
 import org.scalatest.{FeatureSpec, GivenWhenThen}

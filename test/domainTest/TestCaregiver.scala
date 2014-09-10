@@ -1,23 +1,22 @@
-package DomainTest
+package domainTest
 
-import domain.MonthlyReport
+import domain.Caregiver
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by karriem on 9/3/14.
  */
-class TestMonthlyReport extends FeatureSpec with GivenWhenThen {
-  feature(" Save Monthly Report") {
-    info("As a Coordinatior")
+class TestCaregiver  extends FeatureSpec with GivenWhenThen {
+  feature(" Save Caregiver") {
+    info("As a Caregiver")
     info(" I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val monthlyReport = MonthlyReport(4 , 5)
+      val care = Caregiver(10001, "Micheal", "Lou")
 
-      assert(monthlyReport.visits == 5)
-
+      assert(care.caregiverId == 10001)
     }
   }
 
