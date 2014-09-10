@@ -34,8 +34,5 @@ object AddressModel {
 
   }
 
-  val add = TableQuery[AddressRepo]
-
-
 
 }

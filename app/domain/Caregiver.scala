@@ -7,8 +7,6 @@ import play.api.libs.json.Json
  */
 case class Caregiver (
                           caregiverId:Long,
-                          patientId:Long,
-                          coordinator:Long,
                           firstName:String,
                           LastName:String
                        )
