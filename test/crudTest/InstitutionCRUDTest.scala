@@ -20,7 +20,7 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
-      Given("Given a Connection to the Database Through a Repository")
+      Given("Given a Connection to the Database Through a Repsitory")
 
       val instituteRepo = TableQuery[InstitutionRepo]
       val coordinatorRepo = TableQuery[CoordinatorRepo]
