@@ -1,7 +1,8 @@
 package crudTest
 
-import domain.{Institution, Referral}
+import domain.{Coordinator, Institution, Referral}
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.ReferralModel.ReferralRepo
 
@@ -22,6 +23,7 @@ class referrelCRUDTest extends FeatureSpec with GivenWhenThen{
 
       val instituteRepo  = TableQuery[InstitutionRepo]
       val referalRepo = TableQuery[ReferralRepo]
+      val coordinatorRepo = TableQuery[CoordinatorRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         //(instituteRepo.ddl).create
@@ -29,10 +31,13 @@ class referrelCRUDTest extends FeatureSpec with GivenWhenThen{
 
         info("Creating a Referral")
 
+        val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
+        val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
+
         val refRecord = Referral(1, "2014/05/23", Some(0))
         val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
-        val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(0), refID)
+        val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), refID)
         val institueId = instituteRepo.returning (instituteRepo.map (_.instituteId) ).insert (instituteRecord)
 
         def Read(referrelDate: String, id: Long) = {
