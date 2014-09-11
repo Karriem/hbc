@@ -13,7 +13,7 @@ import repository.TimeSheetModel.TimeSheetRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
-class scheduleCRUDTest extends FeatureSpec with GivenWhenThen{
+class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
   feature("Save User") {
     info("As Administrator")
     info("I want to Set up Tables")
@@ -30,7 +30,7 @@ class scheduleCRUDTest extends FeatureSpec with GivenWhenThen{
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
        // (timesheetRepo.ddl).create
-        (scheduleRepo.ddl).create
+        //(scheduleRepo.ddl).create
        // (patientRepo.ddl).create
         info("Creating Schedule")
         val caregiverRecord = Caregiver(1, "Max", "Crews")

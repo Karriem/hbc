@@ -12,7 +12,7 @@ import repository.VisitModel.VisitRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
-class visitCRUDTest  extends FeatureSpec with GivenWhenThen{
+class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
   feature("Save Visit") {
     info("I want to Set up Tables")

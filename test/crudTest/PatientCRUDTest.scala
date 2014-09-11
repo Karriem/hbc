@@ -28,7 +28,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         //if (pat.exists === false) {
          // (pat.ddl).create
         //}
-        (med.ddl).create
+        //(med.ddl).create
 
         info("Creating Patient")
         val patRecord = Patient(1, "20/05/2014", "2/08/2014", "tonata", "nak")

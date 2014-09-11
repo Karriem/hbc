@@ -13,7 +13,7 @@ import scala.slick.lifted.TableQuery
 /**
  * Created by tonata on 9/10/14.
  */
-class institutionCRUDTest extends FeatureSpec with GivenWhenThen {
+class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
 
   feature("Save Institution") {
     info("I want to Set up Tables")

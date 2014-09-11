@@ -74,6 +74,16 @@ feature("Save Daily Report") {
 
       }
 
+      def searchDelete(id: Long) : Int = {
+        dailyReport foreach { case (cr: DailyReport) =>
+          assertResult(false) {
+            dailyReport.filter(_.dailyReportId === id).exists.run
+          }
+        }
+
+        return 0;
+      }
+
       def Delete(id:Long) = {
         dailyReport.filter(_.dailyReportId === id).delete
       }

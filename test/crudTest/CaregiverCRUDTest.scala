@@ -12,7 +12,7 @@ import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by tonata on 9/10/14.
  */
-class caregiverCRUDTest extends FeatureSpec with GivenWhenThen {
+class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
   feature("Save Caregiver") {
     info("I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
@@ -71,26 +71,24 @@ class caregiverCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(age, id, cellNumber, address)
         }
 
-        def searchDelete(id:Long) = {
-          care foreach { case (caregiver: Caregiver) =>
-            println("/////" + id)
-            assertResult(true) {
-
-              if (caregiver.caregiverId == id) {
-                true
-              }
-              else
-                false
+        def searchDelete(id: Long) : Int = {
+          care foreach { case (cr: Caregiver) =>
+            //println("/////" + id)
+            assertResult(false) {
+              care.filter(_.caregiverId === id).exists.run
             }
           }
+
+          return 0;
         }
+
 
         def Delete(id:Long) = {
           demoRepo.filter(_.caregiverId === id).delete
           contactRepo.filter(_.caregiverId === id).delete
           addressRepo.filter(_.caregiverId === id).delete
           care.filter(_.caregiverId === id).delete
-          //searchDelete(id)
+          searchDelete(id)
         }
 
         info("Reading Caregiver Details ")
@@ -101,8 +99,6 @@ class caregiverCRUDTest extends FeatureSpec with GivenWhenThen {
 
         info("Deleting Caregiver")
         Delete(id)
-
-
       }
     }
   }

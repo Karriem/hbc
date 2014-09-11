@@ -12,7 +12,7 @@ import scala.slick.lifted.TableQuery
 /**
  * Created by tonata on 2014/09/11.
  */
-class referrelCRUDTest extends FeatureSpec with GivenWhenThen{
+class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
   feature("Save Referral") {
     info("As a Coodinator")
     info("I want to Set up Tables")

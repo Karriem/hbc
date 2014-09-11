@@ -4,30 +4,33 @@ package crudTest
  * Created by tonata on 9/10/14.
  */
 
-import domain.{User, Caregiver}
+import domain.{Role, User, Caregiver}
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CaregiverModel.CaregiverRepo
+import repository.RoleModel.RoleRepo
 import repository.UserModel.UserRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
-class userCRUDTest extends FeatureSpec with GivenWhenThen {
+class RoleCRUDTest extends FeatureSpec with GivenWhenThen {
 
-  feature("Save User") {
-    info("As Administrator")
+  feature("Save Role") {
     info("I want to Set up Tables")
     info("So that I can Add Data into the MYSQL")
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
 
+      val roleRepo = TableQuery[RoleRepo]
       val userRepo = TableQuery[UserRepo]
       val caregiverRepo = TableQuery[CaregiverRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        //(roleRepo.ddl).create
-        // (userRepo.ddl).create
+       //(roleRepo.ddl).create
+       //(userRepo.ddl).create
+       //(caregiverRepo.ddl).create
+        info("Creating Role")
 
         val caregiverRecord = Caregiver(1, "Max", "Crews")
         val careId = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiverRecord)
@@ -35,36 +38,39 @@ class userCRUDTest extends FeatureSpec with GivenWhenThen {
         val userRecord = User(1, "root", "pass", Some(careId), Some(0))
         val userID = userRepo.returning(userRepo.map(_.userId)).insert(userRecord)
 
-        def Read(desc: String, uName: String, id: Long) = {
-          userRepo foreach { case (u: User) =>
-            if (u.userId == id) {
-              assert(u.username == desc)
+        val roleRecord = Role(1, "HealthCare Professional", Some(userID))
+        val roleId = roleRepo.returning(roleRepo.map(_.roleId)).insert(roleRecord)
 
-              caregiverRepo foreach { case (c: Caregiver) =>
-                if (Option(c.caregiverId) == u.caregiverId) {
-                  assert(c.firstName == uName)
+        def Read(desc: String, uName: String, id: Long) = {
+          roleRepo foreach { case (r: Role) =>
+            if (r.roleId == id) {
+              assert(r.description == desc)
+
+              userRepo foreach { case (u: User) =>
+                if (Option(u.userId) == r.userId) {
+                  assert(u.username == uName)
                 }
               }
             }
           }
         }
 
-        def Update(newDesc: String, newFirstName: String, id: Long) = {
-          userRepo.filter(_.userId === id).map(_.username).update(newDesc)
-          userRepo foreach { case (u: User) =>
+        def Update(newDesc: String, newUsername: String, id: Long) = {
+          roleRepo.filter(_.roleId === id).map(_.description).update(newDesc)
+          roleRepo foreach { case (r: Role) =>
 
-            if (u.userId == id) {
+            if (r.roleId == id) {
 
-              caregiverRepo foreach { case (c: Caregiver) =>
-                if (Option(c.caregiverId) == u.caregiverId) {
-                  val cId = c.caregiverId
-                  caregiverRepo.filter(_.caregiverId === cId).map(_.firstName).update(newFirstName)
+              userRepo foreach { case (u: User) =>
+                if (Option(u.userId) == r.userId) {
+                  val usId = u.userId
+                  userRepo.filter(_.userId === usId).map(_.username).update(newUsername)
                 }
               }
             }
           }
 
-          Read(newDesc, newFirstName, id)
+          Read(newDesc, newUsername, id)
         }
 
         /*def searchDelete(id: Long) = {
@@ -81,23 +87,22 @@ class userCRUDTest extends FeatureSpec with GivenWhenThen {
           }
         }*/
 
-        def Delete(cId:Long, uId: Long) = {
+        def Delete(cId:Long, uId: Long, rId: Long) = {
           caregiverRepo.filter(_.caregiverId === cId ).delete
           userRepo.filter(_.userId === uId).delete
-          //assert(uId)
+          roleRepo.filter(_.roleId === cId).delete
           //searchDelete(id)
         }
 
-        info("Reading User")
-        Read("root", "Max", userID)
+        info("Reading Role")
+        Read("HealthCare Professional", "root", roleId)
 
-        info("Updating User")
-        Update("normal user", "Tomas", userID)
+        info("Updating Role")
+        Update("Administration", "admin", roleId)
 
-        info("Deleting User")
-        Delete(careId, userID)
+        info("Deleting Role")
+        Delete(careId, userID, roleId)
       }
     }
   }
 }
-

@@ -47,7 +47,7 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
           care foreach { case (careplan: CarePlan) =>
             if (careplan.patientId == id) {
               pat foreach { case (patient: Patient) =>
-                if (patient.patientId == id) {
+                if (patient.patientId == careplan.patientId) {
                   assert(patient.firstName == name)
                 }
               }
@@ -64,8 +64,21 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
           }
         }
 
+        def searchDelete(id: Long) : Int = {
+          care foreach { case (cr: CarePlan) =>
+            //println("/////" + id)
+            assertResult(false) {
+              care.filter(_.planId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
+
         def Delete(id:Long) = {
           care.filter(_.planId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Care Plan")

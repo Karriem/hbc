@@ -23,7 +23,7 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        (con.ddl).create
+        //(con.ddl).create
 
         val contact = ContactPerson(1, "Lola", "Fords")
 
@@ -42,8 +42,20 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(name, id)
         }
 
+        def searchDelete(id: Long) : Int = {
+          con foreach { case (cp: ContactPerson) =>
+            assertResult(false) {
+              con.filter(_.personId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
+
         def Delete(id:Long) = {
           con.filter(_.personId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Contact Person")
