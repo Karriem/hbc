@@ -57,24 +57,21 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(name, id)
         }
 
-        def searchDelete(id:Long) = {
-          pat foreach { case (patient: Patient) =>
-            println("/////" + id)
-            assertResult(true) {
-
-              if (patient.patientId == id) {
-                true
-              }
-              else
-                false
+        def searchDelete(id: Long) : Int = {
+          pat foreach { case (cr: Patient) =>
+            assertResult(false) {
+              pat.filter(_.patientId === id).exists.run
             }
           }
+
+          return 0;
         }
 
         def Delete(id:Long) = {
 
           med.filter(_.patientId === id).delete
           pat.filter(_.patientId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Patient")

@@ -32,6 +32,7 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
        // (timesheetRepo.ddl).create
         //(scheduleRepo.ddl).create
        // (patientRepo.ddl).create
+
         info("Creating Schedule")
         val caregiverRecord = Caregiver(1, "Max", "Crews")
         val careId = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiverRecord)
@@ -59,24 +60,21 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
           Read(newWorkDay, id)
         }
 
-        /*def searchDelete(id: Long) = {
-          pat foreach { case (patient: Patient) =>
-            println("/////" + id)
+        def searchDelete(id: Long) : Int = {
+          scheduleRepo foreach { case (cr: Schedule) =>
             assertResult(true) {
-
-              if (patient.patientId == id) {
-                true
-              }
-              else
-                false
+              scheduleRepo.filter(_.scheduleId === id).exists.run
             }
           }
-        }*/
+
+          return 0;
+        }
+
 
         def Delete(id:Long) = {
           timesheetRepo.filter(_.scheduleId=== id).delete
           scheduleRepo.filter(_.scheduleId=== id).delete
-          //searchDelete(id)
+          searchDelete(id)
         }
 
         info("Reading Schedule")
@@ -87,7 +85,6 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
 
         info("Deleting Schedule")
         Delete(scheduleId)
-
 
         }
 

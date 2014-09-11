@@ -67,25 +67,21 @@ class UserCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(newDesc, newFirstName, id)
         }
 
-        /*def searchDelete(id: Long) = {
-          pat foreach { case (patient: Patient) =>
-            println("/////" + id)
+        def searchDelete(id: Long) : Int = {
+          userRepo foreach { case (cr: User) =>
             assertResult(true) {
-
-              if (patient.patientId == id) {
-                true
-              }
-              else
-                false
+              userRepo.filter(_.userId === id).exists.run
             }
           }
-        }*/
+
+          return 0;
+        }
+
 
         def Delete(cId:Long, uId: Long) = {
           caregiverRepo.filter(_.caregiverId === cId ).delete
           userRepo.filter(_.userId === uId).delete
-          //assert(uId)
-          //searchDelete(id)
+          searchDelete(uId)
         }
 
         info("Reading User")

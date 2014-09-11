@@ -86,6 +86,7 @@ feature("Save Daily Report") {
 
       def Delete(id:Long) = {
         dailyReport.filter(_.dailyReportId === id).delete
+        searchDelete(id)
       }
       info("Reading Daily Report")
       Read("Phakama", dReportID)

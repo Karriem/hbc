@@ -59,8 +59,20 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
           Read(referrelDate, id)
         }
 
+        def searchDelete(id: Long) : Int = {
+          referalRepo foreach { case (cr: Referral) =>
+            assertResult(false) {
+              referalRepo.filter(_.referralId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
+
         def Delete(id:Long) = {
           referalRepo.filter(_.referralId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Referral")

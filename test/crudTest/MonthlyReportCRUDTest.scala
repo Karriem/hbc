@@ -48,13 +48,26 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
             }
           }
         }
+
         def Update(visits:Int, id:Long) = {
           monthlyReport.filter(_.monthlyReportId === id).map(_.visits).update(visits)
           Read(visits, id)
         }
 
+        def searchDelete(id: Long) : Int = {
+          monthlyReport foreach { case (cr: MonthlyReport) =>
+            assertResult(false) {
+              monthlyReport.filter(_.monthlyReportId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
+
         def Delete(id:Long) = {
           monthlyReport.filter(_.monthlyReportId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Monthly Report")

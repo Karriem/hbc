@@ -59,6 +59,17 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(name, id)
         }
 
+        def searchDelete(id: Long) : Int = {
+          diag foreach { case (cr: Diagnosis) =>
+            assertResult(false) {
+              diag.filter(_.diagnosisId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
+
         def Delete(id:Long) = {
           diag foreach { case (diagnosis : Diagnosis) =>
             if (diagnosis.diagnosisId == id) {
@@ -70,6 +81,7 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
               }
             }
           }
+          searchDelete(id)
         }
 
         info("Reading Diagnosis")

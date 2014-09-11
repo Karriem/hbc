@@ -75,25 +75,22 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(newInstName, newCoName, id )
         }
 
-        def searchDelete(id:Long) = {
-          //pat foreach { case (patient: Patient) =>
-          //  println("/////" + id)
-           // assertResult(true) {
+        def searchDelete(id: Long) : Int = {
+          instituteRepo foreach { case (cr: Institution) =>
+            assertResult(false) {
+              instituteRepo.filter(_.instituteId === id).exists.run
+            }
+          }
 
-           //   if (patient.patientId == id) {
-               // true
-           //   }
-           //   else
-            //    false
-           // }
-         // }
+          return 0;
         }
+
 
         def Delete(id:Long, coId: Long, refId: Long) = {
           referrallRepo.filter(_.referralId === refId).delete
           instituteRepo.filter(_.instituteId === id).delete
           coordinatorRepo.filter(_.coId=== coId).delete
-          //searchDelete(id)
+          searchDelete(id)
         }
 
         info("Reading Institution")

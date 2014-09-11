@@ -63,6 +63,16 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
           }
         }
 
+        def searchDelete(id: Long) : Int = {
+          dis foreach { case (cr: Disease) =>
+            assertResult(false) {
+              dis.filter(_.diseaseId === id).exists.run
+            }
+          }
+
+          return 0;
+        }
+
         def Delete(id:Long) = {
           dis foreach { case (disease: Disease) => {
             if (disease.diseaseId == id) {
@@ -76,7 +86,9 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
             }
           }
           }
+          searchDelete(id)
         }
+
         info("Reading Disease")
         Read("Tablets", idDis)
         info("Updating Disease")

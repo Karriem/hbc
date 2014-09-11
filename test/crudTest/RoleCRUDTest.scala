@@ -73,25 +73,22 @@ class RoleCRUDTest extends FeatureSpec with GivenWhenThen {
           Read(newDesc, newUsername, id)
         }
 
-        /*def searchDelete(id: Long) = {
-          pat foreach { case (patient: Patient) =>
-            println("/////" + id)
-            assertResult(true) {
-
-              if (patient.patientId == id) {
-                true
-              }
-              else
-                false
+        def searchDelete(id: Long) : Int = {
+          roleRepo foreach { case (cr: Role) =>
+            assertResult(false) {
+              roleRepo.filter(_.roleId === id).exists.run
             }
           }
-        }*/
+
+          return 0;
+        }
+
 
         def Delete(cId:Long, uId: Long, rId: Long) = {
           caregiverRepo.filter(_.caregiverId === cId ).delete
           userRepo.filter(_.userId === uId).delete
-          roleRepo.filter(_.roleId === cId).delete
-          //searchDelete(id)
+          roleRepo.filter(_.roleId === rId).delete
+          searchDelete(rId)
         }
 
         info("Reading Role")

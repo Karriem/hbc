@@ -53,24 +53,20 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
           Read(newWorkDay, id)
         }
 
-        /*def searchDelete(id: Long) = {
-          pat foreach { case (patient: Patient) =>
-            println("/////" + id)
-            assertResult(true) {
-
-              if (patient.patientId == id) {
-                true
-              }
-              else
-                false
+        def searchDelete(id: Long) : Int = {
+          visitRepo foreach { case (cr: Visit) =>
+            assertResult(false) {
+              visitRepo.filter(_.visitId === id).exists.run
             }
           }
-        }*/
+
+          return 0;
+        }
 
         def Delete(id:Long) = {
           timesheetRepo.filter(_.scheduleId=== id).delete
-          visitRepo.filter(_.visitId=== id).delete
-          //searchDelete(id)
+          visitRepo.filter(_.visitId === id).delete
+          searchDelete(id)
         }
 
         info("Reading Visit")
@@ -81,9 +77,6 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
         info("Deleting Visit")
         Delete(visitID)
-
-
-
       }
     }
   }
