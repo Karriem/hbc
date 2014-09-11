@@ -1,6 +1,7 @@
 package crudTest
 
 import domain.{Institution, Referral}
+import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.InstituteModel.InstitutionRepo
 import repository.ReferralModel.ReferralRepo
 
