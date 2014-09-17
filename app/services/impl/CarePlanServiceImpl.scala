@@ -15,13 +15,11 @@ class CarePlanServiceImpl extends CarePlanService{
   val careRepo = TableQuery[CarePlanRepo]
   val patRepo = TableQuery[PatientRepo]
 
-  override def createPlan(care: CarePlan): Long = {
+  override def createPlan(care: CarePlan) {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val id = careRepo.returning (careRepo.map (_.planId)).insert(care)
-
-      return id
+      careRepo.insert(care)
     }
   }
 
@@ -33,12 +31,12 @@ class CarePlanServiceImpl extends CarePlanService{
         if (careplan.patientId == id) {
           patRepo foreach { case (patient : Patient) =>
             if (patient.patientId == careplan.patientId){
-              return patient
+
             }
           }
         }
       }
-      return null
+      return 0
     }
   }
 
