@@ -7,7 +7,7 @@ import domain.{Visit, Coordinator, Patient, CarePlan}
  */
 trait CarePlanService {
 
-  def createPlan(care:CarePlan)
+  def createPlan(care:CarePlan) : Long
 
   def getPatient(id:Long) : Patient
 
