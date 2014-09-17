@@ -15,13 +15,12 @@ val patRepo = TableQuery[PatientRepo]
 
 Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
   println("1")
+  var list : List[String] = List()
   val ob : CarePlanService = new CarePlanServiceImpl
   println("2")
   val care = CarePlan(1, "Caring for elder", "5/05/2014", "5/05/2014", 1, 1)
   println("3")
-  val id = ob.createPlan(care)
-  println("4")
-  println(id)
-  println("5")
-  ob.getPatient(id)
+  ob.createPlan(care)
+ var name = ob.getPatient(1)
+  println(name)
 }
