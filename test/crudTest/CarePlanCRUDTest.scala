@@ -66,7 +66,6 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
 
         def searchDelete(id: Long) : Int = {
           care foreach { case (cr: CarePlan) =>
-            //println("/////" + id)
             assertResult(false) {
               care.filter(_.planId === id).exists.run
             }

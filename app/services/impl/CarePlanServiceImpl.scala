@@ -1,9 +1,10 @@
 package services.impl
 
-import domain.{CarePlan, Coordinator, Patient, Visit}
+import domain.{CarePlan, Coordinator, Visit}
 import repository.CarePlanModel.CarePlanRepo
 import repository.PatientModel.PatientRepo
 import services.CarePlanService
+
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
 
@@ -22,21 +23,17 @@ class CarePlanServiceImpl extends CarePlanService{
       careRepo.insert(care)
     }
   }
-
-  override def getPatient(id: Long): Patient = {
+  override def getPatient(id: Long) {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      careRepo foreach { case (careplan: CarePlan) =>
-        if (careplan.patientId == id) {
-          patRepo foreach { case (patient : Patient) =>
-            if (patient.patientId == careplan.patientId){
+      val patId = careRepo.list
+      val patient = patRepo.list
+      val listP = patId.filter(_.planId == id).map(_.patientId)
 
-            }
-          }
-        }
-      }
-      return 0
+      val listPat = patient.filter(_.patientId == listP.head)
+      println("List: " +listPat.head.LastName)
+
     }
   }
 
