@@ -20,7 +20,6 @@ Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Dri
   println("2")
   val care = CarePlan(1, "Caring for elder", "5/05/2014", "5/05/2014", 1, 1)
   println("3")
-  ob.createPlan(care)
- var name = ob.getPatient(1)
-  println(name)
+  //ob.createPlan(care)
+  ob.getPatient(12)
 }
