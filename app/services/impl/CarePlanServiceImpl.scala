@@ -27,14 +27,15 @@ class CarePlanServiceImpl extends CarePlanService{
       careRepo.insert(care)
     }
   }
+
   override def getPatient(id: Long) {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patId = careRepo.list
       val patient = patRepo.list
-      val listP = patId.filter(_.planId == id).map(_.patientId)
 
+      val listP = patId.filter(_.planId == id).map(_.patientId)
       val listPat = patient.filter(_.patientId == listP.head)
       println("Patient Last Name: " +listPat.head.LastName)
     }
