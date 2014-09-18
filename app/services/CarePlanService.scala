@@ -1,6 +1,6 @@
 package services
 
-import domain.{CarePlan, Coordinator, Visit}
+import domain.CarePlan
 
 /**
  * Created by karriem on 9/16/14.
@@ -11,7 +11,7 @@ trait CarePlanService {
 
   def getPatient(id:Long)
 
-  def getPlanIssued(id:Long) : Coordinator
+  def getPlanIssued(id:Long)
 
-  def getVisit(id:Long) : Visit
+  def getVisit(id:Long)
 }
