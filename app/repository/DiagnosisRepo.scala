@@ -20,6 +20,32 @@ object DiagnosisModel {
     def * = (diagnosisId, diagnosisType, treatment, followUpDate, dailyReportId) <> (Diagnosis.tupled, Diagnosis.unapply)
 
     val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
+
+    val diag = TableQuery[DiagnosisRepo]
+    val a = 0
+
+   /* def create = {
+
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").createConnection()
+      (diag.ddl).create
+    }*/
+    /*def find(id: Long): Diagnosis = {
+      val aDiagnosis = diag.filter(_.diagnosisId === id).list.head
+
+      return aDiagnosis
+    }
+
+    def save(diagnosis: Diagnosis): Unit ={
+      diag.insert(diagnosis)
+    }
+
+    /*def merge (diagnosis: Diagnosis): {
+
+    }*/
+
+    def remove(id: Long)= {
+      diag.filter(_.diagnosisId === id).delete
+    } */
   }
 
 }
