@@ -11,6 +11,8 @@ trait CoordinatorService {
 
   def viewPatients(id:Long)
 
+  def viewAllPatient()
+
   def createUser(user : User)
 
   def getUser(id:Long)

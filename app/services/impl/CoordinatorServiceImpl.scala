@@ -1,11 +1,12 @@
 package services.impl
 
-import domain.{User, Coordinator}
+import domain.{Coordinator, User}
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
 import repository.UserModel.UserRepo
 import services.CoordinatorService
+
 import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by karriem on 9/18/14.
@@ -18,7 +19,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
   val patRepo = TableQuery[PatientRepo]
 
   //val coorList = coorRepo.list
-
+  //val insList = insRepo.list
   //val userList = userRepo.list
   //val patList = patRepo.list
 
@@ -33,11 +34,50 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def getUser(id: Long): Unit = ???
+  override def getUser(id: Long): Unit = {
 
-  override def createUser(user: User): Unit = ???
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-  override def addCoordinator(co: Coordinator): Unit = ???
+      val userList = userRepo.list
 
-  override def viewPatients(id: Long): Unit = ???
+       val coor = userList.filter(_.coordinatorId.get == id)
+       println("User detals: " +coor.head.username)
+    }
+  }
+
+  override def createUser(user: User): Unit =  {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      userRepo.insert(user)
+    }
+  }
+
+  override def addCoordinator(co: Coordinator): Unit ={
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      coorRepo.insert(co)
+    }
+  }
+
+  override def viewPatients(id: Long): Unit ={
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val patList = patRepo.list
+
+      val pat = patList.filter(_.patientId == id)
+      println("Patient Name: " +pat.head.firstName)
+    }
+  }
+
+  override def viewAllPatient(): Unit = {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val patList = patRepo.list
+      println("Patient list: " +patList)
+    }
+  }
 }
