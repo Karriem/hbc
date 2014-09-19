@@ -1,6 +1,7 @@
 package services.impl
 
-import domain.{Coordinator, User}
+import domain._
+import repository.CaregiverModel.CaregiverRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
@@ -17,11 +18,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
   val insRepo = TableQuery[InstitutionRepo]
   val userRepo = TableQuery[UserRepo]
   val patRepo = TableQuery[PatientRepo]
-
-  //val coorList = coorRepo.list
-  //val insList = insRepo.list
-  //val userList = userRepo.list
-  //val patList = patRepo.list
+  val givRepo = TableQuery[CaregiverRepo]
 
   override def getInstitution(id: Long): Unit = {
 
@@ -78,6 +75,30 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
       val patList = patRepo.list
       println("Patient list: " +patList)
+    }
+  }
+
+  override def createCarePlan(care: CarePlan): Unit = {
+
+      val careplan = new CarePlanServiceImpl
+
+      careplan.createPlan(care)
+
+  }
+
+  override def addCareGiver(giver: Caregiver): Unit = {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      givRepo.insert(giver)
+    }
+  }
+
+  override def addPatient(pat: Patient): Unit = {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      patRepo.insert(pat)
     }
   }
 }
