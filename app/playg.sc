@@ -1,8 +1,8 @@
-import domain.CarePlan
 import repository.CarePlanModel.CarePlanRepo
 import repository.PatientModel.PatientRepo
-import services.CarePlanService
-import services.impl.CarePlanServiceImpl
+import services.{CoordinatorService, CarePlanService}
+import services.impl.{CoordinatorServiceImpl, CarePlanServiceImpl}
+
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
 
@@ -14,12 +14,13 @@ val careRepo = TableQuery[CarePlanRepo]
 val patRepo = TableQuery[PatientRepo]
 
 Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-  println("1")
-  var list : List[String] = List()
   val ob : CarePlanService = new CarePlanServiceImpl
-  println("2")
-  val care = CarePlan(1, "Caring for elder", "5/05/2014", "5/05/2014", 1, 1)
-  println("3")
+  val co : CoordinatorService = new CoordinatorServiceImpl
+  //val care = CarePlan(1, "Caring for elder", "5/05/2014", "5/05/2014", 1, 1)
   //ob.createPlan(care)
-  ob.getPatient(12)
+  //ob.getPatient(12)
+  //ob.getPlanIssued(12)
+  //ob.getVisit(1)
+
+  co.getInstitution(10)
 }
