@@ -20,25 +20,27 @@ class CoordinatorServiceImpl extends CoordinatorService{
   val patRepo = TableQuery[PatientRepo]
   val givRepo = TableQuery[CaregiverRepo]
 
-  override def getInstitution(id: Long): Unit = {
+  override def getInstitution(id: Long): List[InstitutionRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val insList = insRepo.list
 
       val coor = insList.filter(_.coordinatorId.get == id)
-      println("Institution Name: " +coor.head.instituteName)
+      //println("Institution Name: " +coor.head.instituteName)
+      coor
     }
   }
 
-  override def getUser(id: Long): Unit = {
+  override def getUser(id: Long): List[UserRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val userList = userRepo.list
 
        val coor = userList.filter(_.coordinatorId.get == id)
-       println("User detals: " +coor.head.username)
+       //println("User detals: " +coor.head.username)
+      coor
     }
   }
 
@@ -58,23 +60,25 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def viewPatients(id: Long): Unit ={
+  override def viewPatients(id: Long): List[PatientRepo#TableElementType] ={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patList = patRepo.list
 
       val pat = patList.filter(_.patientId == id)
-      println("Patient Name: " +pat.head.firstName)
+      //println("Patient Name: " +pat.head.firstName)
+      pat
     }
   }
 
-  override def viewAllPatient(): Unit = {
+  override def viewAllPatient(): List[PatientRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patList = patRepo.list
-      println("Patient list: " +patList)
+      //println("Patient list: " +patList)
+      patList
     }
   }
 
