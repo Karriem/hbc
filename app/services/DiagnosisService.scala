@@ -13,7 +13,7 @@ trait DiagnosisService {
 
   def getDisease(id: Long): Disease
 
-  def getAllQuestionAndAnswers() //list of QnA's
+  def getAllQuestionAndAnswers()
 
   def getQuestionAndAnswers(id: Long)
 
