@@ -1,20 +1,17 @@
 package services
 
-import domain.Patient
-import repository.CarePlanModel.CarePlanRepo
-import repository.PatientModel.PatientRepo
-import repository.UserModel.UserRepo
+import domain.{CarePlan, Patient, User}
 
 /**
  * Created by karriem on 9/19/14.
  */
 trait CaregiverService {
 
-    def getCareplan(id:Long) : List[CarePlanRepo#TableElementType]
+    def getCareplan(id:Long) : CarePlan
 
-    def getPatientDetails(id:Long): List[PatientRepo#TableElementType]
+    def getPatientDetails(id:Long): Patient
 
-    def getUserDetails(id:Long): List[UserRepo#TableElementType]
+    def getUserDetails(id:Long): User
 
-    def addPatient(patient : Patient)
+    def addPatient(patient : Patient) : Long
 }

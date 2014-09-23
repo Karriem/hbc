@@ -1,8 +1,9 @@
-import domain.{CarePlan, User, Patient}
+import domain.{CarePlan, User}
+import org.joda.time.DateTime
 import repository.CarePlanModel.CarePlanRepo
 import repository.PatientModel.PatientRepo
-import services.{CaregiverService, CoordinatorService, CarePlanService}
-import services.impl.{CaregiverServiceImpl, CoordinatorServiceImpl, CarePlanServiceImpl}
+import services.impl.{CarePlanServiceImpl, CaregiverServiceImpl, CoordinatorServiceImpl}
+import services.{CarePlanService, CaregiverService, CoordinatorService}
 
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
@@ -23,6 +24,10 @@ Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Dri
   //ob.getPatient(12)
   //ob.getPlanIssued(12)
   //ob.getVisit(1)
+  val repoList = careRepo.list
+  val repo = repoList.filter(_.planId == 1)
+  val careNew = CarePlan(1, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator)
+  //ob.updateCarePlan(careNew , 1)
   val user = User(1, "Sasuke", "Uchiha", None, Some(13))
   //co.createUser(user)
   //co.getInstitution(10)
@@ -30,12 +35,22 @@ Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Dri
   //co.viewPatients(5)
   //co.viewAllPatient()
   //co.createCarePlan(care)
-  val pat = Patient(1, "2014/5/5", "2014/5/6", "Inoue", "Orihime")
-  var list : List[CarePlanRepo#TableElementType] = List()
-  var listP : List[PatientRepo#TableElementType] = List()
-  list = gi.getCareplan(10)
-  println("Patient Description: " +list.head.description)
-  listP = gi.getPatientDetails(5)
-  println("Patient Name: " +listP.head.firstName)
+  //val pat = Patient(1, "2014/5/5", "2014/5/6", "Inoue", "Orihime")
+  //var list : List[CarePlanRepo#TableElementType] = List()
+  //var listP : List[PatientRepo#TableElementType] = List()
+  val a = gi.getUserDetails(5)
+  println("Name: " +a.username)
+  //list = gi.getCareplan(10)
+  //println("Patient Description: " +list.head.description)
+  //listP = gi.getPatientDetails(5)
+  //println("Patient Name: " +listP.head.firstName)
   //gi.addPatient(pat)
+
+  val t = new DateTime()
+  println(t)
+  var plustwo = t.plusDays(2)
+  val p = plustwo.dayOfWeek().getAsText
+  println(p)
+
+
 }

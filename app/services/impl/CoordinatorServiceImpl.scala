@@ -7,8 +7,8 @@ import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
 import repository.UserModel.UserRepo
 import services.CoordinatorService
-
 import scala.slick.driver.MySQLDriver.simple._
+
 /**
  * Created by karriem on 9/18/14.
  */
@@ -20,54 +20,53 @@ class CoordinatorServiceImpl extends CoordinatorService{
   val patRepo = TableQuery[PatientRepo]
   val givRepo = TableQuery[CaregiverRepo]
 
-  override def getInstitution(id: Long): List[InstitutionRepo#TableElementType] = {
+  override def getInstitution(id: Long): Institution = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val insList = insRepo.list
 
-      val coor = insList.filter(_.coordinatorId.get == id)
-      //println("Institution Name: " +coor.head.instituteName)
+      val coor = insList.filter(_.coordinatorId.get == id).head
       coor
     }
   }
 
-  override def getUser(id: Long): List[UserRepo#TableElementType] = {
+  override def getUser(id: Long): User = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val userList = userRepo.list
 
-       val coor = userList.filter(_.coordinatorId.get == id)
-       //println("User detals: " +coor.head.username)
+      val coor = userList.filter(_.coordinatorId.getOrElse() == id).head
       coor
     }
   }
 
-  override def createUser(user: User): Unit =  {
+  override def createUser(user: User): Long=  {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      userRepo.insert(user)
+      val value = userRepo.returning (userRepo.map (_.userId)).insert(user)
+      value
     }
   }
 
-  override def addCoordinator(co: Coordinator): Unit ={
+  override def addCoordinator(co: Coordinator): Long={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      coorRepo.insert(co)
+      val value = coorRepo.returning (coorRepo.map (_.coId)).insert(co)
+      value
     }
   }
 
-  override def viewPatients(id: Long): List[PatientRepo#TableElementType] ={
+  override def viewPatients(id: Long): Patient ={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patList = patRepo.list
 
-      val pat = patList.filter(_.patientId == id)
-      //println("Patient Name: " +pat.head.firstName)
+      val pat = patList.filter(_.patientId == id).head
       pat
     }
   }
@@ -77,32 +76,33 @@ class CoordinatorServiceImpl extends CoordinatorService{
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patList = patRepo.list
-      //println("Patient list: " +patList)
       patList
     }
   }
 
-  override def createCarePlan(care: CarePlan): Unit = {
+  override def createCarePlan(care: CarePlan): Long= {
 
       val careplan = new CarePlanServiceImpl
 
-      careplan.createPlan(care)
-
+      val value = careplan.createPlan(care)
+    value
   }
 
-  override def addCareGiver(giver: Caregiver): Unit = {
+  override def addCareGiver(giver: Caregiver): Long= {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      givRepo.insert(giver)
+      val value = givRepo.returning (givRepo.map (_.caregiverId)).insert(giver)
+      value
     }
   }
 
-  override def addPatient(pat: Patient): Unit = {
+  override def addPatient(pat: Patient): Long = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      patRepo.insert(pat)
+     val value = patRepo.returning(patRepo.map(_.patientId)).insert(pat)
+      value
     }
   }
 }

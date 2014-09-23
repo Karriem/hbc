@@ -1,30 +1,28 @@
 package services
 
 import domain._
-import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
-import repository.UserModel.UserRepo
 
 /**
  * Created by karriem on 9/18/14.
  */
 trait CoordinatorService {
 
-  def getInstitution(id:Long): List[InstitutionRepo#TableElementType]
+  def getInstitution(id:Long): Institution
 
-  def viewPatients(id:Long): List[PatientRepo#TableElementType]
+  def viewPatients(id:Long): Patient
 
   def viewAllPatient(): List[PatientRepo#TableElementType]
 
-  def createUser(user : User)
+  def createUser(user : User) :Long
 
-  def getUser(id:Long) : List[UserRepo#TableElementType]
+  def getUser(id:Long) : User
 
-  def addCoordinator(co : Coordinator)
+  def addCoordinator(co : Coordinator):Long
 
-  def createCarePlan(care : CarePlan)
+  def createCarePlan(care : CarePlan) :Long
 
-  def addCareGiver(giver : Caregiver)
+  def addCareGiver(giver : Caregiver) :Long
 
-  def addPatient(pat : Patient)
+  def addPatient(pat : Patient) : Long
 }

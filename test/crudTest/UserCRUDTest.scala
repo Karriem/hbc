@@ -69,7 +69,7 @@ class UserCRUDTest extends FeatureSpec with GivenWhenThen {
 
         def searchDelete(id: Long) : Int = {
           userRepo foreach { case (cr: User) =>
-            assertResult(true) {
+            assertResult(false) {
               userRepo.filter(_.userId === id).exists.run
             }
           }

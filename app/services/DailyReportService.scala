@@ -18,7 +18,7 @@ trait DailyReportService {
 
   def getTimeSheetDetails(id: Long): TimeSheet
 
-  def getCategory(id: Long): Category
+  def getCategory(id: Long) : Category
 
   def getDiagnosis(id: Long) : List[DiagnosisRepo#TableElementType]
 

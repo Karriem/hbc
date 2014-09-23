@@ -1,20 +1,19 @@
 package services
 
-import domain.CarePlan
-import repository.CarePlanModel.CarePlanRepo
-import repository.CoordinatorModel.CoordinatorRepo
-import repository.PatientModel.PatientRepo
+import domain.{CarePlan, Coordinator, Patient}
 
 /**
  * Created by karriem on 9/16/14.
  */
 trait CarePlanService {
 
-  def createPlan(care:CarePlan)
+  def createPlan(care:CarePlan):Long
 
-  def getPatient(id:Long) : List[PatientRepo#TableElementType]
+  def updateCarePlan(care:CarePlan, id:Long)
 
-  def getPlanIssued(id:Long) : List[CoordinatorRepo#TableElementType]
+  def getPatient(id:Long) : Patient
 
-  def getVisit(id:Long) : List[CarePlanRepo#TableElementType]
+  def getPlanIssued(id:Long) : Coordinator
+
+  def getVisit(id:Long) : CarePlan
 }

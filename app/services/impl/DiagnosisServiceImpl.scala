@@ -5,6 +5,7 @@ import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
+import domain.Diagnosis
 import services.DiagnosisService
 
 import scala.collection.mutable.ListBuffer
@@ -38,13 +39,13 @@ class DiagnosisServiceImpl extends DiagnosisService{
 
   }
 
-  override def getDisease(id: Long): Disease ={
+
+  override def getDisease(id: Long): Disease = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val retrievedDisease = diseaseRepo.filter(_.diagnosisId === id).list.head
       return retrievedDisease
     }
-
   }
 
   override def getDiagnosis(id: Long) : Diagnosis = {
@@ -57,17 +58,18 @@ class DiagnosisServiceImpl extends DiagnosisService{
 
   }
 
-  override def getAllDiagnosisByCaregiver(id: Long) : List[DiagnosisRepo#TableElementType] ={
+
+  override def getAllDiagnosisByCaregiver(id: Long) : List[DiagnosisRepo#TableElementType] = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-     val caregiverReportIDs = dailyReportRepo.filter(_.caregiverId === id).map(_.dailyReportId).list
-     //val aList : List[DiagnosisRepo#TableElementType] =  List()
-     var diagnosises = new ListBuffer[DiagnosisRepo#TableElementType]()
+      val caregiverReportIDs = dailyReportRepo.filter(_.caregiverId === id).map(_.dailyReportId).list
+      //val aList : List[DiagnosisRepo#TableElementType] =  List()
+      var diagnosises = new ListBuffer[DiagnosisRepo#TableElementType]()
 
 
       caregiverReportIDs foreach { case (id: Long) =>
-          val obj = diagnosisRepo.filter(_.dailyReportId === id).list.head
-          diagnosises += obj
+        val obj = diagnosisRepo.filter(_.dailyReportId === id).list.head
+        diagnosises += obj
       }
 
       val aList = diagnosises.toList
@@ -75,5 +77,4 @@ class DiagnosisServiceImpl extends DiagnosisService{
 
     }
   }
-
 }
