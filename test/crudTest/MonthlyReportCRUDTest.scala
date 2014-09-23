@@ -29,7 +29,7 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
         //(referalRepo.ddl).create
 
         info("Creating a Monthly Report")
-        val monthlyRecord = MonthlyReport(1, 5)
+        val monthlyRecord = MonthlyReport(1,"2014/03/1", 5)
         val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
         val refRecord = Referral(1, "2014/05/23", Some(mReportID))

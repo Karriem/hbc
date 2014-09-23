@@ -34,7 +34,7 @@ feature("Save Daily Report") {
       //(caregiver.ddl).create
       //(patient.ddl).create
 
-      val monthlyRecord = MonthlyReport(1, 10)
+      val monthlyRecord = MonthlyReport(1, "2014/03/12", 10)
       val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
       val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
@@ -44,7 +44,7 @@ feature("Save Daily Report") {
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
       info("Creating Daily Report")
-      val dreportRecord = DailyReport(1, "Cleaned the patient", mReportID, careID, patID)
+      val dreportRecord = DailyReport(1, "Cleaned the patient", Option(mReportID), careID, patID)
       val dReportID = dailyReport.returning(dailyReport.map(_.dailyReportId)).insert(dreportRecord)
 
       def Read(patientName:String, id:Long) = {
@@ -57,7 +57,7 @@ feature("Save Daily Report") {
             }
 
             monthlyReport foreach { case (monthly: MonthlyReport) =>
-              if(monthly.monthlyReportId == report.monthlyReportId)
+              if(Option(monthly.monthlyReportId) == report.monthlyReportId)
                 assert(monthly.visits == 10)
             }
           }

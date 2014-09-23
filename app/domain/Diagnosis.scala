@@ -10,8 +10,9 @@ case class Diagnosis (
                        diagnosisType:String,
                        treatment:String,
                        followUpDate:String,
-                       dailyReportId:Long
+                       dailyReportId:Option[Long]
                        )
+
 
 object Diagnosises{
   implicit lazy val diagnosisFmt = Json.format[Diagnosis]

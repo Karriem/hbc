@@ -7,6 +7,7 @@ import play.api.libs.json.Json
  */
 case class MonthlyReport (
                            monthlyReportId:Long,
+                           date: String,
                            visits:Int)
 
 object MonthlyReports{

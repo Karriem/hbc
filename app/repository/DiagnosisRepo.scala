@@ -16,13 +16,13 @@ object DiagnosisModel {
     def diagnosisType = column[String]("DIAGNOSIS_TYPE")
     def treatment = column[String]("TREATMENT_DESCRIPTION")
     def followUpDate = column[String]("FOLLOW_UP_DATE")
-    def dailyReportId = column[Long]("DAILY_REPORT_ID")
+    def dailyReportId = column[Option[Long]]("DAILY_REPORT_ID")
     def * = (diagnosisId, diagnosisType, treatment, followUpDate, dailyReportId) <> (Diagnosis.tupled, Diagnosis.unapply)
 
     val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
 
     val diag = TableQuery[DiagnosisRepo]
-    val a = 0
+
 
    /* def create = {
 

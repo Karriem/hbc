@@ -14,7 +14,7 @@ class TestDailyReport extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val dReport = DailyReport(7100, "Immunization", 74444, 784569, 222)
+      val dReport = DailyReport(7100, "Immunization", Option(74444L), 784569L, 222L)
 
       assert(dReport.servicesRendered == "Immunization")
 

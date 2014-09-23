@@ -13,7 +13,8 @@ object MonthlyReportModel {
 
       def monthlyReportId = column[Long]("MONTHLY_REPORT_ID", O.PrimaryKey, O.AutoInc)
       def visits = column[Int]("VISITS")
-      def * = (monthlyReportId, visits) <> (MonthlyReport.tupled, MonthlyReport.unapply)
+      def date = column[String]("MONTH_DATE")
+      def * = (monthlyReportId, date, visits) <> (MonthlyReport.tupled, MonthlyReport.unapply)
 
   }
 
