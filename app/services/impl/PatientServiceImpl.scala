@@ -57,11 +57,4 @@ class PatientServiceImpl extends  PatientService {
   }
 }
 
-  override def getCarePlans(id: Long)//:  List[CarePlanRepo#TableElementType] ={
-
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-
-
-    }
 }
