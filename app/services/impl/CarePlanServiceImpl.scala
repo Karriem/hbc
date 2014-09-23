@@ -28,7 +28,7 @@ class CarePlanServiceImpl extends CarePlanService{
     }
   }
 
-  override def getPatient(id: Long) {
+  override def getPatient(id: Long): List[PatientRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -37,11 +37,12 @@ class CarePlanServiceImpl extends CarePlanService{
 
       val listP = patId.filter(_.planId == id).map(_.patientId)
       val listPat = patient.filter(_.patientId == listP.head)
-      println("Patient Last Name: " +listPat.head.LastName)
+      //println("Patient Last Name: " +listPat.head.LastName)
+      listPat
     }
   }
 
-  override def getPlanIssued(id: Long) {
+  override def getPlanIssued(id: Long): List[CoordinatorRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -50,11 +51,12 @@ class CarePlanServiceImpl extends CarePlanService{
 
       val coorID = coId.filter(_.planId == id).map(_.coordinator)
       val coor = pat.filter(_.coId == coorID.head)
-      println("Coordinator Name: " +coor.head.firstName)
+      //println("Coordinator Name: " +coor.head.firstName)
+      coor
     }
   }
 
-  override def getVisit(id: Long) {
+  override def getVisit(id: Long): List[CarePlanRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -64,7 +66,8 @@ class CarePlanServiceImpl extends CarePlanService{
 
       val visId = visList.filter(_.visitId == id).map(_.carePlanId)
       val coor = coId.filter(_.planId == visId.head)
-      println("Visit Description: " +coor.head.description)
+      //println("Visit Description: " +coor.head.description)
+      coor
     }
   }
 }
