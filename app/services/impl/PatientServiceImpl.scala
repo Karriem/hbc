@@ -27,6 +27,7 @@ class PatientServiceImpl extends  PatientService {
     }
   }
 
+
   override def getDiagnosis(id: Long): List[DiagnosisRepo#TableElementType] = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 

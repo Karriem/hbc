@@ -36,7 +36,8 @@ class AddressServiceImpl extends AddressService{
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-     return addressRepo.list
+      val addressList = addressRepo.list
+      addressList
     }
   }
 
