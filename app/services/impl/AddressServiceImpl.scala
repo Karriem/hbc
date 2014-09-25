@@ -14,7 +14,7 @@ class AddressServiceImpl extends AddressService{
   val addressRepo = TableQuery[AddressRepo]
   val patientRepo = TableQuery[PatientRepo]
 
-  override def getAddressById(id: Long) : List[AddressRepo#TableElementType] =  {
+  override def getAddressById(id: Long) : Address={//List[AddressRepo#TableElementType] =  {
 
      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -27,7 +27,7 @@ class AddressServiceImpl extends AddressService{
        //val listAdress = patientAddress.filter(_.patientId == listAd.head)
       println("Address for a Person: " + listAd)
 
-       listAd
+       listAd.head
 
     }
   }

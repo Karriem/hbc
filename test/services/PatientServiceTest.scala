@@ -55,18 +55,18 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
           Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
             val value = patientservice.displayCarePlan(2)
-            //assert(careplanRepo.list.filter(_.patientId == value).head.description == "TB Treatment")
-            //assert(value.description == "TB Treatment")
+            //assert(careplanRepo.list.filter(_.patientId == value.patientId).head.description == "TB Treatment")
+            assert(value.description == "TB Treatment")
 
           }
         }
 
           info("Testing create patient")
-          createPatient
+          //createPatient
           info("Testing get diagnosis")
-          getDiagnosis
-         info("Testing get careplan")
-          // getCarePlans
+           //getDiagnosis
+          info("Testing get careplan")
+           getCarePlans
         }
       }
     }

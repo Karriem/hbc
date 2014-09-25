@@ -50,10 +50,10 @@ class PatientServiceImpl extends  PatientService {
     val careplan = carePlanRepo.list
     val patientCare = patientRepo.list
 
-    val plan = careplan.filter(_.patientId == id)
+    val plan = careplan.filter(_.patientId ==id)
     //val listPlan = patientCare.filter(_.patientId == careplan.head)
 
-    println("Care plan for a specific patient: " + plan.head)
+    println("Care plan for a specific patient: " + plan)
       plan.head
   }
 }
