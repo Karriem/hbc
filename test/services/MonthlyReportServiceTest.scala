@@ -22,7 +22,7 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val referral = Referral (1L, "2013/02/20", None)
 
-      val dailyReport = DailyReport(1l, "Cleaned Burn wounds", None, 1L, 1L)
+      val dailyReport = DailyReport(1L, "Cleaned Burn wounds", None, 1L, 1L)
 
       val timeSheet = TimeSheet("", "08:30", "12:00", None, None, None)
 
@@ -57,7 +57,7 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
           val reportIDs =  new ListBuffer[Long]()
           reportIDs += dlyID
-          (mRepo.ddl).create
+          //(mRepo.ddl).create
 
           mID = monthlyReportService.createMonthlyReport(monthly, referral, reportIDs.toList)
 
