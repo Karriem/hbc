@@ -23,36 +23,52 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
 
       val patientRepo = TableQuery[PatientRepo]
       val diagnosisRepo = TableQuery[DiagnosisRepo]
-      val careplan = TableQuery[CarePlanRepo]
+      val careplanRepo = TableQuery[CarePlanRepo]
 
-      val obj : PatientService = new PatientServiceImpl
+      val patientservice: PatientService = new PatientServiceImpl
+      val patient = Patient(4, "03/10/2014", "03/10/2014", "Buhle", "Ntshewula")
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         def createPatient: Unit = {
-          val patient = Patient(2,"03/10/2014", "03/10/2014", "Phakama", "Ntshewula")
+          val patient = Patient(4, "03/10/2014", "03/10/2014", "Buhle", "Ntshewula")
 
-          val value = obj.addPatient(patient)
+          val value = patientservice.addPatient(patient)
           println("Patient" + value)
-          assert(patientRepo.list.filter(_.patientId == value).head.firstName == "Phakama")
-
-        }
-        def updatePatient: Unit ={
-          val patientList = patientRepo.list
-          val pat = patientList.filter(_.patientId == 2)
-
-          val newPatient = Patient(17, pat.head.dateOfContact, pat.head.dateOfEvaluation, "Tonata", "Nakashololo")
+          assert(patientRepo.list.filter(_.patientId == value).head.firstName == "Buhle")
 
         }
 
-        def testCeatePatient ={
-          val value = obj.getDiagnosis(2)
-          //aseert(value.)
+        def getDiagnosis {
+
+          Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+            val value = patientservice.getDiagnosis(3)
+            assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "TB")
+
+          }
+
         }
-        info("getting diagnosis")
-        createPatient
+
+        def getCarePlans {
+
+          Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+            val value = patientservice.displayCarePlan(2)
+            //assert(careplanRepo.list.filter(_.patientId == value).head.description == "TB Treatment")
+            //assert(value.description == "TB Treatment")
+
+          }
+        }
+
+          info("Testing create patient")
+          createPatient
+          info("Testing get diagnosis")
+          getDiagnosis
+         info("Testing get careplan")
+          // getCarePlans
+        }
       }
     }
-  }
 
-}
+  }
