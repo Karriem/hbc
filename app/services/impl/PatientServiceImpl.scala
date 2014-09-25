@@ -1,6 +1,6 @@
 package services.impl
 
-import domain.{Patient, Diagnosis}
+import domain.{CarePlan, Patient, Diagnosis}
 import repository.CarePlanModel.CarePlanRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
@@ -18,32 +18,32 @@ class PatientServiceImpl extends  PatientService {
   val carePlanRepo = TableQuery[CarePlanRepo]
   val dailyReportRepo = TableQuery[DailyReportRepo]
 
-  override def addPatient(patient: Patient) {
+  override def addPatient(patient: Patient) : Long={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      patientRepo.insert(patient)
-
+      val addPatient = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
+      addPatient
     }
   }
 
 
-  override def getDiagnosis(id: Long): List[DiagnosisRepo#TableElementType] = {
+  override def getDiagnosis(id: Long): Diagnosis = {//List[DiagnosisRepo#TableElementType] = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val diag = diagnosisRepo.list
       val diagnosis = dailyReportRepo.list
 
-      val diagList = diagnosis.filter(_.dailyReportId == id).map(_.dailyReportId)
-      val diagnosisList = diag.filter(_.dailyReportId == diagList.head)
+      val diagList = diagnosis.filter(_.dailyReportId == id).map(_.dailyReportId).head
+      val diagnosisList = diag.filter(_.dailyReportId == Option(diagList))
 
       println("Diagnosis: " + diagnosisList)
-      diagnosisList
+      diagnosisList.head
 
     }
   }
 
-  override def displayCarePlan(id: Long): List[CarePlanRepo#TableElementType] = {
+  override def displayCarePlan(id: Long): CarePlan = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -53,9 +53,21 @@ class PatientServiceImpl extends  PatientService {
     val plan = careplan.filter(_.patientId == id)
     //val listPlan = patientCare.filter(_.patientId == careplan.head)
 
-    println("Care plan for a specific patient: " + plan)
-      plan
+    println("Care plan for a specific patient: " + plan.head)
+      plan.head
   }
 }
 
+ /* override def getPatient(id: Long): List[PatientRepo#TableElementType] = {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      val patient = patientRepo.list
+
+      val patientList = patient.filter(_.patientId == id)
+
+      println("Retrieving the patient by id" + patientList)
+      patientList
+    }
+
+    }*/
 }
