@@ -25,11 +25,16 @@ class ScheduleServiceTest extends FeatureSpec with GivenWhenThen {
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         val schedule = Schedule(1L, 1L, 1L)
 
+        val wd = new DateTime(2014 , 9, 20, 0, 0)
+        val ti = new DateTime(2014 , 9, 20, 8, 30)
+        val to = new DateTime(2014 , 9, 20, 12, 30)
+
+
         val caregiver = Caregiver(1L, "Tonata", "Nakashololo")
 
-        val patient = Patient(1L, DateTime.parse("2013-12-2").toDate, DateTime.parse("2014-04-12").toDate, "Helvi", "Kalenga")
+        val patient = Patient(1L, "2013/12/2", "2014/04/12", "Helvi", "Kalenga")
 
-        val timesheet = TimeSheet("2014-09-20", "08:30", "12:30", None, None, Option(1L))
+        val timesheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, Option(1L))
 
         val scheduleService : ScheduleService = new ScheduleServiceImpl()
 
@@ -59,7 +64,7 @@ class ScheduleServiceTest extends FeatureSpec with GivenWhenThen {
 
         def testGetTimesheetDetails = {
           val timeSheet = scheduleService.getTimesheetDetails(id)
-          assert(timeSheet.workDay == "2014-09-20")
+          assert(timeSheet.workDay == wd.toDate)
         }
 
         def testGetSchedulePerCaregiver = {

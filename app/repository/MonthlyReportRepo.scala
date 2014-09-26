@@ -1,5 +1,7 @@
 package repository
 
+import java.util.Date
+
 import domain.MonthlyReport
 
 import scala.slick.driver.MySQLDriver.simple._
@@ -13,13 +15,14 @@ object MonthlyReportModel {
 
       def monthlyReportId = column[Long]("MONTHLY_REPORT_ID", O.PrimaryKey, O.AutoInc)
       def visits = column[Int]("VISITS")
-      def date = column[String]("MONTH_DATE")
+      def date = column[Date]("MONTH_DATE")
       def * = (monthlyReportId, date, visits) <> (MonthlyReport.tupled, MonthlyReport.unapply)
 
     implicit val JavaUtilDateMapper =
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (
         d => new java.sql.Timestamp(d.getTime),
         d => new java.util.Date(d.getTime))
+
   }
 
 }

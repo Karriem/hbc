@@ -1,5 +1,7 @@
 package repository
 
+import java.util.Date
+
 import domain.TimeSheet
 import repository.DailyReportModel.DailyReportRepo
 import repository.ScheduleModel.ScheduleRepo
@@ -14,9 +16,9 @@ object TimeSheetModel {
 
   class TimeSheetRepo(tag:Tag) extends Table[TimeSheet](tag, "TIMESHEET"){
 
-      def workDay = column[String]("WORKDAY")
-      def timeIn = column[String]("TIME_IN")
-      def timeOut = column[String]("TIME_OUT")
+      def workDay = column[Date]("WORKDAY")
+      def timeIn = column[Date]("TIME_IN")
+      def timeOut = column[Date]("TIME_OUT")
       def visitId = column[Option[Long]]("VISIT_ID")
       def dailyReportId = column[Option[Long]]("DAILY_REPORT_ID")
       def scheduleId = column[Option[Long]]("SCHEDULE_ID")
@@ -30,6 +32,7 @@ object TimeSheetModel {
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (
         d => new java.sql.Timestamp(d.getTime),
         d => new java.util.Date(d.getTime))
+
   }
 
 }

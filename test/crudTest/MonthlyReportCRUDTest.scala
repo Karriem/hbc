@@ -1,6 +1,7 @@
 package crudTest
 
-import domain.{MonthlyReport, Referral}
+import domain.{Referral, MonthlyReport}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CategoryModel.CategoryRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
@@ -32,10 +33,13 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
         //(catRepo.ddl).create
 
         info("Creating a Monthly Report")
-        val monthlyRecord = MonthlyReport(1,"2014-03-01", 5)
+        val refDate = DateTime.parse("2014-05-23")
+        val monthDate = new DateTime(2014, 3, 1, 0, 0)
+
+        val monthlyRecord = MonthlyReport(1,monthDate.toDate, 5)
         val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
-        val refRecord = Referral(1, "2014-05-23", Some(mReportID))
+        val refRecord = Referral(1, refDate.toDate, Some(mReportID))
         val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         def Read(visits: Int, id: Long) = {
@@ -45,8 +49,8 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
 
               referalRepo foreach{case (ref: Referral) =>
                   if(ref.monthlyReportId == Option(id)){
-                    assert(ref.referralDate == "2014-05-23")
-                  }
+                    assert(ref.referralDate == refDate.toDate)
+                 }
               }
             }
           }

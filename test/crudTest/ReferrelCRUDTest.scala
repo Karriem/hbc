@@ -1,7 +1,10 @@
 package crudTest
 
+import java.util.Date
+
 import domain.{Coordinator, Institution, Referral}
-import org.scalatest.{FeatureSpec, GivenWhenThen}
+import org.joda.time.DateTime
+import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.ReferralModel.ReferralRepo
@@ -30,17 +33,19 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         //(referalRepo.ddl).create
 
         info("Creating a Referral")
+        val refDate = DateTime.parse("2014-05-23")
+        val updatedRefDate = DateTime.parse("2014-07-23")
 
         val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
         val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
 
-        val refRecord = Referral(1, "2014-05-23", Some(0))
+        val refRecord = Referral(1, refDate.toDate, Some(0))
         val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), refID)
         val institueId = instituteRepo.returning (instituteRepo.map (_.instituteId) ).insert (instituteRecord)
 
-        def Read(referrelDate: String, id: Long) = {
+        def Read(referrelDate: Date, id: Long) = {
           referalRepo foreach { case (r: Referral) =>
             if (r.referralId == id) {
               assert(r.referralDate == referrelDate )
@@ -54,7 +59,7 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
           }
         }
 
-        def Update(referrelDate: String, id:Long) = {
+        def Update(referrelDate: Date, id:Long) = {
           referalRepo.filter(_.referralId === id).map(_.referralDate).update(referrelDate)
           Read(referrelDate, id)
         }
@@ -76,9 +81,9 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Referral")
-        Read("2014-05-23", refID)
+        Read(refDate.toDate, refID)
         info("Updating Referral")
-        Update("2014-07-23", refID)
+        Update(updatedRefDate.toDate, refID)
         info("Deleting Referral")
         Delete(refID)
 
