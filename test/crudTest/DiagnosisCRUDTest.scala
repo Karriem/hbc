@@ -1,6 +1,7 @@
 package crudTest
 
 import domain.{DailyReport, Diagnosis}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
@@ -33,11 +34,11 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
       //(diag.ddl).create
      // (qNA.ddl).create
       //(di.ddl).create
-
+        val diaDate = DateTime.parse("2014-07-07")
         val dailyReport = DailyReport(1, "Provided Medication", Option(1), 1, 1)
         val idD = daily.returning (daily.map (_.dailyReportId) ).insert(dailyReport)
 
-        val diagnosis = Diagnosis(1, "Flu", "Flu tablets", "7/07/2014", Option(idD))
+        val diagnosis = Diagnosis(1, "Flu", "Flu tablets", diaDate.toDate, Option(idD))
         val id = diag.returning (diag.map (_.diagnosisId)).insert(diagnosis)
 
         def Read(name: String, id : Long) = {

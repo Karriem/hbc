@@ -1,6 +1,7 @@
 package domainTest
 
 import domain.Referral
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
@@ -9,7 +10,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen}
 class TestReferral extends FeatureSpec with GivenWhenThen {
   feature("Save Referral") {
 
-    val rd = "8/12/2014"
+    val rd = DateTime.parse("2014-12-08")
 
     info("As a Institution")
     info(" I want to Set up Tables")
@@ -17,9 +18,9 @@ class TestReferral extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val ref = new Referral(4, rd, Some(0))
+      val ref = new Referral(4, rd.toDate, Some(0))
 
-      assert(ref.referralDate == rd)
+      assert(ref.referralDate == rd.toDate)
 
     }
   }

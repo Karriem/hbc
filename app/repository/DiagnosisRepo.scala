@@ -1,5 +1,7 @@
 package repository
 
+import java.util.Date
+
 import domain.Diagnosis
 import repository.DailyReportModel.DailyReportRepo
 
@@ -15,13 +17,18 @@ object DiagnosisModel {
     def diagnosisId = column[Long]("DIAGNOSIS_ID", O.PrimaryKey, O.AutoInc)
     def diagnosisType = column[String]("DIAGNOSIS_TYPE")
     def treatment = column[String]("TREATMENT_DESCRIPTION")
-    def followUpDate = column[String]("FOLLOW_UP_DATE")
+    def followUpDate = column[Date]("FOLLOW_UP_DATE")
     def dailyReportId = column[Option[Long]]("DAILY_REPORT_ID")
     def * = (diagnosisId, diagnosisType, treatment, followUpDate, dailyReportId) <> (Diagnosis.tupled, Diagnosis.unapply)
 
     val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
 
     val diag = TableQuery[DiagnosisRepo]
+
+    implicit val JavaUtilDateMapper =
+      MappedColumnType .base[java.util.Date, java.sql.Timestamp] (
+        d => new java.sql.Timestamp(d.getTime),
+        d => new java.util.Date(d.getTime))
 
 
    /* def create = {

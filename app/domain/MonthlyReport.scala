@@ -1,5 +1,7 @@
 package domain
 
+import java.util.Date
+
 import play.api.libs.json.Json
 
 /**
@@ -7,7 +9,7 @@ import play.api.libs.json.Json
  */
 case class MonthlyReport (
                            monthlyReportId:Long,
-                           date: String,
+                           date: Date,
                            visits:Int)
 
 object MonthlyReports{

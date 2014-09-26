@@ -1,6 +1,7 @@
 package services
 
 import domain._
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CategoryModel.CategoryRepo
 import repository.DailyReportModel.DailyReportRepo
@@ -22,9 +23,15 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
     scenario("Creating object instances"){
       Given("Specific entity information")
 
+      val wd = new DateTime(2014 , 2, 8, 0, 0)
+      val ti = new DateTime(2014 , 2, 8, 8, 30)
+      val to = new DateTime(2014 , 2, 8, 12, 0)
+
+      val flwUpDate = DateTime.parse("2014-07-07")
+
       val dailyReport = DailyReport(1l, "Cleaned Burn wounds", None, 1L, 1L)
 
-      val timeSheet = TimeSheet("", "08:30", "12:00", None, None, None)
+      val timeSheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, None)
 
       val category = Category("Critical", "2", 1L)
 
@@ -34,7 +41,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
-      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", "7/07/2014", null)
+      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", flwUpDate.toDate, null)
 
       val qAndA = QuestionAnswer("When did it occur?", Option("3 days ago"), 1L)
 
@@ -73,7 +80,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
         def testGetTimesheetDetials ={
           val sheet = reportService.getTimeSheetDetails(id)
-          assert(sheet.timeIn == "08:30")
+          assert(sheet.timeIn == ti.toDate)
         }
 
         def testGetCategory = {
@@ -111,7 +118,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
             val rID = r.dailyReportId
             timesheetRepo foreach { case (t: TimeSheet) =>
               if(t.dailyReportId == Option(rID)){
-                assert(t.timeIn == "08:30")
+                assert(t.timeIn == ti.toDate)
               }
             }
           }

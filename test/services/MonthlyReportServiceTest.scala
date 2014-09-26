@@ -1,6 +1,7 @@
 package services
 
 import domain._
+import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.MonthlyReportModel.MonthlyReportRepo
 import services.impl.{MonthlyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
@@ -20,11 +21,19 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
     scenario("Creating object instances") {
       Given("Specific entity information")
 
-      val referral = Referral (1L, "2013/02/20", None)
+      val wd = new DateTime(2014 , 2, 8, 0, 0)
+      val ti = new DateTime(2014 , 2, 8, 8, 30)
+      val to = new DateTime(2014 , 2, 8, 12, 0)
+      val mDate = new DateTime(2014, 12, 3, 0 ,0)
+
+      val fDate = DateTime.parse("2014-07-07")
+
+      val refDate = DateTime.parse("2013-02-20")
+      val referral = Referral (1L, refDate.toDate, None)
 
       val dailyReport = DailyReport(1L, "Cleaned Burn wounds", None, 1L, 1L)
 
-      val timeSheet = TimeSheet("", "08:30", "12:00", None, None, None)
+      val timeSheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, None)
 
       val category = Category("Critical", "2", 1L)
 
@@ -34,13 +43,13 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
-      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", "7/07/2014", null)
+      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", fDate.toDate, null)
 
       val qAndA = QuestionAnswer("When did it occur?", Option("3 days ago"), 1L)
 
       val disease = Disease(1L, "3rd Degree Burns", "Burn Wounds", 1L)
 
-      val monthly = MonthlyReport(1L,"2014/12/3", 0)
+      val monthly = MonthlyReport(1L,mDate.toDate, 0)
 
       val mRepo = TableQuery[MonthlyReportRepo]
 
@@ -73,7 +82,7 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       def testCheckForReferral = {
         val retrievedRef = monthlyReportService.checkForReferral(mID)
-        assert(retrievedRef.referralDate == "2013/02/20")
+        assert(retrievedRef.referralDate == refDate.toDate)
       }
 
       def testGetAllDailyReports ={
