@@ -21,17 +21,32 @@ class DemographicServiceTest extends FeatureSpec with GivenWhenThen{
       val demoservice: DemographicService = new DemographicServiceImpl
       val demoRepo = TableQuery[DemographicRepo]
 
-      def getDemo: Unit ={
+      def getDemo: Unit = {
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-          val value = demoservice.getPersonDemo(9)
-          println("Vsalue" + value)
-          assert(demoRepo.list.filter(_.caregiverId.getOrElse() == value).head.gender == "Female")
+
+          val value = demoservice.getPersonDemo(2)
+            assert(value.gender == "male")
 
         }
-        }
-      info("Testing read for a person's demographics")
-      getDemo
+      }
+
+        def getAllDemos: Unit ={
+
+          Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+            var demolist : List[DemographicRepo#TableElementType] = List()
+            demolist = demoservice.getAllDemos()
+            assert(demolist.size == 3)
+          }
+          }
+
+
+         info("Testing read for a person's demographics")
+         getDemo
+
+         info("Testing for get all demos service")
+         getAllDemos
     }
   }
 }
