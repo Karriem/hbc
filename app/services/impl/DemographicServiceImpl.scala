@@ -13,23 +13,24 @@ import scala.slick.driver.MySQLDriver.simple._
  * Created by phakama on 2014/09/23.
  */
 class DemographicServiceImpl extends DemographicService{
+
   val patientRepo = TableQuery[PatientRepo]
   val demoRepo = TableQuery[DemographicRepo]
   val caregiverRepo = TableQuery[CaregiverRepo]
 
 
-  override def getPersonDemo(id: Long): Demographic = {//List[DemographicRepo#TableElementType] = {
+  override def getPersonDemo(id: Long): Demographic={//List[DemographicRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patientDemo = demoRepo.list
-      val patDemoList = patientDemo.filter(_.patientId == id)
+      //val patDemoList = patientDemo.filter(_.patientId == Some(id))
 
-      val caregiver = caregiverRepo.list
-      val caregiverDemo = caregiver.filter(_.caregiverId == id)
+      val caregiver = demoRepo.list
+      val caregiverDemo = caregiver.filter(_.caregiverId == Some(id))
 
-      println("Displaying the person demographics" + patDemoList.head)
-      patDemoList.head
+      println("Displaying the person demographics" + caregiverDemo)
+       caregiverDemo.head
 
     }
 
