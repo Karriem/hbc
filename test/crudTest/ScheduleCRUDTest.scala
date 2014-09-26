@@ -62,7 +62,7 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
 
         def searchDelete(id: Long) : Int = {
           scheduleRepo foreach { case (cr: Schedule) =>
-            assertResult(true) {
+            assertResult(false) {
               scheduleRepo.filter(_.scheduleId === id).exists.run
             }
           }

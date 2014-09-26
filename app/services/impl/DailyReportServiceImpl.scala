@@ -23,14 +23,15 @@ class DailyReportServiceImpl extends DailyReportService {
   val categoryRepo = TableQuery[CategoryRepo]
   val diagnosisRepo = TableQuery[DiagnosisRepo]
 
-  override def createDailyReport(report: DailyReport, timesheet: TimeSheet, category: Category, caregiver: Caregiver, patient: Patient, diagnosisID: Long) :Long ={
+  override def createDailyReport(report: DailyReport, timesheet: TimeSheet, category: Category, caregiver: Caregiver, patient: Patient, diagnosisID: Long) :Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val caregiverID = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiver)
-      val patientID = patientRepo.returning(patientRepo.map (_.patientId)).insert(patient)
+      val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
+      val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
 
-      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.monthlyReportId, caregiverID, patientID )
-      val diaID = dailyReportRepo.returning(dailyReportRepo.map (_.dailyReportId) ).insert(newReport)
+      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.monthlyReportId, caregiverID, patientID)
+      val diaID = dailyReportRepo.returning(dailyReportRepo.map(_.dailyReportId)).insert(newReport)
+
 
       val updatedTimesheet = TimeSheet(timesheet.workDay, timesheet.timeIn, timesheet.timeOut, None, Option(diaID), None)
       timesheetRepo.insert(updatedTimesheet)
@@ -43,10 +44,9 @@ class DailyReportServiceImpl extends DailyReportService {
       return diaID
 
     }
-
   }
 
-  override def getTimeSheetDetails(id: Long): TimeSheet ={
+  override def getTimeSheetDetails(id: Long): TimeSheet = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
        val retrievedSheet = timesheetRepo.filter(_.dailyReportId === id).list.head
        return retrievedSheet
@@ -60,13 +60,13 @@ class DailyReportServiceImpl extends DailyReportService {
     }
   }
 
-  override def getDiagnosis(id: Long):List[DiagnosisRepo#TableElementType] = {
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-      val dList = diagnosisRepo.filter(_.dailyReportId === id).list
 
-      return dList
+  override def getDiagnosis(id: Long):List[DiagnosisRepo#TableElementType] = {
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+        val dList = diagnosisRepo.filter(_.dailyReportId === id).list
+        dList
+      }
     }
-  }
 
   override def getReportByPatient(id: Long) : List[DailyReportRepo#TableElementType]= {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
@@ -82,7 +82,7 @@ class DailyReportServiceImpl extends DailyReportService {
     }
   }
 
-  override def getAllReports(): List[DailyReportRepo#TableElementType] ={
+  override def getAllReports():List[DailyReportRepo#TableElementType] ={
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         return dailyReportRepo.list
 

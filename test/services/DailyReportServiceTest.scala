@@ -1,16 +1,15 @@
 package services
 
 import domain._
-import org.scalatest.{GivenWhenThen, FeatureSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CategoryModel.CategoryRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
-import repository.QuestionAnswerModel.QuestionAnswerRepo
 import repository.TimeSheetModel.TimeSheetRepo
-import services.impl.{DiagnosisServiceImpl, DailyReportServiceImpl}
+import services.impl.{DailyReportServiceImpl, DiagnosisServiceImpl}
 
-import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
+import scala.slick.lifted.TableQuery
 
 /**
  * Created by tonata on 2014/09/23.
@@ -57,7 +56,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
         def testCreateReport = {
         // (cat.ddl).create
          //(dailyReportRepo.ddl).create
-         (dia.ddl).create
+         //(dia.ddl).create
 
           val dID = diaService.createDiagnosis(diagnosis, disease, qAndA)
           reportService.createDailyReport(dailyReport, timeSheet, category, caregiver, patient, dID)

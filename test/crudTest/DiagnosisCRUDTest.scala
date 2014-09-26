@@ -30,9 +30,9 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-     // (diag.ddl ++ daily.ddl).create
+      //(diag.ddl).create
      // (qNA.ddl).create
-     // (di.ddl).create
+      //(di.ddl).create
 
         val dailyReport = DailyReport(1, "Provided Medication", Option(1), 1, 1)
         val idD = daily.returning (daily.map (_.dailyReportId) ).insert(dailyReport)

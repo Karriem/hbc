@@ -2,6 +2,7 @@ package crudTest
 
 import domain.{Referral, MonthlyReport}
 import org.scalatest.{FeatureSpec, GivenWhenThen}
+import repository.CategoryModel.CategoryRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
 import repository.ReferralModel.ReferralRepo
 
@@ -21,12 +22,14 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
 
       val monthlyReport = TableQuery[MonthlyReportRepo]
       val referalRepo = TableQuery[ReferralRepo]
+      val catRepo = TableQuery[CategoryRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
 
         //(monthlyReport.ddl).create
         //(referalRepo.ddl).create
+        //(catRepo.ddl).create
 
         info("Creating a Monthly Report")
         val monthlyRecord = MonthlyReport(1,"2014/03/1", 5)

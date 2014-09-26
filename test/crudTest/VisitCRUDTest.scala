@@ -39,18 +39,22 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         val timeSheetRecord = TimeSheet("2013/12/12", "08:00", "16:00", Some(visitID), Some(0), Some(0))
         timesheetRepo.insert(timeSheetRecord)
 
-        def Read(workDay: String, id: Long) = {
+        def Read(timeIn: String, id: Long) = {
           timesheetRepo foreach { case (sheet: TimeSheet) =>
             if (sheet.visitId == Option(id)) {
-              assert(sheet.workDay == workDay)
+              assert(sheet.timeIn == timeIn)
             }
           }
-
         }
 
         def Update(newWorkDay:String, id:Long) = {
           timesheetRepo.filter(_.visitId === id).map(_.workDay).update(newWorkDay)
-          Read(newWorkDay, id)
+          //Read(newWorkDay, id)
+          timesheetRepo foreach { case (sheet: TimeSheet) =>
+            if (sheet.visitId == Option(id)) {
+              assert(sheet.workDay == newWorkDay)
+            }
+          }
         }
 
         def searchDelete(id: Long) : Int = {
@@ -70,10 +74,10 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Visit")
-        Read("2013/12/12", visitID)
+        Read("08:00", visitID)
 
         info("Updating Visit")
-        Update("2014/03/23", visitID)
+        Update("4/03/23", visitID)
 
         info("Deleting Visit")
         Delete(visitID)

@@ -74,7 +74,6 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
           return 0;
         }
 
-
         def Delete(id:Long) = {
           care.filter(_.planId === id).delete
           searchDelete(id)
