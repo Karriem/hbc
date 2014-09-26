@@ -45,7 +45,7 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
         val caregiverRecord = Caregiver(1, "Max", "Crews")
         val careId = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiverRecord)
 
-        val patientRecord = Patient(1, "2013/03/12" , "2014/04/24",  "Tonata", "Nakashololo")
+        val patientRecord = Patient(1, DateTime.parse("2013-03-12").toDate , DateTime.parse("2014-04-24").toDate,  "Tonata", "Nakashololo")
         val patId = patientRepo.returning(patientRepo.map(_.patientId)).insert(patientRecord)
 
         val scheduleRecord = Schedule(1, patId, careId)

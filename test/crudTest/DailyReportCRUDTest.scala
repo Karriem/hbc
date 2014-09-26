@@ -43,7 +43,7 @@ feature("Save Daily Report") {
       val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
       val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
 
-      val patientRecord = Patient(1, "25/12/2014", "25/12/2014", "Phakama", "Ntshewula")
+      val patientRecord = Patient(1, DateTime.parse("2014-12-25").toDate, DateTime.parse("2014-12-25").toDate, "Phakama", "Ntshewula")
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
       info("Creating Daily Report")

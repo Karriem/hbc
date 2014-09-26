@@ -26,6 +26,8 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
       val to = new DateTime(2014 , 2, 8, 12, 0)
       val mDate = new DateTime(2014, 12, 3, 0 ,0)
 
+      //val doE = DateTime.parse()
+
       val fDate = DateTime.parse("2014-07-07")
 
       val refDate = DateTime.parse("2013-02-20")
@@ -39,7 +41,7 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
-      val patient = Patient(1L, "2013/03/14", "2014/03/14" , "Leratho", "Kanime")
+      val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 

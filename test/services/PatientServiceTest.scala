@@ -1,6 +1,7 @@
 package services
 
 import domain.{Diagnosis, Patient}
+import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.CarePlanModel.CarePlanRepo
 import repository.DiagnosisModel.DiagnosisRepo
@@ -26,12 +27,12 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
       val careplanRepo = TableQuery[CarePlanRepo]
 
       val patientservice: PatientService = new PatientServiceImpl
-      val patient = Patient(4, "03/10/2014", "03/10/2014", "Buhle", "Ntshewula")
+      val patient = Patient(4, DateTime.parse("2014-10-03").toDate, DateTime.parse("2014-10-03").toDate, "Buhle", "Ntshewula")
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         def createPatient: Unit = {
-          val patient = Patient(4, "03/10/2014", "03/10/2014", "Buhle", "Ntshewula")
+          val patient = Patient(4, DateTime.parse("2014-10-03").toDate, DateTime.parse("2014-10-03").toDate, "Buhle", "Ntshewula")
 
           val value = patientservice.addPatient(patient)
           println("Patient" + value)

@@ -37,7 +37,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
       val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
-      val patient = Patient(1L, "2013/03/14", "2014/03/14" , "Leratho", "Kanime")
+      val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
