@@ -1,6 +1,7 @@
 package services
 
 import domain.CarePlan
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
 import repository.CoordinatorModel.CoordinatorRepo
@@ -31,7 +32,7 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         def createPlanTest: Unit ={
 
-          val careplan = CarePlan(1, "Healing", "12/12/2014", "13/12/2014", 5, 1)
+          val careplan = CarePlan(1, "Healing", DateTime.parse("2014-12-12").toDate, DateTime.parse("2014-12-13").toDate , 5, 1)
 
           val value = obj.createPlan(careplan)
           println("id" + value)
@@ -41,30 +42,30 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
         def updateCarePlanTest: Unit ={
 
           val repoList = care.list
-          val repo = repoList.filter(_.planId == 8)
+          val repo = repoList.filter(_.planId == 124)
           val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator)
-          obj.updateCarePlan(careNew, 8)
+          obj.updateCarePlan(careNew, 124)
           val repoList3 = care.list
-          assert(repoList3.filter(_.planId == 8).head.description == "Cleaning house")
+          assert(repoList3.filter(_.planId == 124).head.description == "Cleaning house")
         }
 
         def getPatientTest : Unit ={
 
-          val value = obj.getPatient(8)
+          val value = obj.getPatient(128)
 
-          assert(value.firstName == "Bo")
+          assert(value.firstName == "Phakama")
         }
 
         def getPlanIssuedTest: Unit ={
 
-          val value = obj.getPlanIssued(3)
+          val value = obj.getPlanIssued(124)
           assert(value.firstName == "Lou")
         }
 
         def getVisitTest: Unit ={
 
-          val value = obj.getVisit(1)
-          assert(value.patientId == 40)
+          val value = obj.getVisit(20)
+          assert(value.patientId == 0)
         }
 
         info("createPlanTest")

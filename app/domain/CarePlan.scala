@@ -1,5 +1,7 @@
 package domain
 
+import java.util.Date
+
 import play.api.libs.json.Json
 
 /**
@@ -8,8 +10,8 @@ import play.api.libs.json.Json
 case class CarePlan (
                         planId:Long,
                         description:String,
-                        startDate:String,
-                        endDate:String,
+                        startDate:Date,
+                        endDate:Date,
                         patientId:Long,
                         coordinator:Long
                       )

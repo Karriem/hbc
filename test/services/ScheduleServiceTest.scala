@@ -1,6 +1,7 @@
 package services
 
 import domain.{TimeSheet, Patient, Schedule, Caregiver}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CaregiverModel.CaregiverRepo
 import repository.PatientModel.PatientRepo
@@ -26,9 +27,9 @@ class ScheduleServiceTest extends FeatureSpec with GivenWhenThen {
 
         val caregiver = Caregiver(1L, "Tonata", "Nakashololo")
 
-        val patient = Patient(1L, "2013/12/2", "2014/04/12", "Helvi", "Kalenga")
+        val patient = Patient(1L, DateTime.parse("2013-12-2").toDate, DateTime.parse("2014-04-12").toDate, "Helvi", "Kalenga")
 
-        val timesheet = TimeSheet("2014/09/20", "08:30", "12:30", None, None, Option(1L))
+        val timesheet = TimeSheet("2014-09-20", "08:30", "12:30", None, None, Option(1L))
 
         val scheduleService : ScheduleService = new ScheduleServiceImpl()
 
@@ -58,7 +59,7 @@ class ScheduleServiceTest extends FeatureSpec with GivenWhenThen {
 
         def testGetTimesheetDetails = {
           val timeSheet = scheduleService.getTimesheetDetails(id)
-          assert(timeSheet.workDay == "2014/09/20")
+          assert(timeSheet.workDay == "2014-09-20")
         }
 
         def testGetSchedulePerCaregiver = {

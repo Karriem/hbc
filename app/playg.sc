@@ -52,5 +52,4 @@ Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Dri
   val p = plustwo.dayOfWeek().getAsText
   println(p)
 
-
 }

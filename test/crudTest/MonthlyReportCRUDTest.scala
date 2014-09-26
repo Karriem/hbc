@@ -1,6 +1,6 @@
 package crudTest
 
-import domain.{Referral, MonthlyReport}
+import domain.{MonthlyReport, Referral}
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CategoryModel.CategoryRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
@@ -32,10 +32,10 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
         //(catRepo.ddl).create
 
         info("Creating a Monthly Report")
-        val monthlyRecord = MonthlyReport(1,"2014/03/1", 5)
+        val monthlyRecord = MonthlyReport(1,"2014-03-01", 5)
         val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
-        val refRecord = Referral(1, "2014/05/23", Some(mReportID))
+        val refRecord = Referral(1, "2014-05-23", Some(mReportID))
         val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         def Read(visits: Int, id: Long) = {
@@ -45,7 +45,7 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
 
               referalRepo foreach{case (ref: Referral) =>
                   if(ref.monthlyReportId == Option(id)){
-                    assert(ref.referralDate == "2014/05/23")
+                    assert(ref.referralDate == "2014-05-23")
                   }
               }
             }

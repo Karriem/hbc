@@ -25,6 +25,11 @@ object TimeSheetModel {
       val visit = foreignKey("VISIT_FK", visitId, TableQuery[VisitRepo])(_.visitId)
       val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
       val schedule = foreignKey("SCHEDULE_FK", scheduleId, TableQuery[ScheduleRepo])(_.scheduleId)
+
+    implicit val JavaUtilDateMapper =
+      MappedColumnType .base[java.util.Date, java.sql.Timestamp] (
+        d => new java.sql.Timestamp(d.getTime),
+        d => new java.util.Date(d.getTime))
   }
 
 }

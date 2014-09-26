@@ -88,7 +88,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
     value
   }
 
-  override def addCareGiver(giver: Caregiver): Long= {
+  override def addCaregiver(giver: Caregiver): Long= {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -101,7 +101,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-     val value = patRepo.returning(patRepo.map(_.patientId)).insert(pat)
+      val value = patRepo.returning(patRepo.map(_.patientId)).insert(pat)
       value
     }
   }

@@ -1,6 +1,7 @@
 package crudTest
 
 import domain.{Medication, Patient}
+import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.MedicationModel.MedicationRepo
 import repository.PatientModel.PatientRepo
@@ -31,7 +32,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         //(med.ddl).create
 
         info("Creating Patient")
-        val patRecord = Patient(1, "20/05/2014", "2/08/2014", "tonata", "nak")
+        val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
 
         val medication = Medication("M144", "Apply to burnt area", id)

@@ -1,6 +1,7 @@
 package services
 
 import domain._
+import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.MonthlyReportModel.MonthlyReportRepo
 import services.impl.{MonthlyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
@@ -30,11 +31,11 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
-      val patient = Patient(1L, "2013/03/14", "2014/03/14" , "Leratho", "Kanime")
+      val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
-      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", "7/07/2014", null)
+      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", DateTime.parse("2014-07-07").toDate, null)
 
       val qAndA = QuestionAnswer("When did it occur?", Option("3 days ago"), 1L)
 

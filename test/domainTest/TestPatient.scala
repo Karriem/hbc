@@ -1,6 +1,7 @@
 package domainTest
 
 import domain.Patient
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
@@ -9,8 +10,8 @@ import org.scalatest.{FeatureSpec, GivenWhenThen}
 class TestPatient extends FeatureSpec with GivenWhenThen {
   feature(" Save Patient") {
 
-    val doc = "4/05/12"
-    val dov = "5/05/12"
+    val doc = DateTime.parse("2012-05-12")
+    val dov = DateTime.parse("2012-05-13")
 
     info("As a Caregiver")
     info(" I want to Set up Tables")
@@ -18,9 +19,9 @@ class TestPatient extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val pat = Patient(1, doc, dov, "Jaul", "Pam")
+      val pat = Patient(1, doc.toDate, dov.toDate, "Jaul", "Pam")
 
-      assert(pat.dateOfEvaluation == dov)
+      assert(pat.dateOfEvaluation == dov.toDate)
 
     }
   }

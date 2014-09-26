@@ -1,6 +1,7 @@
 package crudTest
 
 import domain.{Coordinator, Patient, CarePlan}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
 import repository.CoordinatorModel.CoordinatorRepo
@@ -33,13 +34,13 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
         //(pat.ddl).create
 
         info("Creating a Care Plan")
-        val patient = Patient(1, "8/02/2012", "10/02/2012", "Bo", "Micheals")
+        val patient = Patient(1, DateTime.parse("2014-05-02").toDate, DateTime.parse("2014-02-10").toDate, "Bo", "Micheals")
         val coor = Coordinator(1, "Lou", "Smith")
 
         val idp = pat.returning (pat.map (_.patientId))insert(patient)
         val idc = co.returning (co.map (_.coId) )insert(coor)
 
-        val careplan = CarePlan(1, "Caring for elder", "5/05/2014", "5/05/2014", idp, idc)
+        val careplan = CarePlan(1, "Caring for elder", DateTime.parse("2014-05-05").toDate, DateTime.parse("2014-05-05").toDate, idp, idc)
         val id = care.returning (care.map (_.planId)).insert(careplan)
 
 

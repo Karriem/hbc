@@ -9,7 +9,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen}
 class TestTimeSheet extends FeatureSpec with GivenWhenThen {
   feature(" Save Time Sheet") {
 
-    val wd = "8/2/2014"
+    val wd = "2014-02-08"
     val ti = "15:00:00"
     val to = "17:00:00"
 
@@ -19,7 +19,7 @@ class TestTimeSheet extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val tm = new TimeSheet(wd,ti,to,Some(1),Some(4),Some(8))
+      val tm = new TimeSheet(wd ,ti , to, Some(1), Some(4), Some(8))
 
       assert(tm.visitId == Option(1L))
     }

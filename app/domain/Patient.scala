@@ -1,5 +1,7 @@
 package domain
 
+import java.util.Date
+
 import play.api.libs.json.Json
 
 /**
@@ -7,8 +9,8 @@ import play.api.libs.json.Json
  */
 case class Patient (
                        patientId:Long,
-                       dateOfContact:String,
-                       dateOfEvaluation:String,
+                       dateOfContact:Date,
+                       dateOfEvaluation:Date,
                        firstName:String,
                        LastName:String
                      )

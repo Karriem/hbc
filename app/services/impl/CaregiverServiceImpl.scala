@@ -17,7 +17,6 @@ class CaregiverServiceImpl extends CaregiverService{
   val userRepo = TableQuery[UserRepo]
 
   override def getCareplan(id: Long): CarePlan = {
-
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val careList = careRepo.list

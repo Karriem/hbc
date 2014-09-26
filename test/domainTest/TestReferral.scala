@@ -9,7 +9,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen}
 class TestReferral extends FeatureSpec with GivenWhenThen {
   feature("Save Referral") {
 
-    val rd = "8/12/2014"
+    val rd = "2014-12-08"
 
     info("As a Institution")
     info(" I want to Set up Tables")

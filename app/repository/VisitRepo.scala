@@ -1,5 +1,7 @@
 package repository
 
+import java.util.Date
+
 import domain.Visit
 import repository.CarePlanModel.CarePlanRepo
 
@@ -13,11 +15,16 @@ object VisitModel {
   class VisitRepo(tag:Tag) extends Table[Visit](tag, "VISIT"){
 
       def visitId = column[Long]("VISIT_ID", O.PrimaryKey, O.AutoInc)
-      def nextVisit = column[String]("NEXT_VISIT")
+      def nextVisit = column[Date]("NEXT_VISIT")
       def carePlanId = column[Long]("CAREPLAN_ID")
       def * = (visitId, nextVisit, carePlanId) <> (Visit.tupled, Visit.unapply)
 
       val carePlan = foreignKey("CAREPLAN_FK", carePlanId, TableQuery[CarePlanRepo])(_.planId)
+
+    implicit val JavaUtilDateMapper =
+      MappedColumnType .base[java.util.Date, java.sql.Timestamp] (
+        d => new java.sql.Timestamp(d.getTime),
+        d => new java.util.Date(d.getTime))
   }
 
 }

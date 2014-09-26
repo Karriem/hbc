@@ -1,6 +1,7 @@
 package services
 
 import domain.{Diagnosis, Disease, QuestionAnswer}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
@@ -20,7 +21,7 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
     scenario("Creating object instances"){
       Given("Specific entity information")
 
-      val diagnosis = Diagnosis(1, "Asthmatic", "Antibiotics", "7/07/2014", None)
+      val diagnosis = Diagnosis(1, "Asthmatic", "Antibiotics", DateTime.parse("2014-07-07").toDate, None)
 
       val qAndA = QuestionAnswer("How long has the coughing persisted", None, 1L)
 
@@ -36,7 +37,7 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
           diagnosisRepo foreach { case (d: Diagnosis) =>
-            if(d.followUpDate == "7/07/2014"){
+            if(d.followUpDate == DateTime.parse("2014-07-07").toDate){
 
               diseasesRepo foreach { case (disease: Disease) =>
                 if(disease.diagnosisId == id){

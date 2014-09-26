@@ -22,7 +22,7 @@ trait CoordinatorService {
 
   def createCarePlan(care : CarePlan) :Long
 
-  def addCareGiver(giver : Caregiver) :Long
+  def addCaregiver(giver : Caregiver) :Long
 
   def addPatient(pat : Patient) : Long
 }

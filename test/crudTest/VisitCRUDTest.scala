@@ -4,7 +4,8 @@ package crudTest
  * Created by tonata on 9/10/14.
  */
 
-import domain.{TimeSheet, Visit, CarePlan}
+import domain.{CarePlan, TimeSheet, Visit}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
 import repository.TimeSheetModel.TimeSheetRepo
@@ -30,13 +31,13 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         //(visitRepo.ddl).create
         //(careplanRepo.ddl).create
         info("Creating Visit")
-        val carePlanRec = CarePlan(1, "TB Treatment", "2014/08/22" , "2014/09/22" , 0, 0)
+        val carePlanRec = CarePlan(1, "TB Treatment", DateTime.parse("2014-08-22").toDate , DateTime.parse("2014-09-22").toDate , 0, 0)
         val planID = careplanRepo.returning(careplanRepo .map(_.planId)).insert(carePlanRec)
 
-        val visitRec = Visit(1, "2014/09/12", planID)
+        val visitRec = Visit(1, DateTime.parse("2014-09-12").toDate, planID)
         val visitID= visitRepo.returning(visitRepo.map(_.visitId)).insert(visitRec)
 
-        val timeSheetRecord = TimeSheet("2013/12/12", "08:00", "16:00", Some(visitID), Some(0), Some(0))
+        val timeSheetRecord = TimeSheet("2013-12-12", "08:00:00", "16:00:00", Some(visitID), Some(0), Some(0))
         timesheetRepo.insert(timeSheetRecord)
 
         def Read(timeIn: String, id: Long) = {
@@ -74,10 +75,10 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Visit")
-        Read("08:00", visitID)
+        Read("08:00:00", visitID)
 
         info("Updating Visit")
-        Update("4/03/23", visitID)
+        Update("2014-03-23", visitID)
 
         info("Deleting Visit")
         Delete(visitID)

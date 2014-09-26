@@ -1,6 +1,7 @@
 package services
 
 import domain.Patient
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.PatientModel.PatientRepo
 import services.impl.CaregiverServiceImpl
@@ -24,24 +25,24 @@ class CaregiverServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getCarePlanTest ={
 
-          val obj = careObj.getCareplan(5)
-          assert(obj.description == "Caring for elder")
+          val obj = careObj.getCareplan(124)
+          assert(obj.description == "Cleaning house")
         }
 
         def getPatientDetailsTest = {
 
-          val obj = careObj.getPatientDetails(5)
-          assert(obj.firstName == "Phakama")
+          val obj = careObj.getPatientDetails(132)
+          assert(obj.firstName == "Bo")
         }
 
         def getUserDetailsTest ={
 
-          val obj = careObj.getUserDetails(5)
-          assert(obj.username == "Sasuke")
+          val obj = careObj.getUserDetails(138)
+          assert(obj.username == "Caregiver")
         }
 
         def addPatientTest = {
-          val patRecord = Patient(1, "20/05/2014", "2/08/2014", "MIMI", "No")
+          val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-2").toDate, "MIMI", "No")
           val value = careObj.addPatient(patRecord)
           val repo = TableQuery[PatientRepo]
           assert(repo.list.filter(_.patientId == value).head.firstName == "MIMI")

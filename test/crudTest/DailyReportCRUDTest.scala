@@ -1,6 +1,7 @@
 package crudTest
 
 import domain.{Patient, Caregiver, MonthlyReport, DailyReport}
+import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.CaregiverModel.CaregiverRepo
 import repository.DailyReportModel.DailyReportRepo
@@ -34,13 +35,13 @@ feature("Save Daily Report") {
       //(caregiver.ddl).create
       //(patient.ddl).create
 
-      val monthlyRecord = MonthlyReport(1, "2014/03/12", 10)
+      val monthlyRecord = MonthlyReport(1, "2014-03-12", 10)
       val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
       val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
       val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
 
-      val patientRecord = Patient(1, "25/12/2014", "25/12/2014", "Phakama", "Ntshewula")
+      val patientRecord = Patient(1, DateTime.parse("2014-12-25").toDate, DateTime.parse("2014-12-25").toDate, "Phakama", "Ntshewula")
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
       info("Creating Daily Report")

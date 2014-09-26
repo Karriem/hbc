@@ -1,7 +1,7 @@
 package crudTest
 
 import domain.{Coordinator, Institution, Referral}
-import org.scalatest.{GivenWhenThen, FeatureSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.ReferralModel.ReferralRepo
@@ -34,7 +34,7 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
         val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
 
-        val refRecord = Referral(1, "2014/05/23", Some(0))
+        val refRecord = Referral(1, "2014-05-23", Some(0))
         val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), refID)
@@ -76,9 +76,9 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Referral")
-        Read("2014/05/23", refID)
+        Read("2014-05-23", refID)
         info("Updating Referral")
-        Update("2014/07/23", refID)
+        Update("2014-07-23", refID)
         info("Deleting Referral")
         Delete(refID)
 
