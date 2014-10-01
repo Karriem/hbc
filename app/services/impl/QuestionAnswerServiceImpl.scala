@@ -23,7 +23,7 @@ class QuestionAnswerServiceImpl extends QuestionAnswerService {
         qARepo.insert(q)
       }
 
-      return diagID
+     return diagID
     }
 
   }

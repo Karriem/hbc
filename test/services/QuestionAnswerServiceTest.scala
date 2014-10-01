@@ -46,7 +46,7 @@ class QuestionAnswerServiceTest extends FeatureSpec with GivenWhenThen {
         }
 
         def testGetQuestionsAnswers ={
-          val list = qAService.getQuestionAndAnswers(id)
+          val list= qAService.getQuestionAndAnswers(id)
 
           list foreach { case (q: QuestionAnswer) =>
             if(q.question == "How often has the coughing persisted?" ){

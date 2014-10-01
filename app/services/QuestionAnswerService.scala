@@ -12,4 +12,5 @@ trait QuestionAnswerService {
                                questionAnswerList: List[QuestionAnswerRepo#TableElementType]): Long
   def getQuestionAndAnswers(id: Long): List[QuestionAnswerRepo#TableElementType]
 
+
 }
