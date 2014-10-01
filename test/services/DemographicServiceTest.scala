@@ -25,8 +25,8 @@ class DemographicServiceTest extends FeatureSpec with GivenWhenThen{
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-          val value = demoservice.getPersonDemo(2)
-            assert(value.gender == "male")
+          val value = demoservice.getPersonDemo(138)
+            assert(value.gender == "Female")
 
         }
       }
@@ -37,7 +37,7 @@ class DemographicServiceTest extends FeatureSpec with GivenWhenThen{
 
             var demolist : List[DemographicRepo#TableElementType] = List()
             demolist = demoservice.getAllDemos()
-            assert(demolist.size == 3)
+            assert(demolist.size == 6)
           }
           }
 

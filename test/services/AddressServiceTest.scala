@@ -24,8 +24,8 @@ class AddressServiceTest extends FeatureSpec with GivenWhenThen{
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        val value = addressService.getAddressById(1)
-        assert(value.streetAddress == "30 Chester Road")
+        val value = addressService.getAddressById(138)
+        assert(value.streetAddress == "402 Apple Street")
 
       }
     }
@@ -35,7 +35,7 @@ class AddressServiceTest extends FeatureSpec with GivenWhenThen{
 
           var addressList : List[AddressRepo#TableElementType] = List()
           addressList = addressService.getAllAddresses()
-          assert(addressList.size == 1)
+          assert(addressList.size == 6)
         }
 
         }

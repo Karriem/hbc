@@ -34,7 +34,11 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.0.13"
 )
 
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.3.4"
+
 resolvers ++= Seq(
   "Spray repository" at "http://repo.spray.io",
   "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 )
+
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.3.4"

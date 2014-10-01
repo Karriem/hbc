@@ -1,15 +1,15 @@
 package services
 
-import domain.{Diagnosis, Patient}
+import domain.Patient
 import org.joda.time.DateTime
-import org.scalatest.{GivenWhenThen, FeatureSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.PatientModel.PatientRepo
 import services.impl.PatientServiceImpl
 
-import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
+import scala.slick.lifted.TableQuery
 
 /**
  * Created by phakama on 2014/09/24.
@@ -44,8 +44,8 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
 
           Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-            val value = patientservice.getDiagnosis(3)
-            assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "TB")
+            val value = patientservice.getDiagnosis(44)
+            assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "Flu")
 
           }
 

@@ -2,14 +2,13 @@ package services
 
 import domain.{Diagnosis, QuestionAnswer}
 import org.joda.time.DateTime
-import org.scalatest.{GivenWhenThen, FeatureSpec}
-import repository.DiagnosisModel.DiagnosisRepo
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.QuestionAnswerModel.QuestionAnswerRepo
 import services.impl.QuestionAnswerServiceImpl
 
 import scala.collection.mutable.ListBuffer
-import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
+import scala.slick.lifted.TableQuery
 
 /**
  * Created by tonata on 9/30/14.
@@ -28,7 +27,7 @@ class QuestionAnswerServiceTest extends FeatureSpec with GivenWhenThen {
         val qARec3 = QuestionAnswer("How often has the coughing persisted?", Option("all day everyday"), 1L)
 
         val qAService : QuestionAnswerService = new QuestionAnswerServiceImpl()
-        val qARepo = TableQuery[QuestionAnswer]
+        val qARepo = TableQuery[QuestionAnswerRepo]
         var qList = new ListBuffer[QuestionAnswerRepo#TableElementType]()
 
         qList += qARec1

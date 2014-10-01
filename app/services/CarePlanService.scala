@@ -9,6 +9,8 @@ trait CarePlanService {
 
   def createPlan(care:CarePlan):Long
 
+  def getCarePlan(id:Long) : CarePlan
+
   def updateCarePlan(care:CarePlan, id:Long)
 
   def getPatient(id:Long) : Patient

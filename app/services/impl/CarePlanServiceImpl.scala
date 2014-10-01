@@ -77,4 +77,16 @@ class CarePlanServiceImpl extends CarePlanService{
       careRepo.filter(_.planId === id).update(care)
     }
   }
+
+  override def getCarePlan(id: Long): CarePlan = {
+
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val careList = careRepo.list
+
+      val care = careList.filter(_.planId == id)
+
+      care.head
+    }
+  }
 }

@@ -39,6 +39,13 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
           assert(care.list.filter(_.planId == value).head.description == "Healing")
         }
 
+        def getCarePlanTest: Unit = {
+
+          val value = obj.getCarePlan(124)
+
+          assert(value.patientId == 2)
+        }
+
         def updateCarePlanTest: Unit ={
 
           val repoList = care.list
@@ -70,6 +77,8 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         info("createPlanTest")
         createPlanTest
+        info("getCarePlan")
+        getCarePlanTest
         info("updateCarePlanTest")
         updateCarePlanTest
         info("getPatientTest")
