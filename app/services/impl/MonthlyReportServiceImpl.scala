@@ -54,7 +54,7 @@ class MonthlyReportServiceImpl extends MonthlyReportService {
     }
   }
 
-  /*override def getMonthlyReport(theDate: String) : MonthlyReport = {
+  /*override def getMonthlyReport(theDate: Date) : MonthlyReport = {
     /*Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
       return monthlyReportREpo.filter(_.date === theDate).list.head
     }*/

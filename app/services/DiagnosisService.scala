@@ -12,15 +12,10 @@ trait DiagnosisService {
                       disease: Disease,
                       qAndA: QuestionAnswer) :Long
 
-  //def createQuestionAndAnswers()
 
   def getDisease(id: Long): Disease
 
   def getAllDiagnosisByCaregiver(id:Long) : List[DiagnosisRepo#TableElementType]
-
-  //def getAllQuestionAndAnswers()
-
-  //def getQuestionAndAnswers(id: Long)
 
   def getDiagnosis(id: Long) : Diagnosis
 
