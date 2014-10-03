@@ -1,21 +1,29 @@
 package controllers
 
-import repository.AddressModel.AddressRepo
+import domain.{Caregiver, Address}
+import play.api.libs.json.{Writes, Json}
+import play.api.mvc.Action
+import play.mvc._
 import services.AddressService
 import services.impl.AddressServiceImpl
-import play.api.libs.json._
-import play.api.mvc._
+import spray.can.parsing.Result.Ok
 
 /**
- * Created by phakama on 2014/10/01.
+ * Created by phakama on 2014/10/02.
  */
-class AddressController  extends Controller{
+object AddressController extends Controller {
 
-  val addressRepo = TableQuery[AddressRepo]
   val addressservice : AddressService = new AddressServiceImpl
 
-  def listAddresses = Action{
-    val json = Json.toJson(addressservice.getAllAddresses())//.list
+  implicit val addresses = Json.writes[Address]
+  implicit val caregiver = Json.writes[Caregiver]
+
+  def listAddress(id: Long) = Action  {
+
+    val add = addressservice.getAddressById(id)
+    val json = Json.toJson(add)
     Ok(json)
+
   }
+
 }
