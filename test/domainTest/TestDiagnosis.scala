@@ -16,7 +16,7 @@ class TestDiagnosis extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val add = Diagnosis(78, "TB", "Medication", followUpDate.toDate, Option(7))
+      val add = Diagnosis(78, "TB", "Medication", followUpDate.toDate, Option(7), "Workplace Routine")
 
       assert(add.followUpDate == followUpDate.toDate)
     }

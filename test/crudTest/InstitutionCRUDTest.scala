@@ -39,7 +39,7 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
         val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
         val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
 
-        val referralRecord = Referral(1, refDate.toDate , Some(0))
+        val referralRecord = Referral(1, refDate.toDate , None)
         val referalId = referrallRepo.returning (referrallRepo.map (_.referralId) ).insert (referralRecord)
 
         val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), referalId)

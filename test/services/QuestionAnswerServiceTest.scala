@@ -21,7 +21,7 @@ class QuestionAnswerServiceTest extends FeatureSpec with GivenWhenThen {
       Given("Specific entity information")
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-        val diagnosis = Diagnosis(1L, "", "", new DateTime(2014, 12, 9, 0 ,0).toDate, None)
+        val diagnosis = Diagnosis(1L, "", "", new DateTime(2014, 12, 9, 0 ,0).toDate, None, "Workplace Routine")
         val qARec1 = QuestionAnswer("How long has the symptoms persisted?", Option("2 weeks"), 1L)
         val qARec2 = QuestionAnswer("Have you had a check up", Option("No"), 1L)
         val qARec3 = QuestionAnswer("How often has the coughing persisted?", Option("all day everyday"), 1L)

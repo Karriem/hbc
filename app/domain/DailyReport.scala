@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 case class DailyReport (
                            dailyReportId:Long,
                            servicesRendered:String,
-                           monthlyReportId:Option[Long],
+                           weeklyReportId:Option[Long],
                            caregiverId:Long,
                            patientId:Long
                          )

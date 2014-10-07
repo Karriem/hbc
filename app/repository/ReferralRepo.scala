@@ -4,6 +4,7 @@ import java.util.Date
 
 import domain.Referral
 import repository.MonthlyReportModel.MonthlyReportRepo
+import repository.WeeklyReportModel.WeeklyReportRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -16,10 +17,10 @@ object ReferralModel {
 
       def referralId = column[Long]("REFERRAL_ID", O.PrimaryKey, O.AutoInc)
       def referralDate = column[Date]("REFERRAL_DATE")
-      def monthlyReportId = column[Option[Long]]("MONTHLY_REPORT_ID")
-      def * = (referralId, referralDate, monthlyReportId) <> (Referral.tupled, Referral.unapply)
+      def weeklyReportId = column[Option[Long]]("MONTHLY_REPORT_ID")
+      def * = (referralId, referralDate, weeklyReportId) <> (Referral.tupled, Referral.unapply)
 
-      def monthlyReport = foreignKey("MONTHLYREPORT_FK", monthlyReportId, TableQuery[MonthlyReportRepo])(_.monthlyReportId)
+      val weeklyReport = foreignKey("WEEKLY_REPORT_FK", weeklyReportId, TableQuery[WeeklyReportRepo])(_.weeklyReportId)
 
       implicit val JavaUtilDateMapper =
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (

@@ -13,7 +13,8 @@ case class Address (
                      instituteId:Option[Long],
                      patientId:Option[Long],
                      caregiverId:Option[Long],
-                     coordinatorId:Option[Long]
+                     coordinatorId:Option[Long],
+                     unplannedVisitID:Option[Long]
                      )
 
 object Addresses{
