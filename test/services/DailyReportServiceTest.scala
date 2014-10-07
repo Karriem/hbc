@@ -41,7 +41,7 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
-      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", flwUpDate.toDate, null)
+      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", flwUpDate.toDate, None, "Workplace Routine")
 
       val qAndA = QuestionAnswer("When did it occur?", Option("3 days ago"), 1L)
 

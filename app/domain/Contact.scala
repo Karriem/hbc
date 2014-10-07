@@ -13,7 +13,8 @@ case class Contact (
                      instituteId:Option[Long],
                      coordinatorId:Option[Long],
                      patientId:Option[Long],
-                     caregiverId:Option[Long]
+                     caregiverId:Option[Long],
+                     unplannedVisitID:Option[Long]
                      )
 
 object Contacts{

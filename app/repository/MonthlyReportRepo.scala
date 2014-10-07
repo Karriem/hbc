@@ -14,9 +14,14 @@ object MonthlyReportModel {
   class MonthlyReportRepo(tag:Tag) extends Table[MonthlyReport](tag, "MONTHLYREPORT"){
 
       def monthlyReportId = column[Long]("MONTHLY_REPORT_ID", O.PrimaryKey, O.AutoInc)
-      def visits = column[Int]("VISITS")
       def date = column[Date]("MONTH_DATE")
-      def * = (monthlyReportId, date, visits) <> (MonthlyReport.tupled, MonthlyReport.unapply)
+      def noOfCoordinators = column[Int]("NO_OF_COORDINATORS")
+      def noOfCarers = column[Int]("NO_OF_CARERS")
+      def noOfAdherences = column[Int]("NO_OF_ADHERENCES")
+      def noOfChronicSupportGroups = column[Int]("NO_OF_CHRONIC_SUPPORT_GROUPS")
+      def noOfPSRSupportGroups = column[Int]("NO_OF_PSR_SUPPORT_GROUPS")
+
+      def * = (monthlyReportId, date, noOfCoordinators, noOfCarers, noOfAdherences, noOfChronicSupportGroups, noOfPSRSupportGroups ) <> (MonthlyReport.tupled, MonthlyReport.unapply)
 
     implicit val JavaUtilDateMapper =
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (

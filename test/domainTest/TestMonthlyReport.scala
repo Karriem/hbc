@@ -16,9 +16,9 @@ class TestMonthlyReport extends FeatureSpec with GivenWhenThen {
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
       val mDate = new DateTime(2014, 12, 1, 0 ,0)
-      val monthlyReport = MonthlyReport(4 ,mDate.toDate,  5)
+      val monthlyReport = MonthlyReport(4 ,mDate.toDate,  2, 6, 10, 4, 3)
 
-      assert(monthlyReport.visits == 5)
+      assert(monthlyReport.noOfCarers == 6)
 
     }
   }

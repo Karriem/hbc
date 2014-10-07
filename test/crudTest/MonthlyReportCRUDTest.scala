@@ -14,7 +14,7 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
   feature("Save Monthly Report") {
-    info("As a Coodinator")
+    info("As a Coordinator")
     info("I want to Set up Tables")
     info("So that I can add their info into the database")
 
@@ -22,68 +22,55 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
       Given("Given a Connection to the Database through a repository")
 
       val monthlyReport = TableQuery[MonthlyReportRepo]
-      val referalRepo = TableQuery[ReferralRepo]
-      val catRepo = TableQuery[CategoryRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-
         //(monthlyReport.ddl).create
-        //(referalRepo.ddl).create
-        //(catRepo.ddl).create
-
         info("Creating a Monthly Report")
         val refDate = DateTime.parse("2014-05-23")
-        val monthDate = new DateTime(2014, 3, 1, 0, 0)
+        val mDate = new DateTime(2014, 12, 1, 0, 0)
+        val monthlyRecord = MonthlyReport(4, mDate.toDate, 2, 6, 10, 4, 3)
 
-        val monthlyRecord = MonthlyReport(1,monthDate.toDate, 5)
         val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
 
-        val refRecord = Referral(1, refDate.toDate, Some(mReportID))
-        val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
-
-        def Read(visits: Int, id: Long) = {
+        def Read(carers: Int, id: Long) = {
           monthlyReport foreach { case (report: MonthlyReport) =>
             if (report.monthlyReportId == id) {
-              assert(report.visits == visits)
+              assert(report.noOfCarers == carers)
 
-              referalRepo foreach{case (ref: Referral) =>
-                  if(ref.monthlyReportId == Option(id)){
-                    assert(ref.referralDate == refDate.toDate)
-                 }
-              }
             }
           }
         }
 
-        def Update(visits:Int, id:Long) = {
-          monthlyReport.filter(_.monthlyReportId === id).map(_.visits).update(visits)
-          Read(visits, id)
-        }
 
-        def searchDelete(id: Long) : Int = {
-          monthlyReport foreach { case (cr: MonthlyReport) =>
-            assertResult(false) {
+      def Update(carers: Int, id: Long) = {
+        monthlyReport.filter(_.monthlyReportId === id).map(_.noOfCarers).update(carers)
+        Read(carers, id)
+      }
+
+          def searchDelete(id: Long): Int = {
+              monthlyReport foreach { case (cr: MonthlyReport) =>
+              assertResult(false) {
               monthlyReport.filter(_.monthlyReportId === id).exists.run
             }
           }
 
-          return 0;
+          return 0
         }
 
 
-        def Delete(id:Long) = {
-          monthlyReport.filter(_.monthlyReportId === id).delete
-          searchDelete(id)
-        }
+          def Delete(id: Long) = {
+            monthlyReport.filter(_.monthlyReportId === id).delete
+            searchDelete(id)
+          }
 
-        info("Reading Monthly Report")
-        Read(5, mReportID)
-        info("Updating Monthly Report")
-        Update(17, mReportID)
-        info("Deleting Monthly Report")
-        Delete(mReportID)
+          info("Reading Monthly Report")
+          Read(6, mReportID)
+          info("Updating Monthly Report")
+          Update(10, mReportID)
+          info("Deleting Monthly Report")
+          Delete(mReportID)
+        }
       }
     }
   }
-}
+

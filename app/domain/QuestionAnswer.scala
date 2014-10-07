@@ -9,7 +9,9 @@ case class QuestionAnswer (
                             question:String,
                             answer:Option[String],
                             diagnosisId:Long
-                            )
+                            ){
+ // def a() = { QuestionsAnswers.questionAnswerFmt}
+}
 
 object QuestionsAnswers{
   implicit lazy val questionAnswerFmt = Json.format[QuestionAnswer]

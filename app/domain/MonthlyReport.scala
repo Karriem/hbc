@@ -10,7 +10,12 @@ import play.api.libs.json.Json
 case class MonthlyReport (
                            monthlyReportId:Long,
                            date: Date,
-                           visits:Int)
+                           noOfCoordinators:Int,
+                           noOfCarers:Int,
+                           noOfAdherences:Int,
+                           noOfChronicSupportGroups:Int,
+                           noOfPSRSupportGroups:Int
+                           )
 
 object MonthlyReports{
   implicit lazy val monthlyReportFmt = Json.format[MonthlyReport]

@@ -36,6 +36,7 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
         info("Creating a Care Plan")
         val patient = Patient(1, DateTime.parse("2014-05-02").toDate, DateTime.parse("2014-02-10").toDate, "Bo", "Micheals")
         val coor = Coordinator(1, "Lou", "Smith")
+        //patient.copy(patient)
 
         val idp = pat.returning (pat.map (_.patientId))insert(patient)
         val idc = co.returning (co.map (_.coId) )insert(coor)

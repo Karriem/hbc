@@ -21,7 +21,7 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
     scenario("Creating object instances"){
       Given("Specific entity information")
 
-      val diagnosis = Diagnosis(1, "Asthmatic", "Antibiotics", DateTime.parse("2014-07-07").toDate, None)
+      val diagnosis = Diagnosis(1, "Asthmatic", "Antibiotics", DateTime.parse("2014-07-07").toDate, None, "Workplace Routine")
 
       val qAndA = QuestionAnswer("How long has the coughing persisted", None, 1L)
 

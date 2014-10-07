@@ -5,7 +5,20 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /careplans/:id                 controllers.CarePlanController.listCarePlan(id:Long)
+GET     /careplans/:id              controllers.CarePlanController.listCarePlan(id:Long)
 
+
+# Diagnosis
+# POST    /api/diagnosis/:dia/:di/:qa     controllers.DiagnosisController.create(dia, di, q)
+
+
+
+# Daily Report
+
+# QuestionAnswer
+
+# Schedule
+
+# Monthly Report
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
