@@ -1,9 +1,9 @@
 package crudTest
 
-import domain.{Medication, Patient}
+import domain.{Adherence, Patient}
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
-import repository.MedicationModel.MedicationRepo
+import repository.AdherenceModel.AdherenceRepo
 import repository.PatientModel.PatientRepo
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
@@ -22,21 +22,21 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
       Given("Given a Connection to the Database Through a Repository")
 
       val pat = TableQuery[PatientRepo]
-      val med  = TableQuery[MedicationRepo]
+      val adherence  = TableQuery[AdherenceRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         //if (pat.exists === false) {
          // (pat.ddl).create
         //}
-        //(med.ddl).create
+        //(adherence.ddl).create
 
         info("Creating Patient")
         val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
 
-        val medication = Medication("M144", "Apply to burnt area", id)
-        med.insert(medication)
+        val medication = Adherence("M144", "Apply to burnt area", id)
+        adherence.insert(medication)
 
         def Read(name: String, id : Long) =
           pat foreach { case (patient: Patient) => {
@@ -46,9 +46,9 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
           }
           }
 
-          med foreach{ case (med : Medication) => {
+        adherence foreach{ case (med : Adherence) => {
             if (med.patientId == id){
-              assert(med.mType == "M144")
+              assert(med.adType == "M144")
             }
           }
         }
@@ -70,7 +70,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
 
         def Delete(id:Long) = {
 
-          med.filter(_.patientId === id).delete
+          adherence.filter(_.patientId === id).delete
           pat.filter(_.patientId === id).delete
           searchDelete(id)
         }

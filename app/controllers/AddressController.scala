@@ -18,12 +18,12 @@ object AddressController extends Controller {
   implicit val addresses = Json.writes[Address]
   implicit val caregiver = Json.writes[Caregiver]
 
-  def listAddress(id: Long) = Action  {
+  /*def listAddress(id: Long) = Action  {
 
     val add = addressservice.getAddressById(id)
     val json = Json.toJson(add)
     Ok(json)
 
-  }
+  }*/
 
 }

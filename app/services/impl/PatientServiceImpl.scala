@@ -1,6 +1,7 @@
 package services.impl
 
-import domain.{CarePlan, Patient, Diagnosis}
+import domain.{Adherence, CarePlan, Patient, Diagnosis}
+import repository.AdherenceModel.AdherenceRepo
 import repository.CarePlanModel.CarePlanRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
@@ -15,8 +16,8 @@ class PatientServiceImpl extends  PatientService {
 
   val patientRepo = TableQuery[PatientRepo]
   val diagnosisRepo = TableQuery[DiagnosisRepo]
-  val carePlanRepo = TableQuery[CarePlanRepo]
   val dailyReportRepo = TableQuery[DailyReportRepo]
+  val adherenceRepo = TableQuery[AdherenceRepo]
 
   override def addPatient(patient: Patient) : Long={
 
@@ -43,31 +44,24 @@ class PatientServiceImpl extends  PatientService {
     }
   }
 
-  override def displayCarePlan(id: Long): CarePlan = {
-
+  override def createAdherence(adherence: Adherence): Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-    val careplan = carePlanRepo.list
-    val patientCare = patientRepo.list
-
-    val plan = careplan.filter(_.patientId ==id)
-    //val listPlan = patientCare.filter(_.patientId == careplan.head)
-
-    println("Care plan for a specific patient: " + plan.head)
-      plan.head
-  }
-}
-
- /* override def getPatient(id: Long): List[PatientRepo#TableElementType] = {
-
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-      val patient = patientRepo.list
-
-      val patientList = patient.filter(_.patientId == id)
-
-      println("Retrieving the patient by id" + patientList)
-      patientList
+     // val newAdherence = adherenceRepo.returning(adherenceRepo.map(_.patientId)).insert(adherence)
+      val newAdherence = adherenceRepo.insert(adherence)
+      println("New Adherence" + adherence)
+      newAdherence
+    }
     }
 
-    }*/
+  override def getAdherence(id: Long): Adherence = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val adh = adherenceRepo.list
+
+      val patAdherence = adh.filter(_.patientId == id).head
+      patAdherence
+    }
+
+  }
 }

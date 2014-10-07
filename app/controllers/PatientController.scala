@@ -23,10 +23,10 @@ object PatientController extends Controller{
   implicit val plan = Json.format[CarePlan]
 
 
-  def getPlan(id : Long) = Action(BodyParsers.parse.json){//request =>
+ /* def getPlan(id : Long) = Action(BodyParsers.parse.json){//request =>
     //val patient = request.body.validate[Patient]
     val patient = patientservice.displayCarePlan(id)
     val patRecord = Json.toJson(patient)
-   Ok//(patRecord)
-  }
+   Ok(patRecord)
+  }*/
 }
