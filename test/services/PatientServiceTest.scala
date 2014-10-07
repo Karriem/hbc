@@ -30,17 +30,30 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
 
       val patientservice: PatientService = new PatientServiceImpl
       val patient = Patient(4, DateTime.parse("2014-10-03").toDate, DateTime.parse("2014-10-03").toDate, "Buhle", "Ntshewula")
-      val adherence = Adherence("Laxatives", "take 1, 3 times a day", 110)
+      val adherence = Adherence("Laxatives", "take 1, 3 times a day", 15)
 
-      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
+      var id: Long = 0L
         def testCreatePatient: Unit = {
-          val patient = Patient(4, DateTime.parse("2014-10-03").toDate, DateTime.parse("2014-10-03").toDate, "Buhle", "Ntshewula")
 
-          val value = patientservice.addPatient(patient)
-          println("Patient" + value)
-          assert(patientRepo.list.filter(_.patientId == value).head.firstName == "Buhle")
+         // id = patientservice.addPatient(patient, adherence)
+          //println("Patient" + id)
 
+          Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+            patientRepo foreach { case (p: Patient) =>
+              if (p.patientId == id) {
+                assert(p.patientId == 15)
+
+
+                /*adherence foreach { case (ad: Adherence) =>
+                  if (ad.patientId == id) {
+                    assert(ad.adType == "Laxatives")
+                  }
+
+                }*/
+              }
+
+            }
+          }
         }
 
         def testGetDiagnosis {
@@ -52,7 +65,7 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
           }
         }
 
-        def testCreateAdherence {
+        /*def testCreateAdherence {
           Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
             val value = patientservice.createAdherence(adherence)
@@ -61,7 +74,7 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
            // assert(value.)
           }
 
-          }
+          }*/
 
         def testGetAdherence: Unit ={
           Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
@@ -75,14 +88,14 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen{
 
           info("Testing create patient")
             testCreatePatient
+
           info("Testing get diagnosis")
-            testGetDiagnosis
-          info("Testing create adherence")
-           //testCreateAdherence
+            //testGetDiagnosis
+
           info("Testing get adherence")
-            testGetAdherence
+            //testGetAdherence
         }
       }
     }
 
-  }
+

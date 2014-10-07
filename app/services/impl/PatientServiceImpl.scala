@@ -19,11 +19,16 @@ class PatientServiceImpl extends  PatientService {
   val dailyReportRepo = TableQuery[DailyReportRepo]
   val adherenceRepo = TableQuery[AdherenceRepo]
 
-  override def addPatient(patient: Patient) : Long={
+  override def addPatient(patient: Patient, adherence : Adherence) : Long={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val addPatient = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
+      val adh = Adherence(adherence.adType, adherence.instructions, addPatient)
+
+      val newAdherence = adherenceRepo.insert(adh)
+
+      //newAdherence
       addPatient
     }
   }
@@ -44,7 +49,7 @@ class PatientServiceImpl extends  PatientService {
     }
   }
 
-  override def createAdherence(adherence: Adherence): Long = {
+  /*override def createAdherence(adherence: Adherence): Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
      // val newAdherence = adherenceRepo.returning(adherenceRepo.map(_.patientId)).insert(adherence)
@@ -52,7 +57,7 @@ class PatientServiceImpl extends  PatientService {
       println("New Adherence" + adherence)
       newAdherence
     }
-    }
+    }*/
 
   override def getAdherence(id: Long): Adherence = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
