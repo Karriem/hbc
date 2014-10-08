@@ -41,50 +41,55 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getCarePlanTest: Unit = {
 
-          val value = obj.getCarePlan(124)
+          val value = obj.getCarePlan(2)
 
-          assert(value.patientId == 2)
+          assert(value.patientId == 124)
         }
 
         def updateCarePlanTest: Unit ={
 
           val repoList = care.list
-          val repo = repoList.filter(_.planId == 124)
-          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator)
-          obj.updateCarePlan(careNew, 124)
+          val repo = repoList.filter(_.planId == 2)
+          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 124, repo.head.coordinator)
+          obj.updateCarePlan(careNew, 2)
           val repoList3 = care.list
-          assert(repoList3.filter(_.planId == 124).head.description == "Cleaning house")
+          assert(repoList3.filter(_.planId == 2).head.description == "Cleaning house")
         }
 
         def getPatientTest : Unit ={
 
-          val value = obj.getPatient(128)
+          val value = obj.getPatient(1)
 
-          assert(value.firstName == "Phakama")
+          assert(value.firstName == "Bo")
         }
 
         def getPlanIssuedTest: Unit ={
 
-          val value = obj.getPlanIssued(124)
-          assert(value.firstName == "Lou")
+          val value = obj.getPlanIssued(2)
+          assert(value.firstName == "Nikki")
         }
 
         def getVisitTest: Unit ={
 
-          val value = obj.getVisit(20)
-          assert(value.patientId == 0)
+          val value = obj.getVisit(1)
+          assert(value.planId == 2)
         }
 
         info("createPlanTest")
         createPlanTest
+
         info("getCarePlan")
         getCarePlanTest
+
         info("updateCarePlanTest")
         updateCarePlanTest
+
         info("getPatientTest")
         getPatientTest
+
         info("getPlanIssuedTest")
         getPlanIssuedTest
+
         info("getVisitTest")
         getVisitTest
       }

@@ -32,7 +32,7 @@ feature("Save Daily Report") {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       //(weeklyReport.ddl).create
-      //(dailyReport.ddl).create
+     // (dailyReport.ddl).create
       //(caregiver.ddl).create
      // (patient.ddl).create
 

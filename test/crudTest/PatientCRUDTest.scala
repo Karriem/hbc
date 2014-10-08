@@ -1,8 +1,9 @@
 package crudTest
 
-import domain.{Adherence, Patient}
+import domain.{Address, Adherence, Patient}
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import repository.AddressModel.AddressRepo
 import repository.AdherenceModel.AdherenceRepo
 import repository.PatientModel.PatientRepo
 import scala.slick.driver.MySQLDriver.simple._
@@ -23,6 +24,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
 
       val pat = TableQuery[PatientRepo]
       val adherence  = TableQuery[AdherenceRepo]
+      val patAddress =TableQuery[AddressRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -34,6 +36,9 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         info("Creating Patient")
         val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
+
+        val address = Address("34 long street", "34 long street", "8000", None, None, Some(4), None, None, None)
+        patAddress.insert(patAddress)
 
         val medication = Adherence("M144", "Apply to burnt area", id)
         adherence.insert(medication)
@@ -76,11 +81,13 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Patient")
-        Read("tonata", id)
+          //Read("tonata", id)
+
         info("Updating Patient")
-        Update("Helvi", id)
+          //Update("Helvi", id)
+
         info("Deleting Patient")
-        Delete(id)
+          //Delete(id)
       }
     }
   }

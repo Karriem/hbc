@@ -25,6 +25,7 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         //(monthlyReport.ddl).create
+
         info("Creating a Monthly Report")
         val refDate = DateTime.parse("2014-05-23")
         val mDate = new DateTime(2014, 12, 1, 0, 0)

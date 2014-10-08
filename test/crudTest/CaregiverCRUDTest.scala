@@ -29,7 +29,7 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
 
         //(addressRepo.ddl).create
        // (care.ddl).create
-        //(contactRepo.ddl).create
+       // (contactRepo.ddl).create
        // (demoRepo.ddl).create
 
         val caregiverRecord = Caregiver(1,  "Nikki", "Shiyagaya")
@@ -99,7 +99,7 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
         Update("Maxine" , id, 27 , "0823349090", "402 Apple Street")
 
         info("Deleting Caregiver")
-        Delete(id)
+         Delete(id)
       }
     }
   }
