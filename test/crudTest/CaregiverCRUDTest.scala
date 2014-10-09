@@ -27,10 +27,10 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
       val demoRepo = TableQuery[DemographicRepo]
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        //(addressRepo.ddl).create
-       // (care.ddl).create
-       // (contactRepo.ddl).create
-       // (demoRepo.ddl).create
+        (demoRepo.ddl).create
+        (contactRepo.ddl).create
+        (addressRepo.ddl).create
+        (adRepo.ddl).create
 
         val caregiverRecord = Caregiver(1,  "Nikki", "Shiyagaya")
 

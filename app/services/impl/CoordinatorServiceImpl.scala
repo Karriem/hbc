@@ -2,13 +2,13 @@ package services.impl
 
 import domain._
 import repository.AddressModel.AddressRepo
+import repository.AdherenceModel.AdherenceRepo
 import repository.CarePlanModel.CarePlanRepo
 import repository.CaregiverModel.CaregiverRepo
 import repository.ContactModel.ContactRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.DemographicModel.DemographicRepo
 import repository.InstituteModel.InstitutionRepo
-import repository.MedicationModel.MedicationRepo
 import repository.PatientModel.PatientRepo
 import repository.UserModel.UserRepo
 import services.CoordinatorService
@@ -28,7 +28,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
   val demoRepo = TableQuery[DemographicRepo]
   val contactRepo = TableQuery[ContactRepo]
   val addressRepo = TableQuery[AddressRepo]
-  val medRepo = TableQuery[MedicationRepo]
+  val adRepo = TableQuery[AdherenceRepo]
 
   val dataCon = Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin")
 
@@ -130,7 +130,7 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
     dataCon.withSession { implicit session =>
 
-      medRepo.filter(_.patientId === id).delete
+      adRepo.filter(_.patientId === id).delete
       patRepo.filter(_.patientId === id).delete
     }
   }
