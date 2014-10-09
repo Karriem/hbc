@@ -77,7 +77,7 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         info("createPlanTest")
         createPlanTest
-        info("getCarePlan")
+        info("getCarePlanTest")
         getCarePlanTest
         info("updateCarePlanTest")
         updateCarePlanTest

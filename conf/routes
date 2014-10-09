@@ -5,7 +5,69 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /careplans/:id                 controllers.CarePlanController.listCarePlan(id:Long)
+# Care Plan
+
+GET     /careplans/get/:id                  controllers.CarePlanController.getCarePlan(id:Long)
+
+#POST   /careplans/create/:care              controllers.CarePlanController.createCarePlan(care)
+
+#PUT    /careplans/update/:care/:id          controllers.CarePlanController.updateCarePlan(care, id:Long)
+
+GET     /careplans/getPatient/:id           controllers.CarePlanController.getPatient(id:Long)
+
+GET     /careplans/issued/:id               controllers.CarePlanController.getWhoIssuedPlan(id:Long)
+
+GET     /careplans/getVisit/:id             controllers.CarePlanController.getVisit(id:Long)
+
+# Caregiver
+
+GET     /caregiver/getplan/:id                  controllers.CaregiverController.getCarePlan(id:Long)
+
+GET     /caregiver/getpatient/:id               controllers.CaregiverController.getPatient(id:Long)
+
+GET     /caregiver/getuser/:id                  controllers.CaregiverController.getUser(id:Long)
+
+#POST    /caregiver/create/:pat                  controllers.CaregiverController.addPatient(pat)
+
+# Coordinator
+
+GET     /coordinator/getins/:id                 controllers.CoordinatorController.getInstitution(id:Long)
+
+GET     /coordinator/getuser/:id                controllers.CoordinatorController.getUser(id:Long)
+
+GET     /coordinator/getpatient/:id             controllers.CoordinatorController.getPatient(id:Long)
+
+GET     /coordinator/getgiver/:id               controllers.CoordinatorController.getCaregiver(id:Long)
+
+GET     /coordinator/viewallpat                 controllers.CoordinatorController.viewAllPatients
+
+#POST   /coordinator/createuser/:user            controllers.CoordinatorController.createUser(user: String)
+
+#POST   /coordinator/addco/:coordin              controllers.CoordinatorController.addCoordinator(coordin)
+
+#POST   /coordinator/createcare/:care            controllers.CoordinatorController.createCarePlan(care:String)
+
+#POST   /coordinator/addgiver/:giver             controllers.CoordinatorController.addCaregiver(giver)
+
+#POST   /coordinator/addpat/:pat                 controllers.CoordinatorController.addPatient(pat)
+
+#PUT    /coordinator/updateco/:co/:id            controllers.CoordinatorController.updateCoordinator(co, id:Long)
+
+#PUT    /coordinator/updateuser/:user/:id        controllers.CoordinatorController.updateUser(user, id:Long)
+
+#PUT    /coordinator/updategiver/:giver/:id      controllers.CoordinatorController.updateCaregiver(giver, id:Long)
+
+#PUT    /coordinator/updatepat/:pat/:id          controllers.CoordinatorController.updatePatient(pat, id:Long)
+
+#PUT    /coordinator/updateplan/:plan/:id        controllers.CoordinatorController.updatePatient(plan, id:Long)
+
+DELETE  /coordinator/delco/:id                   controllers.CoordinatorController.deleteCoordinator(id:Long)
+
+DELETE  /coordinator/delgiver/:id                controllers.CoordinatorController.deleteCaregiver(id:Long)
+
+DELETE  /coordinator/delpat/:id                  controllers.CoordinatorController.deletePatient(id:Long)
+
+DELETE  /coordinator/delcare/:id                 controllers.CoordinatorController.deleteCarePlan(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -97,6 +97,14 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
           assert(patRepo.list.filter(_.patientId == value).head.firstName == "TYes")
         }
 
+        def updateCoordinatorTest: Unit = {
+
+          val coorRepo = TableQuery[CoordinatorRepo]
+
+          val coObj = Coordinator(175, "Bob", "Lord")
+          obj.updateCoordinator(coObj, 175)
+        }
+
         info("getInstitutionTest")
         getInstitutionTest
         info("viewPatientTest")
@@ -115,6 +123,8 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
         addCaregiverTest
         info("addPatientTest")
         addPatientTest
+        info("updateCoordinatorTest")
+        updateCoordinatorTest
       }
     }
   }
