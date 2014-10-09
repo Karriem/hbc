@@ -1,9 +1,9 @@
 package controllers
 
 import domain.{Caregiver, Address}
-import play.api.libs.json.{Writes, Json}
-import play.api.mvc.Action
-import play.mvc._
+import play.api.libs.json._
+//import play.api.mvc.Action
+import play.api.mvc._
 import services.AddressService
 import services.impl.AddressServiceImpl
 import spray.can.parsing.Result.Ok
@@ -18,12 +18,34 @@ object AddressController extends Controller {
   implicit val addresses = Json.writes[Address]
   implicit val caregiver = Json.writes[Caregiver]
 
-  /*def listAddress(id: Long) = Action  {
+  def listContactPersonAddress(id: Long) = Action  {
 
-    val add = addressservice.getAddressById(id)
-    val json = Json.toJson(add)
+    val json = Json.toJson(addressservice.getContactPersonAddress(id))
     Ok(json)
+  }
 
-  }*/
+  def listCoordinatorAddress(id: Long) = Action {
+
+    val coord = Json.toJson(addressservice.getCoordinatorAddress(id))
+    Ok(coord)
+  }
+
+  def listCaregiverAddress(id: Long) = Action{
+
+    val json = Json.toJson(addressservice.getCaregiverAddress(id))
+    Ok(json)
+  }
+
+  def listPatientAddress(id: Long) = Action{
+
+    val json = Json.toJson(addressservice.getPatientAddress(id))
+    Ok(json)
+  }
+
+  def listAllAddresses = Action{
+
+    val json = Json.toJson(addressservice.getAllAddresses())
+    Ok(json)
+  }
 
 }
