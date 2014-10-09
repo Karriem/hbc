@@ -1,5 +1,7 @@
 package domain
 
+import java.util.Date
+
 import play.api.libs.json.Json
 
 /**
@@ -8,7 +10,7 @@ import play.api.libs.json.Json
 case class Demographic (
                          age:Int,
                          gender:String,
-                         dateOfBirth:String,
+                         dateOfBirth:Date,
                          coordinatorId:Option[Long],
                          personId:Option[Long],
                          patientId:Option[Long],

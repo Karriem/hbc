@@ -1,9 +1,10 @@
 package crudTest
 
 
-import domain.{Institution, Referral, Coordinator}
+import domain.{ContactPerson, Institution, Referral, Coordinator}
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
+import repository.ContactPersonModel.ContactPersonRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
 import repository.ReferralModel.ReferralRepo
@@ -26,11 +27,12 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
       val instituteRepo = TableQuery[InstitutionRepo]
       val coordinatorRepo = TableQuery[CoordinatorRepo]
       val referrallRepo = TableQuery[ReferralRepo]
+      val contactRepo = TableQuery[ContactPersonRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         info("Creating Institution")
 
-       // (instituteRepo.ddl).create
+        //(instituteRepo.ddl).create
         //(coordinatorRepo.ddl).create
         //(referrallRepo.ddl).create
 
@@ -39,13 +41,14 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
         val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
         val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
 
-        val referralRecord = Referral(1, refDate.toDate , Some(0))
+        val referralRecord = Referral(1, refDate.toDate , None)
         val referalId = referrallRepo.returning (referrallRepo.map (_.referralId) ).insert (referralRecord)
 
         val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), referalId)
         val institueId = instituteRepo.returning (instituteRepo.map (_.instituteId) ).insert (instituteRecord)
 
-
+        val contactPerson = ContactPerson(12, "Karriem", "Peterson")
+        val personId = contactRepo.insert(contactPerson)
 
         def Read(instName: String, coName: String,  id : Long) =
           instituteRepo foreach { case (ins : Institution) =>

@@ -2,6 +2,7 @@ package crudTest
 
 
 import domain.{Address, Coordinator, Demographic}
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.AddressModel.AddressRepo
 import repository.ContactModel.ContactRepo
@@ -30,14 +31,14 @@ class CoordinatorCRUDTest extends FeatureSpec with GivenWhenThen {
         // (addressRepo.ddl).create
         // (coordinatorRepo.ddl).create
         //(contactRepo.ddl).create
-        // (demoRepo.ddl).create
+        //(demoRepo.ddl).create
 
         val coordinatorRecord = Coordinator(1,  "Nikki", "Shiyagaya")
 
         val id = coordinatorRepo.returning(coordinatorRepo.map(_.coId)).insert(coordinatorRecord)
 
-        val addressRecord = Address("30 Chester Road", "30 Chester Road" , "7700" , Some(0), Some(0), Some(0) , Some(0) , Some(id))
-        val demoRecord = Demographic(23 ,"Female", "1976/03/16" , Some(id), Some(0), Some(0) , Some(0) )
+        val addressRecord = Address("30 Apple Road", "30 Apple Road" , "7700" , None, Some(0), None , None , Some(id), None)
+        val demoRecord = Demographic(23 ,"Female", DateTime.parse("1976-03-16").toDate , Some(id), Some(0), None , None )
 
         addressRepo.insert(addressRecord)
         demoRepo.insert(demoRecord)

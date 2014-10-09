@@ -3,8 +3,10 @@ package services
 import domain._
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import repository.DiagnosisModel.DiagnosisRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
-import services.impl.{MonthlyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
+import repository.WeeklyReportModel.WeeklyReportRepo
+import services.impl.{WeeklyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
 
 import scala.collection.mutable.ListBuffer
 import scala.slick.lifted.TableQuery
@@ -13,10 +15,10 @@ import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by tonata on 2014/09/23.
  */
-class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
+class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
-  feature("Monthly Report Service") {
-    info("I want to carry out specific monthly report services")
+  feature("Weekly Report Service") {
+    info("I want to carry out specific weekly report services")
 
     scenario("Creating object instances") {
       Given("Specific entity information")
@@ -24,9 +26,6 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
       val wd = new DateTime(2014 , 2, 8, 0, 0)
       val ti = new DateTime(2014 , 2, 8, 8, 30)
       val to = new DateTime(2014 , 2, 8, 12, 0)
-      val mDate = new DateTime(2014, 12, 3, 0 ,0)
-
-      //val doE = DateTime.parse()
 
       val fDate = DateTime.parse("2014-07-07")
 
@@ -45,50 +44,51 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
-      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", fDate.toDate, null)
+      val diagnosis = Diagnosis(1, "Burn wounds", "Cream and Antibiotics", fDate.toDate, None, "Workplace Routine")
 
       val qAndA = QuestionAnswer("When did it occur?", Option("3 days ago"), 1L)
 
       val disease = Disease(1L, "3rd Degree Burns", "Burn Wounds", 1L)
 
-      val monthly = MonthlyReport(1L,mDate.toDate, 0)
+      val weekly = WeeklyReport(1L, DateTime.parse("2014-10-7").toDate, DateTime.parse("2014-10-14").toDate, "No transfer", 3 , Some(1L))
 
-      val mRepo = TableQuery[MonthlyReportRepo]
+      val wRepo = TableQuery[WeeklyReportRepo]
+      val diag = TableQuery[DiagnosisRepo]
 
       val diaService : DiagnosisService = new DiagnosisServiceImpl()
       val dailyReportService: DailyReportService = new DailyReportServiceImpl()
-      val monthlyReportService: MonthlyReportService = new MonthlyReportServiceImpl()
+      val weeklyReportService: WeeklyReportService = new WeeklyReportServiceImpl()
 
       var mID: Long  = 0L
 
-      def testCreateMonthlyReport() = {
+      def testCreateWeeklyReport() = {
         val dID = diaService.createDiagnosis(diagnosis, disease, qAndA)
         val dlyID = dailyReportService.createDailyReport(dailyReport, timeSheet, category, caregiver, patient, dID)
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
           val reportIDs =  new ListBuffer[Long]()
           reportIDs += dlyID
-          //(mRepo.ddl).create
+          //(diag.ddl).create
 
-          mID = monthlyReportService.createMonthlyReport(monthly, referral, reportIDs.toList)
+          mID = weeklyReportService.createWeeklyReport(weekly, referral, reportIDs.toList)
 
-          assert(mRepo.filter(_.monthlyReportId === mID).list.length == 1)
+          assert(wRepo.filter(_.weeklyReportId === mID).list.length == 1)
         }
 
       }
 
       def testGetTotalVisits ={
-        val visits = monthlyReportService.getTotalVisits(mID)
+        val visits = weeklyReportService.getTotalVisits(mID)
         assert(visits == 1)
       }
 
       def testCheckForReferral = {
-        val retrievedRef = monthlyReportService.checkForReferral(mID)
+        val retrievedRef = weeklyReportService.checkForReferral(mID)
         assert(retrievedRef.referralDate == refDate.toDate)
       }
 
       def testGetAllDailyReports ={
-        val reports = monthlyReportService.getAllDailyReports(mID)
+        val reports = weeklyReportService.getAllDailyReports(mID)
 
         reports foreach {case (d: DailyReport) =>
           val dType = d.servicesRendered
@@ -100,8 +100,8 @@ class MonthlyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       }
 
-      info("Creating Monthly Report")
-      testCreateMonthlyReport
+      info("Creating Weekly Report")
+      testCreateWeeklyReport
       info("Retrieving Visits")
       testGetTotalVisits
       info("Retrieving referral")

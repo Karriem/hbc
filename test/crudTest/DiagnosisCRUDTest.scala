@@ -7,7 +7,6 @@ import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
-
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
 
@@ -31,14 +30,14 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      //(diag.ddl).create
-     // (qNA.ddl).create
-      //(di.ddl).create
+        //(diag.ddl).create
+        //(qNA.ddl).create
+        //(di.ddl).create
 
         val dailyReport = DailyReport(1, "Provided Medication", Option(1), 1, 1)
         val idD = daily.returning (daily.map (_.dailyReportId) ).insert(dailyReport)
 
-        val diagnosis = Diagnosis(1, "Flu", "Flu tablets", DateTime.parse("2014-07-07").toDate, Option(idD))
+        val diagnosis = Diagnosis(1, "Flu", "Flu tablets", DateTime.parse("2014-07-07").toDate, Option(idD), "Workplace Routine")
         val id = diag.returning (diag.map (_.diagnosisId)).insert(diagnosis)
 
         def Read(name: String, id : Long) = {

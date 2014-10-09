@@ -10,7 +10,9 @@ case class Disease (
                      diseaseType:String,
                      symptoms:String,
                      diagnosisId:Long
-                     )
+                     ){
+//  def a() = { Diseases.diseaseFmt}
+}
 
 object Diseases{
   implicit lazy val diseaseFmt = Json.format[Disease]

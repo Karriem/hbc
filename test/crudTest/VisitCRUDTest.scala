@@ -34,7 +34,7 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        //(visitRepo.ddl).create
+        (visitRepo.ddl).create
         //(careplanRepo.ddl).create
 
         info("Creating Visit")
@@ -95,13 +95,13 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Visit")
-        Read(ti.toDate, visitID)
+        //Read(ti.toDate, visitID)
 
         info("Updating Visit")
-        Update(upWd.toDate, visitID)
+       // Update(upWd.toDate, visitID)
 
         info("Deleting Visit")
-        Delete(visitID)
+        //Delete(visitID)
       }
     }
   }

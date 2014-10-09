@@ -29,7 +29,7 @@ class DailyReportServiceImpl extends DailyReportService {
       val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
       val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
 
-      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.monthlyReportId, caregiverID, patientID)
+      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.weeklyReportId, caregiverID, patientID)
       val diaID = dailyReportRepo.returning(dailyReportRepo.map(_.dailyReportId)).insert(newReport)
 
 

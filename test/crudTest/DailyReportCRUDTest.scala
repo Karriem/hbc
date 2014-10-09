@@ -1,12 +1,13 @@
 package crudTest
 
-import domain.{Patient, Caregiver, MonthlyReport, DailyReport}
+import domain._
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.CaregiverModel.CaregiverRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
 import repository.PatientModel.PatientRepo
+import repository.WeeklyReportModel.WeeklyReportRepo
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
 
@@ -24,21 +25,22 @@ feature("Save Daily Report") {
     Given("Given a Connection to the Database Through a Repository")
 
     val dailyReport = TableQuery[DailyReportRepo]
-    val monthlyReport = TableQuery[MonthlyReportRepo]
+    val weeklyReport = TableQuery[WeeklyReportRepo]
     val caregiver = TableQuery[CaregiverRepo]
     val patient = TableQuery[PatientRepo]
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      //(monthlyReport.ddl).create
-      //(dailyReport.ddl).create
+      //(weeklyReport.ddl).create
+     // (dailyReport.ddl).create
       //(caregiver.ddl).create
-      //(patient.ddl).create
+     // (patient.ddl).create
 
-      val monthDate = new DateTime(2014, 3, 12, 0, 0)
+      val wSDate = new DateTime(2014, 3, 12, 0, 0)
+      val wEDate = new DateTime(2014, 3, 19, 0, 0)
 
-      val monthlyRecord = MonthlyReport(1, monthDate.toDate, 10)
-      val mReportID = monthlyReport.returning(monthlyReport.map(_.monthlyReportId)).insert(monthlyRecord)
+      val weeklyRecord = WeeklyReport(1L, wSDate.toDate, wEDate.toDate, "No transfer", 3, Some(1L))
+      val wReportID = weeklyReport.returning(weeklyReport.map(_.weeklyReportId)).insert(weeklyRecord)
 
       val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
       val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
@@ -47,7 +49,7 @@ feature("Save Daily Report") {
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
       info("Creating Daily Report")
-      val dreportRecord = DailyReport(1, "Cleaned the patient", Option(mReportID), careID, patID)
+      val dreportRecord = DailyReport(1, "Cleaned the patient", Option(wReportID), careID, patID)
       val dReportID = dailyReport.returning(dailyReport.map(_.dailyReportId)).insert(dreportRecord)
 
       def Read(patientName:String, id:Long) = {
@@ -59,9 +61,9 @@ feature("Save Daily Report") {
               }
             }
 
-            monthlyReport foreach { case (monthly: MonthlyReport) =>
-              if(Option(monthly.monthlyReportId) == report.monthlyReportId)
-                assert(monthly.visits == 10)
+            weeklyReport foreach { case (weekly: WeeklyReport) =>
+              if(Option(weekly.weeklyReportId) == report.weeklyReportId)
+                assert(weekly.visits == 3)
             }
           }
         }

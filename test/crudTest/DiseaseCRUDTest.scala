@@ -36,7 +36,7 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
         val dailyReoprt = DailyReport(1, "Provided Medication", Option(1), 1, 1)
         val idDialy = daily.returning (daily.map (_.dailyReportId) ).insert(dailyReoprt)
 
-        val diagnosis = Diagnosis(1, "TB", "Tablets", diaDate.toDate, Option(idDialy))
+        val diagnosis = Diagnosis(1, "TB", "Tablets", diaDate.toDate, Option(idDialy), "Workplace Routine")
         val idDiag = diag.returning (diag.map (_.diagnosisId)).insert(diagnosis)
 
         val disease = Disease(1, "TB", "Coughing", idDiag)

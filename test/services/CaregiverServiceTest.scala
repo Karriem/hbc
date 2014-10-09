@@ -25,20 +25,20 @@ class CaregiverServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getCarePlanTest ={
 
-          val obj = careObj.getCareplan(124)
-          assert(obj.description == "Cleaning house")
+          val obj = careObj.getCareplan(2)
+          assert(obj.description == "TB Treatment")
         }
 
         def getPatientDetailsTest = {
 
-          val obj = careObj.getPatientDetails(132)
+          val obj = careObj.getPatientDetails(1)
           assert(obj.firstName == "Bo")
         }
 
         def getUserDetailsTest ={
 
-          val obj = careObj.getUserDetails(138)
-          assert(obj.username == "Caregiver")
+          val obj = careObj.getUserDetails(10)
+          assert(obj.username == "normal user")
         }
 
         def addPatientTest = {

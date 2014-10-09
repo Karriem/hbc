@@ -2,6 +2,8 @@ package services.impl
 
 import domain.Address
 import repository.AddressModel.AddressRepo
+import repository.ContactPersonModel.ContactPersonRepo
+import repository.CoordinatorModel.CoordinatorRepo
 import repository.PatientModel.PatientRepo
 import services.AddressService
 import scala.slick.driver.MySQLDriver.simple._
@@ -13,20 +15,15 @@ class AddressServiceImpl extends AddressService{
 
   val addressRepo = TableQuery[AddressRepo]
   val patientRepo = TableQuery[PatientRepo]
+  val coordinatorRepo = TableQuery[CoordinatorRepo]
+  val contactRepo = TableQuery[ContactPersonRepo]
 
-  override def getAddressById(id: Long) : Address={//List[AddressRepo#TableElementType] =  {
-
+  override def getCaregiverAddress(id: Long) : Address={
      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-
-     // val patAddress = addressRepo
-      val patientAddress = patientRepo.list
 
       val listAd = addressRepo.filter(_.caregiverId === id).list
 
-       //val listAdress = patientAddress.filter(_.patientId == listAd.head)
-      println("Address for a Person: " + listAd)
-
+      println("Address for a Caregiver: " + listAd)
        listAd.head
 
     }
@@ -37,8 +34,40 @@ class AddressServiceImpl extends AddressService{
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val addressList = addressRepo.list
+      println("All addresses: " + addressList)
       addressList
     }
   }
 
+  override def getCoordinatorAddress(id: Long): Address = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val coord = addressRepo.filter(_.coordinatorId === id).list
+
+      println("Coordinator address" + coord)
+      coord.head
+
+    }
+    }
+
+  override def getContactPersonAddress(id: Long): Address = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val contact = addressRepo.filter(_.personId === id).list
+
+      println("Contact person address" + contact)
+      contact.head
+    }
+    }
+
+  override def getPatientAddress(id: Long): Address = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val patient = addressRepo.filter(_.patientId === id).list
+
+      println("Patient address" + patient)
+      patient.head
+
+    }
+    }
 }

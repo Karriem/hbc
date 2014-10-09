@@ -1,14 +1,14 @@
 package services.impl
 
-import domain.{Disease, DailyReport, Diagnosis, QuestionAnswer}
+import domain._
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
-import domain.Diagnosis
 import services.DiagnosisService
 
 import scala.collection.mutable.ListBuffer
+
 
 /**
  * Created by tonata on 9/18/14.

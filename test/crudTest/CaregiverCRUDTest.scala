@@ -1,6 +1,7 @@
 package crudTest
 
 import domain._
+import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.AddressModel.AddressRepo
 import repository.CaregiverModel.CaregiverRepo
@@ -28,16 +29,16 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
 
         //(addressRepo.ddl).create
        // (care.ddl).create
-        //(contactRepo.ddl).create
+       // (contactRepo.ddl).create
        // (demoRepo.ddl).create
 
         val caregiverRecord = Caregiver(1,  "Nikki", "Shiyagaya")
 
         val id = care.returning(care.map(_.caregiverId)).insert(caregiverRecord)
 
-        val addressRecord = Address("30 Chester Road", "30 Chester Road", "7700" , Some(0), Some(0), Some(0) , Some(id) , Some(0))
-        val contactRecord = Contact(Some("021798000") , "0786119726", "n@gmail.com", Some(0), Some(0), Some(0) , Some(0), Some(id))
-        val demoRecord = Demographic(23 ,"Female", "1976/03/16" , Some(0), Some(0), Some(0) , Some(id) )
+        val addressRecord = Address("30 Chester Road", "30 Chester Road", "7700" , Some(0), Some(0), Some(0) , Some(id) , Some(0), None)
+        val contactRecord = Contact(Some("021798000") , "0786119726", "n@gmail.com", Some(0), Some(0), Some(0) , Some(0), Some(id), None)
+        val demoRecord = Demographic(23 ,"Female", DateTime.parse("1976-03-16").toDate , Some(0), Some(0), Some(0) , Some(id) )
 
         addressRepo.insert(addressRecord)
         contactRepo.insert(contactRecord)
@@ -98,7 +99,7 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
         Update("Maxine" , id, 27 , "0823349090", "402 Apple Street")
 
         info("Deleting Caregiver")
-        Delete(id)
+         Delete(id)
       }
     }
   }

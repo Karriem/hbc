@@ -1,14 +1,14 @@
 package services
 
-import domain.{MonthlyReport, Referral}
+import domain.{WeeklyReport, MonthlyReport, Referral}
 import repository.DailyReportModel.DailyReportRepo
 
 /**
  * Created by tonata on 9/18/14.
  */
-trait MonthlyReportService {
+trait WeeklyReportService {
 
-  def createMonthlyReport(report: MonthlyReport,
+  def createWeeklyReport(report: WeeklyReport,
                            referral: Referral,
                            dailyReportid: List[Long]) : Long
 

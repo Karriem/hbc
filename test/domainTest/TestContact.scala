@@ -15,7 +15,7 @@ class TestContact extends FeatureSpec with GivenWhenThen {
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
       val contact = Contact(Some("5415151518"), "0786119726", "tonata93@gmail.com",
-        Some(0), Some(0), Some(900), Some(0), Some(4000))
+        Some(0), Some(0), Some(900), Some(0), Some(4000), None)
 
       assert(contact.cellNumber == "0786119726")
     }
