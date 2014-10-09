@@ -1,10 +1,11 @@
 package services.impl
 
-import domain.{User, CarePlan, Patient}
+import domain.{CarePlan, Patient, User}
 import repository.CarePlanModel.CarePlanRepo
 import repository.PatientModel.PatientRepo
 import repository.UserModel.UserRepo
-import services.{CoordinatorService, CaregiverService}
+import services.CaregiverService
+
 import scala.slick.driver.MySQLDriver.simple._
 
 /**
@@ -31,8 +32,10 @@ class CaregiverServiceImpl extends CaregiverService{
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val patList = patRepo.list
+      val careList = careRepo.list
 
-      val patient = patList.filter(_.patientId == id).head
+      val careplan = careList.filter(_.planId == id).map(_.patientId).head
+      val patient = patList.filter(_.patientId == careplan).head
       patient
     }
   }
@@ -46,13 +49,5 @@ class CaregiverServiceImpl extends CaregiverService{
       val user = userList.filter(_.caregiverId.getOrElse() == id).head
       user
     }
-  }
-
-  override def addPatient(patient: Patient) :Long= {
-
-    val co : CoordinatorService = new CoordinatorServiceImpl
-
-    val value = co.addPatient(patient)
-    value
   }
 }

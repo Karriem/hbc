@@ -12,6 +12,4 @@ trait CaregiverService {
     def getPatientDetails(id:Long): Patient
 
     def getUserDetails(id:Long): User
-
-    def addPatient(patient : Patient) : Long
 }

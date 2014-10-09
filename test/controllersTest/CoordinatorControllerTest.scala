@@ -1,12 +1,12 @@
-package controllerTest
-
-import java.util.Date
+package controllersTest
 
 import com.google.gson.Gson
+import model.{CoordinatorModel, CarePlanModel, UserModel}
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import play.api.Logger
+import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test.{FakeRequest, WithApplication}
 
@@ -18,23 +18,46 @@ class CoordinatorControllerTest extends Specification {
 
   val gson = new Gson()
 
-  val tim1 = new Date()
-  val tim2 = new Date()
-
   "Controllers" should {
 
-    /*"Should Save User Object" in new WithApplication {
+    "Should Save User Object" in new WithApplication {
 
-      val careplan = UserModel(1, "Yes", "Yes", Some(111), None)
-      val jsonstring = gson.toJson(careplan).stripMargin
+      val user = UserModel("1", "ME", "No", "", "135")
+      val jsonstring = gson.toJson(user).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/createuser/:user").withJsonBody(json)
+        POST, "/coordinator/createuser/:user").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
       contentType(result) must beSome("application/json")
-    }*/
+    }
+
+    "Should Save Care Plan Object" in new WithApplication {
+
+      val plan = CarePlanModel(1, "Yes We Can", "2014-05-05", "2014-05-05", 350, 250)
+      val jsonstring = gson.toJson(plan).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        POST, "/coordinator/createplan/:plan").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Save Coordinator Object" in new WithApplication {
+
+      val co = CoordinatorModel("1", "Karriem", "Uchiha")
+      val jsonstring = gson.toJson(co).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        POST, "/coordinator/addco/:coordinator").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
 
     "Should Delete a Coordinator Record" in new WithApplication {
 

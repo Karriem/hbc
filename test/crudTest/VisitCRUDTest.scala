@@ -34,7 +34,7 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        (visitRepo.ddl).create
+        //(visitRepo.ddl).create
         //(careplanRepo.ddl).create
 
         info("Creating Visit")

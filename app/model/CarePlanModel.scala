@@ -1,8 +1,7 @@
 package model
 
-import java.util.Date
-
 import domain.CarePlan
+import org.joda.time.DateTime
 import play.api.libs.json.Json
 
 /**
@@ -10,8 +9,8 @@ import play.api.libs.json.Json
  */
 case class CarePlanModel (planId:Long,
                           description:String,
-                          startDate:Date,
-                          endDate:Date,
+                          startDate:String,
+                          endDate:String,
                           patientId:Long,
                           coordinator:Long){
 
@@ -26,8 +25,8 @@ object CarePlanModel {
 
     CarePlan(model.planId,
       model.description,
-      model.startDate,
-      model.endDate,
+      DateTime.parse(model.startDate).toDate,
+      DateTime.parse(model.endDate).toDate,
       model.patientId,
       model.coordinator)
   }

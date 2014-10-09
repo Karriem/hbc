@@ -5,9 +5,6 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /careplans/:id              controllers.CarePlanController.listCarePlan(id:Long)
-
-
 # Diagnosis
 
 # POST    /diagnosis/create/:dia/:di/:qa        controllers.DiagnosisController.create(dia, di, q)
@@ -42,12 +39,52 @@ GET     /questionAnswer/getPerDiagnosis/:id     controllers.QuestionAnswerContro
 
 # Schedule
 
+
 # POST  /schedule/create/                       controllers.ScheduleController.createSchedule()
 GET     /schedule/getTimeSheet/:id              controllers.ScheduleController.getTimeSheetDetails(id: Long)
 GET     /schedule/patientSchedule/:id           controllers.ScheduleController.getSchedulePerPatient(id: Long)
 GET     /schedule/caregiverSchedule/:id         controllers.ScheduleController.getSchedulePerCaregiver(id: Long)
 
 # Weekly Report
+
+GET     /coordinator/getins/:id                 controllers.CoordinatorController.getInstitution(id:Long)
+
+GET     /coordinator/getuser/:id                controllers.CoordinatorController.getUser(id:Long)
+
+GET     /coordinator/getpat/:id                 controllers.CoordinatorController.getPatient(id:Long)
+
+GET     /coordinator/getcare/:id                controllers.CoordinatorController.getCaregiver(id:Long)
+
+GET     /coordinator/allpat/                    controllers.CoordinatorController.viewAllPatients
+
+DELETE     /coordinator/delco/:id               controllers.CoordinatorController.deleteCoordinator(id:Long)
+
+DELETE     /coordinator/delgiver/:id            controllers.CoordinatorController.deleteCaregiver(id:Long)
+
+DELETE     /coordinator/delpat/:id              controllers.CoordinatorController.deletePatient(id:Long)
+
+DELETE     /coordinator/delcare/:id             controllers.CoordinatorController.deleteCarePlan(id:Long)
+
+POST      /coordinator/createuser/:user         controllers.CoordinatorController.createUser(user:String)
+
+POST      /coordinator/createplan/:plan         controllers.CoordinatorController.createCarePlan(plan:String)
+
+POST     /coordinator/addco/:coordinator        controllers.CoordinatorController.addCoordinator(coordinator:String)
+
+#POST     /coordinator/addgiver/:giver           controllers.CoordinatorController.addCaregiver(giver:String)
+
+#POST     /coordinator/addpat/:pat               controllers.CoordinatorController.addPatient(pat:String)
+
+#PUT     /coordinator/upco/:coor/:id             controllers.CoordinatorController.updateCoordinator(coor:String, id:Long)
+
+#PUT     /coordinator/upuser/:user/id            controllers.CoordinatorController.updateUser(user:String, id:Long)
+
+#PUT     /coordinator/upgiver/:care/:id          controllers.CoordinatorController.updateCaregiver(care:String, id:Long)
+
+#PUT     /coordinator/uppat/:pat/:id             controllers.CoordinatorController.updatePatient(pat:String, id:Long)
+
+#PUT     /coordinator/upplan/:plan/:id           controllers.CoordinatorController.updateCarePlan(plan:String, id:Long)
+
 
 # POST /weeklyReport/create/                    controllers.WeeklyReportController.create
 GET    /weeklyReport/totalVisits/:id            controllers.WeeklyReportController.getTotalVisits(id: Long)

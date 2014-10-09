@@ -1,11 +1,9 @@
 package crudTest
 
-import domain.{Referral, MonthlyReport}
+import domain.MonthlyReport
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
-import repository.CategoryModel.CategoryRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
-import repository.ReferralModel.ReferralRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
