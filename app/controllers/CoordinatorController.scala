@@ -1,7 +1,7 @@
 package controllers
 
 import domain._
-import model.{CarePlanModel, UserModel}
+import model.{CoordinatorModel, CarePlanModel, UserModel}
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 import services.CoordinatorService
@@ -42,26 +42,25 @@ object CoordinatorController extends Controller {
       val input = request.body
       val userModel = Json.fromJson[UserModel](input).get
       val userObj = userModel.getDomain()
-      val us = userObj.copy(userId = user.toLong)
-      val u : Future[Long] = Future{coorServ.createUser(us)}
+      val u : Future[Long] = Future{coorServ.createUser(userObj)}
 
       u.map(use =>
         Ok(Json.toJson(use))
       )
   }
 
-  /*def addCoordinator(coordinator:String) = Action.async(parse.json) {
+  def addCoordinator(coordinator:String) = Action.async(parse.json) {
 
     request =>
       val input = request.body
-      val coor = Json.fromJson[Coordinator](input).get
-      val coorObj = coor.copy(coordinator.toLong)
-      val co = coorServ.addCoordinator(coorObj)
+      val coor = Json.fromJson[CoordinatorModel](input).get
+      val userObj = coor.getDomain()
+      val co : Future[Long] = Future{coorServ.addCoordinator(userObj)}
 
       co.map(c =>
-        Ok(Json.toJson(coorObj))
+        Ok(Json.toJson(c))
       )
-  }*/
+  }
 
   def getPatient(id:Long) = Action {
 
@@ -88,11 +87,8 @@ object CoordinatorController extends Controller {
 
     request =>
       val input = request.body
-      println("Body" ,input)
       val carePlanModel = Json.fromJson[CarePlanModel](input).get
-      println("Model" ,carePlanModel)
       val carePlanObj = carePlanModel.getDomain()
-      val careplan = carePlanObj.copy(planId = care.toLong)
       val plan : Future[Long] = Future{coorServ.createCarePlan(carePlanObj)}
 
       plan.map(p =>

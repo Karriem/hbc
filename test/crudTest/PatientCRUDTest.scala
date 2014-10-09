@@ -91,7 +91,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Patient")
-          Read("tonata", id)
+          Read("Chris", id)
 
         info("Updating Patient")
           Update("Helvi", id)
