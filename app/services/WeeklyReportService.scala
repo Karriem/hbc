@@ -1,5 +1,7 @@
 package services
 
+import java.util.Date
+
 import domain.{WeeklyReport, MonthlyReport, Referral}
 import repository.DailyReportModel.DailyReportRepo
 
@@ -18,5 +20,5 @@ trait WeeklyReportService {
 
   def getAllDailyReports(id: Long) : List[DailyReportRepo#TableElementType]
 
-  //def getMonthlyReport(theDate: String) : MonthlyReport
+  //def getWeeklyReport(beginningOfweek: Date) : WeeklyReport
 }

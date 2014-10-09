@@ -9,8 +9,8 @@ import repository.ScheduleModel.ScheduleRepo
 trait ScheduleService {
 
   def createSchedule(schedule: Schedule,
-                     caregiver: Caregiver,
-                     patient: Patient ,
+                     caregiver: Long,
+                     patient: Long ,
                      timeSheet: TimeSheet) : Long
 
   def getTimesheetDetails(id: Long) : TimeSheet

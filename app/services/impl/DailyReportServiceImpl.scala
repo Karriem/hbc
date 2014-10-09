@@ -23,13 +23,13 @@ class DailyReportServiceImpl extends DailyReportService {
   val categoryRepo = TableQuery[CategoryRepo]
   val diagnosisRepo = TableQuery[DiagnosisRepo]
 
-  override def createDailyReport(report: DailyReport, timesheet: TimeSheet, category: Category, caregiver: Caregiver, patient: Patient, diagnosisID: Long) :Long = {
+  override def createDailyReport(report: DailyReport, timesheet: TimeSheet, category: Category, caregiver: Long, patient: Long, diagnosisID: Long) :Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
-      val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
+      //val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
+     // val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
 
-      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.weeklyReportId, caregiverID, patientID)
+      val newReport = DailyReport(report.caregiverId, report.servicesRendered, report.weeklyReportId, caregiver, patient)
       val diaID = dailyReportRepo.returning(dailyReportRepo.map(_.dailyReportId)).insert(newReport)
 
 

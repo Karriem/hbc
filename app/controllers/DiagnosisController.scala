@@ -24,12 +24,12 @@ object DiagnosisController extends Controller {
   request =>
     val input = request.body
 
-    val diag = Json.fromJson[Diagnosis](input).get
+    val diag = Json.fromJson[DiagnosisModel](input).get
     val di = Json.fromJson[Disease](input).get
     val qa = Json.fromJson[QuestionAnswer](input).get
 
-    val diagObj = diag.copy(diagnosis.toLong)
-    val diseaseObj = di.copy(disease.toLong)
+    val diagObj = diag.copy(diagnosisId = diagnosis.toLong)
+    val diseaseObj = di.copy(diseaseId=disease.toLong)
     val qaObj = qa.copy(qA)
 
     val results : Future[Long] =  Future{diagnosisService.createDiagnosis(diagObj, diseaseObj, qaObj)}
@@ -42,16 +42,22 @@ object DiagnosisController extends Controller {
     )
   }*/
 
-  def getDiagnosis(id: Long) ={
+  def getDiagnosis(id: Long) = Action {
+    val diagnosis = diagnosisService.getDiagnosis(id)
+    val json = Json.toJson(diagnosis)
+    Ok(json)
   }
 
-  def getDiesease(id: Long) = {
+  def getDisease(id: Long) = Action {
+    val disease = diagnosisService.getDisease(id)
+    val json = Json.toJson(disease)
+    Ok(json)
   }
 
-  def diagnosisPerCaregiver(id: Long) = {
+  def diagnosisPerCaregiver(id: Long) = Action {
+    val diagnosises = diagnosisService.getAllDiagnosisByCaregiver(id)
+    val json = Json.toJson(diagnosises)
+    Ok(json)
   }
 
-  def index = Action {
-    Ok//(views.html.index("Your new application is ready."))
-  }
 }

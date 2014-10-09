@@ -1,5 +1,7 @@
 package services.impl
 
+import java.util.Date
+
 import domain.{WeeklyReport, MonthlyReport, Referral}
 import repository.DailyReportModel.DailyReportRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
@@ -55,10 +57,10 @@ class WeeklyReportServiceImpl extends WeeklyReportService {
     }
   }
 
-  /*override def getWeeklyReport(theDate: Date) : WeeklyReport = {
-    /*Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-      return monthlyReportREpo.filter(_.date === theDate).list.head
-    }*/
+ /* override def getWeeklyReport(beginningOfweek: Date) : WeeklyReport = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+      return weeklyReportREpo.filter(_.weekStartDate === beginningOfweek).list.head
+    }
   }*/
 
 }

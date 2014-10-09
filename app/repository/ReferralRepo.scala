@@ -17,7 +17,7 @@ object ReferralModel {
 
       def referralId = column[Long]("REFERRAL_ID", O.PrimaryKey, O.AutoInc)
       def referralDate = column[Date]("REFERRAL_DATE")
-      def weeklyReportId = column[Option[Long]]("MONTHLY_REPORT_ID")
+      def weeklyReportId = column[Option[Long]]("WEEKLY_REPORT_ID")
       def * = (referralId, referralDate, weeklyReportId) <> (Referral.tupled, Referral.unapply)
 
       val weeklyReport = foreignKey("WEEKLY_REPORT_FK", weeklyReportId, TableQuery[WeeklyReportRepo])(_.weeklyReportId)

@@ -12,8 +12,8 @@ trait DailyReportService {
   def createDailyReport(report: DailyReport,
                          timesheet: TimeSheet,
                          category: Category,
-                         caregiver: Caregiver,
-                         patient: Patient,
+                         caregiver: Long,
+                         patient: Long,
                          diagnosisID: Long): Long
 
   def getTimeSheetDetails(id: Long): TimeSheet

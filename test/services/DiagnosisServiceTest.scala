@@ -5,8 +5,10 @@ import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
+import repository.QuestionAnswerModel.QuestionAnswerRepo
 import services.impl.DiagnosisServiceImpl
 
+import scala.collection.mutable.ListBuffer
 import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -31,9 +33,11 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
       val diseasesRepo = TableQuery[DiseaseRepo]
       var id : Long = 0L
       val diaService : DiagnosisService = new DiagnosisServiceImpl()
+      var qList = new ListBuffer[QuestionAnswerRepo#TableElementType]()
+      qList += qAndA
 
       def testCreateDiagnosis = {
-        id = diaService.createDiagnosis(diagnosis, disease, qAndA)
+        id = diaService.createDiagnosis(diagnosis, disease, qList.toList)
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
           diagnosisRepo foreach { case (d: Diagnosis) =>

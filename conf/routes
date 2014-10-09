@@ -5,67 +5,53 @@
 # Home page
 GET     /                           controllers.Application.index
 
-# Care Plan
+GET     /careplans/:id              controllers.CarePlanController.listCarePlan(id:Long)
 
-GET     /careplans/getcare/:ids              controllers.CarePlanController.getCarePlan(ids:Long)
 
-GET     /careplans/getpat/:id                controllers.CarePlanController.getPatient(id:Long)
+# Diagnosis
 
-GET     /careplans/getissued/:id             controllers.CarePlanController.getWhoIssuedPlan(id:Long)
+# POST    /diagnosis/create/:dia/:di/:qa        controllers.DiagnosisController.create(dia, di, q)
+GET       /diagnosis/getDiagnosis/:id           controllers.DiagnosisController.getDiagnosis(id: Long)
+GET       /diagnosis/getDisease/:id             controllers.DiagnosisController.getDisease(id: Long)
+GET       /diagnosis/getCaregiversDiagnosis/:id controllers.DiagnosisController.diagnosisPerCaregiver(id: Long)
 
-GET     /careplans/getvisit/:id              controllers.CarePlanController.getVisit(id:Long)
+# Measurement
 
-#POST     /careplans/createplan/:id           controllers.CarePlanController.createCarePlan(care:String)
+# POST    /measurement/create/:m/:pID/:cID      controllers.MeasurementController.createMeasurement(m, pID, cID)
+GET       /measurement/getMeasurements/:id      controllers.MeasurementController.getMeasurements(id: Long)
 
-#PUT     /careplans/updateplan/:care/:id      controllers.CarePlanController.updateCarePlan(care:CarePlan, id:Long)
+# Unplanned Visit
 
-# Caregiver
+# POST  /unplannedVisit/create                  controllers.UnplannedVisitController.createUnplannedVisit()
+GET     /unplannedVisit/listVisits              controllers.UnplannedVisitController.getUnplannedVisits
 
-GET     /caregiver/getcare/:ids                controllers.CaregiverController.getCarePlan(ids:Long)
 
-GET     /caregiver/getpat/:id                  controllers.CaregiverController.getPatient(id:Long)
+# Daily Report
+# POST /dailyReport/create                      controllers.DailyReportController.create()
+GET    /dailyReport/timesheet/:id               controllers.DailyReportController.getTimeSheetDetails(id: Long)
+GET    /dailyReport/category/:id                controllers.DailyReportController.getCategory(id: Long)
+GET    /dailyReport/diagnosis/:id               controllers.DailyReportController.getDiagnosis(id: Long)
+GET    /dailyReport/patientsReports/:id         controllers.DailyReportController.getReportByPatient(id: Long)
+GET    /dailyReport/caregiversReports/:id      controllers.DailyReportController.getReportByCaregiver(id: Long)
+GET    /dailyReport/allReports               controllers.DailyReportController.getAllReports
 
-GET     /caregiver/getuser/:id                 controllers.CaregiverController.getUser(id:Long)
+# QuestionAnswer
 
-#POST   /caregiver/addpat/:pat                  controllers.CaregiverController.addPatient(pat:String)
+# POST   /questionAnswer/create/:id             controllers.QuestionAnswerController.createQuestionAnswer()
+GET     /questionAnswer/getPerDiagnosis/:id     controllers.QuestionAnswerController.getQuestionAnswer(id: Long)
 
-# Coordinator
+# Schedule
 
-GET     /coordinator/getins/:id                 controllers.CarePlanController.getInstitution(id:Long)
+# POST  /schedule/create/                       controllers.ScheduleController.createSchedule()
+GET     /schedule/getTimeSheet/:id              controllers.ScheduleController.getTimeSheetDetails(id: Long)
+GET     /schedule/patientSchedule/:id           controllers.ScheduleController.getSchedulePerPatient(id: Long)
+GET     /schedule/caregiverSchedule/:id         controllers.ScheduleController.getSchedulePerCaregiver(id: Long)
 
-GET     /coordinator/getuser/:id                controllers.CarePlanController.getUser(id:Long)
+# Weekly Report
 
-GET     /coordinator/getpat/:id                 controllers.CarePlanController.getPatient(id:Long)
-
-GET     /coordinator/getcare/:id                controllers.CarePlanController.getCaregiver(id:Long)
-
-GET     /coordinator/allpat/                    controllers.CarePlanController.viewAllPatients
-
-DELETE     /coordinator/delco/:id               controllers.CarePlanController.deleteCoordinator(id:Long)
-
-DELETE     /coordinator/delgiver/:id            controllers.CarePlanController.deleteCaregiver(id:Long)
-
-DELETE     /coordinator/delpat/:id              controllers.CarePlanController.deletePatient(id:Long)
-
-DELETE     /coordinator/delcare/:id             controllers.CarePlanController.deleteCarePlan(id:Long)
-
-#POST     /coordinator/createuser/:user          controllers.CarePlanController.createUser(user:String)
-
-#POST     /coordinator/addco/:coordinator        controllers.CarePlanController.addCoordinator(coordinator:String)
-
-#POST     /coordinator/addgiver/:giver           controllers.CarePlanController.addCaregiver(giver:String)
-
-#POST     /coordinator/addpat/:pat               controllers.CarePlanController.addPatient(pat:String)
-
-#PUT     /coordinator/upco/:coor/:id             controllers.CarePlanController.updateCoordinator(coor:String, id:Long)
-
-#PUT     /coordinator/upuser/:user/id            controllers.CarePlanController.updateUser(user:String, id:Long)
-
-#PUT     /coordinator/upgiver/:care/:id          controllers.CarePlanController.updateCaregiver(care:String, id:Long)
-
-#PUT     /coordinator/uppat/:pat/:id             controllers.CarePlanController.updatePatient(pat:String, id:Long)
-
-#PUT     /coordinator/upplan/:plan/:id           controllers.CarePlanController.updateCarePlan(plan:String, id:Long)
-
+# POST /weeklyReport/create/                    controllers.WeeklyReportController.create
+GET    /weeklyReport/totalVisits/:id            controllers.WeeklyReportController.getTotalVisits(id: Long)
+GET    /weeklyReport/referralCheck/:id          controllers.WeeklyReportController.checkForReferral(id: Long)
+GET    /weeklyReport/allDailyReports/:id        controllers.WeeklyReportController.getAllDailyReports(id: Long)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

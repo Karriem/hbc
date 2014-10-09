@@ -3,8 +3,11 @@ package services
 import domain._
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import repository.CaregiverModel.CaregiverRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
+import repository.PatientModel.PatientRepo
+import repository.QuestionAnswerModel.QuestionAnswerRepo
 import repository.WeeklyReportModel.WeeklyReportRepo
 import services.impl.{WeeklyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
 
@@ -22,6 +25,9 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
     scenario("Creating object instances") {
       Given("Specific entity information")
+
+      val caregiverRepo = TableQuery[CaregiverRepo]
+      val patientRepo = TableQuery[PatientRepo]
 
       val wd = new DateTime(2014 , 2, 8, 0, 0)
       val ti = new DateTime(2014 , 2, 8, 8, 30)
@@ -50,7 +56,7 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
       val disease = Disease(1L, "3rd Degree Burns", "Burn Wounds", 1L)
 
-      val weekly = WeeklyReport(1L, DateTime.parse("2014-10-7").toDate, DateTime.parse("2014-10-14").toDate, "No transfer", 3 , Some(1L))
+      val weekly = WeeklyReport(1L, DateTime.parse("2014-11-7").toDate, DateTime.parse("2014-11-14").toDate, "No transfer", 3 , Some(1L))
 
       val wRepo = TableQuery[WeeklyReportRepo]
       val diag = TableQuery[DiagnosisRepo]
@@ -58,14 +64,21 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
       val diaService : DiagnosisService = new DiagnosisServiceImpl()
       val dailyReportService: DailyReportService = new DailyReportServiceImpl()
       val weeklyReportService: WeeklyReportService = new WeeklyReportServiceImpl()
+      var qList = new ListBuffer[QuestionAnswerRepo#TableElementType]()
+      qList += qAndA
 
       var mID: Long  = 0L
 
       def testCreateWeeklyReport() = {
-        val dID = diaService.createDiagnosis(diagnosis, disease, qAndA)
-        val dlyID = dailyReportService.createDailyReport(dailyReport, timeSheet, category, caregiver, patient, dID)
+
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+          val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
+          val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
+
+          val dID = diaService.createDiagnosis(diagnosis, disease, qList.toList)
+          val dlyID = dailyReportService.createDailyReport(dailyReport, timeSheet, category, caregiverID, patientID, dID)
+
           val reportIDs =  new ListBuffer[Long]()
           reportIDs += dlyID
           //(diag.ddl).create
@@ -74,6 +87,7 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
           assert(wRepo.filter(_.weeklyReportId === mID).list.length == 1)
         }
+
 
       }
 
@@ -96,8 +110,9 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
         }
       }
 
-      def testGetMonthlyReport = {
-
+      def testGetWeeklyReport = {
+       // val report = weeklyReportService.getWeeklyReport(DateTime.parse("2014-11-7").toDate)
+        //assert(report.weekEndDate == DateTime.parse("2014-11-14").toDate )
       }
 
       info("Creating Weekly Report")
@@ -108,7 +123,8 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
       testCheckForReferral
       info("Retrieving all reports")
       testGetAllDailyReports
-      //testGetMonthlyReport
+      //info("Retrieving a report")
+      //testGetWeeklyReport
     }
   }
 

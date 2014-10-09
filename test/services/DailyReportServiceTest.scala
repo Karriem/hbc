@@ -3,12 +3,16 @@ package services
 import domain._
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
+import repository.CaregiverModel.CaregiverRepo
 import repository.CategoryModel.CategoryRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
+import repository.PatientModel.PatientRepo
+import repository.QuestionAnswerModel.QuestionAnswerRepo
 import repository.TimeSheetModel.TimeSheetRepo
 import services.impl.{DailyReportServiceImpl, DiagnosisServiceImpl}
 
+import scala.collection.mutable.ListBuffer
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
 
@@ -22,6 +26,13 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
     scenario("Creating object instances"){
       Given("Specific entity information")
+
+      val dailyReportRepo = TableQuery[DailyReportRepo]
+      val timesheetRepo = TableQuery[TimeSheetRepo]
+      //val cat = TableQuery[CategoryRepo]
+      //val dia = TableQuery[DiagnosisRepo]
+      val caregiverRepo = TableQuery[CaregiverRepo]
+      val patientRepo = TableQuery[PatientRepo]
 
       val wd = new DateTime(2014 , 2, 8, 0, 0)
       val ti = new DateTime(2014 , 2, 8, 8, 30)
@@ -37,7 +48,9 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
       val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
+
       val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
+
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
 
@@ -48,12 +61,8 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
       val disease = Disease(1L, "3rd Degree Burns", "Burn Wounds", 1L)
 
       val diaService : DiagnosisService = new DiagnosisServiceImpl()
-
-      val dailyReportRepo = TableQuery[DailyReportRepo]
-      val timesheetRepo = TableQuery[TimeSheetRepo]
-      val cat = TableQuery[CategoryRepo]
-      val dia = TableQuery[DiagnosisRepo]
-
+      var qList = new ListBuffer[QuestionAnswerRepo#TableElementType]()
+      qList += qAndA
 
       var id: Long = 0L
       var careID: Long = 0L
@@ -64,9 +73,11 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
         // (cat.ddl).create
          //(dailyReportRepo.ddl).create
          //(dia.ddl).create
+          val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
+          val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
 
-          val dID = diaService.createDiagnosis(diagnosis, disease, qAndA)
-          reportService.createDailyReport(dailyReport, timeSheet, category, caregiver, patient, dID)
+          val dID = diaService.createDiagnosis(diagnosis, disease, qList.toList)
+          reportService.createDailyReport(dailyReport, timeSheet, category, caregiverID, patientID, dID)
 
           dailyReportRepo foreach { case (report: DailyReport) =>
             if(report.servicesRendered == "Cleaned Burn wounds" ){

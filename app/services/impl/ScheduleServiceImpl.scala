@@ -21,16 +21,16 @@ class ScheduleServiceImpl  extends ScheduleService{
   val timesheetRepo = TableQuery[TimeSheetRepo]
 
   override def createSchedule(schedule: Schedule,
-                              caregiver: Caregiver,
-                              patient: Patient ,
+                              caregiver: Long,
+                              patient: Long ,
                               timeSheet: TimeSheet): Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
 
-      val caregiverID = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiver)
-      val patientID = patientRepo.returning(patientRepo.map (_.patientId)).insert(patient)
+      //val caregiverID = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiver)
+      //val patientID = patientRepo.returning(patientRepo.map (_.patientId)).insert(patient)
 
-      val upSchedule = Schedule(schedule.scheduleId , patientID, caregiverID)
+      val upSchedule = Schedule(schedule.scheduleId , patient, caregiver)
       val schID =  scheduleRepo.returning(scheduleRepo.map (_.scheduleId)).insert(upSchedule)
 
       val upSheet = TimeSheet(timeSheet.workDay, timeSheet.timeIn, timeSheet.timeOut, timeSheet.visitId, timeSheet.dailyReportId, Option(schID))
