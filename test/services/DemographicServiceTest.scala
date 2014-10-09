@@ -21,32 +21,54 @@ class DemographicServiceTest extends FeatureSpec with GivenWhenThen{
       val demoservice: DemographicService = new DemographicServiceImpl
       val demoRepo = TableQuery[DemographicRepo]
 
-      def getDemo: Unit = {
+      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+        def getPersonDemo: Unit = {
 
-        Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-          val value = demoservice.getPersonDemo(138)
-            assert(value.gender == "Female")
-
+          val value = demoservice.getPersonDemo(11)
+          assert(value.gender == "male")
         }
+
+        def getCaregiverDemo: Unit = {
+
+          val value = demoservice.getCaregiverDemo(16)
+          assert(value.age == 23)
+        }
+
+        def getCoordinatorDemo: Unit ={
+
+          val value = demoservice.getCoordinatorDemo(16)
+          assert(value.gender == "Female")
+        }
+
+        def getPatientDemo: Unit ={
+
+          val value = demoservice.getPatientDemo(12)
+          assert(value.age == 32)
+        }
+
+        def getAllDemos: Unit = {
+
+          var demolist: List[DemographicRepo#TableElementType] = List()
+          demolist = demoservice.getAllDemos()
+          assert(demolist.size == 4)
+        }
+
+
+        info("Testing read for a person's demographics")
+        getPersonDemo
+
+        info("Testing for getting all demos service")
+        getAllDemos
+
+        info("Testing for get caregiver demos service")
+        getCaregiverDemo
+
+        info("Testing for get coordinator demos service")
+        getCoordinatorDemo
+
+        info("Testing for get patient demos service")
+        getPatientDemo
       }
-
-        def getAllDemos: Unit ={
-
-          Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-            var demolist : List[DemographicRepo#TableElementType] = List()
-            demolist = demoservice.getAllDemos()
-            assert(demolist.size == 6)
-          }
-          }
-
-
-         info("Testing read for a person's demographics")
-         getDemo
-
-         info("Testing for get all demos service")
-         getAllDemos
     }
   }
 }

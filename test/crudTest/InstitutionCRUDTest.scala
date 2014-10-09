@@ -1,9 +1,10 @@
 package crudTest
 
 
-import domain.{ContactPerson, Institution, Referral, Coordinator}
+import domain._
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
+import repository.ContactModel.ContactRepo
 import repository.ContactPersonModel.ContactPersonRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
@@ -27,7 +28,7 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
       val instituteRepo = TableQuery[InstitutionRepo]
       val coordinatorRepo = TableQuery[CoordinatorRepo]
       val referrallRepo = TableQuery[ReferralRepo]
-      val contactRepo = TableQuery[ContactPersonRepo]
+      val contRepo = TableQuery[ContactRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         info("Creating Institution")
@@ -47,8 +48,8 @@ class InstitutionCRUDTest extends FeatureSpec with GivenWhenThen {
         val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), referalId)
         val institueId = instituteRepo.returning (instituteRepo.map (_.instituteId) ).insert (instituteRecord)
 
-        val contactPerson = ContactPerson(12, "Karriem", "Peterson")
-        val personId = contactRepo.insert(contactPerson)
+        val contact = Contact(Some("0214578"), "08245789", "kp@grabowhosp.com", None, Some(institueId), None, None, None, None)
+        contRepo.insert(contact)
 
         def Read(instName: String, coName: String,  id : Long) =
           instituteRepo foreach { case (ins : Institution) =>

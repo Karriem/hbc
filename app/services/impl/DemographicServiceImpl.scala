@@ -14,23 +14,16 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 class DemographicServiceImpl extends DemographicService{
 
-  val patientRepo = TableQuery[PatientRepo]
   val demoRepo = TableQuery[DemographicRepo]
-  val caregiverRepo = TableQuery[CaregiverRepo]
-
 
   override def getPersonDemo(id: Long): Demographic={//List[DemographicRepo#TableElementType] = {
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val patientDemo = demoRepo.list
-      //val patDemoList = patientDemo.filter(_.patientId == Some(id))
+      val personDemo = demoRepo.filter(_.personId === id).list
 
-      val caregiver = demoRepo.list
-      val caregiverDemo = caregiver.filter(_.caregiverId == Some(id))
-
-      println("Displaying the person demographics" + caregiverDemo)
-       caregiverDemo.head
+      println("Displaying the person demographics" + personDemo)
+      personDemo.head
 
     }
 
@@ -44,6 +37,30 @@ class DemographicServiceImpl extends DemographicService{
 
       println("Geting all the demographics")
       demoList
+    }
+  }
+
+  override def getPatientDemo(id: Long): Demographic = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val patientDemo = demoRepo.filter(_.patientId === id).list
+      patientDemo.head
+    }
+  }
+
+  override def getCaregiverDemo(id: Long): Demographic = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val caregiverDemo = demoRepo.filter(_.caregiverId === id).list
+      caregiverDemo.head
+    }
+  }
+
+  override def getCoordinatorDemo(id: Long): Demographic = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val coordDemo = demoRepo.filter(_.coordinatorId === id).list
+      coordDemo.head
     }
   }
 }

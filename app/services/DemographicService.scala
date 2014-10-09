@@ -8,6 +8,9 @@ import repository.DemographicModel.DemographicRepo
  */
 trait DemographicService {
   def getPersonDemo(id : Long) : Demographic//List[DemographicRepo#TableElementType]
+  def getPatientDemo(id : Long) : Demographic
+  def getCaregiverDemo(id : Long) : Demographic
+  def getCoordinatorDemo(id : Long) : Demographic
   def getAllDemos() : List[DemographicRepo#TableElementType]
 
 }

@@ -37,8 +37,8 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
         val id = care.returning(care.map(_.caregiverId)).insert(caregiverRecord)
 
         val addressRecord = Address("30 Chester Road", "30 Chester Road", "7700" , Some(0), Some(0), Some(0) , Some(id) , Some(0), None)
-        val contactRecord = Contact(Some("021798000") , "0786119726", "n@gmail.com", Some(0), Some(0), Some(0) , Some(0), Some(id), None)
-        val demoRecord = Demographic(23 ,"Female", DateTime.parse("1976-03-16").toDate , Some(0), Some(0), Some(0) , Some(id) )
+        val contactRecord = Contact(Some("021798000") , "0786119726", "n@gmail.com", None, None, None , None, Some(id), None)
+        val demoRecord = Demographic(23 ,"Female", DateTime.parse("1976-03-16").toDate , None, None, None , Some(id) )
 
         addressRepo.insert(addressRecord)
         contactRepo.insert(contactRecord)
@@ -93,7 +93,7 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Caregiver Details ")
-        Read(23, id, "0786119726", "30 Chester Road")
+         Read(23, id, "0786119726", "30 Chester Road")
 
         info("Updating Caregiver Details")
         Update("Maxine" , id, 27 , "0823349090", "402 Apple Street")

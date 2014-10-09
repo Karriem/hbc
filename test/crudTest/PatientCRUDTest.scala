@@ -1,10 +1,12 @@
 package crudTest
 
-import domain.{Address, Adherence, Patient}
+import domain._
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
 import repository.AddressModel.AddressRepo
 import repository.AdherenceModel.AdherenceRepo
+import repository.ContactModel.ContactRepo
+import repository.DemographicModel.DemographicRepo
 import repository.PatientModel.PatientRepo
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.TableQuery
@@ -25,6 +27,8 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
       val pat = TableQuery[PatientRepo]
       val adherence  = TableQuery[AdherenceRepo]
       val patAddress =TableQuery[AddressRepo]
+      val contact = TableQuery[ContactRepo]
+      val demoRepo = TableQuery[DemographicRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -34,7 +38,7 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         //(adherence.ddl).create
 
         info("Creating Patient")
-        val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak")
+        val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
 
         val address = Address("34 long street", "34 long street", "8000", None, None, Some(4), None, None, None)
@@ -42,6 +46,12 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
 
         val medication = Adherence("M144", "Apply to burnt area", id)
         adherence.insert(medication)
+
+        val demo = Demographic(32, "male", DateTime.parse("1979-04-25").toDate, None, None, Some(id), None)
+        demoRepo.insert(demo)
+
+        val contactRecord = Contact(None, "07983464", "mk@yahoo", None, None, None, Some(id), None, Some(2))
+        contact.insert(contactRecord)
 
         def Read(name: String, id : Long) =
           pat foreach { case (patient: Patient) => {
@@ -81,13 +91,13 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Patient")
-          //Read("tonata", id)
+          Read("tonata", id)
 
         info("Updating Patient")
-          //Update("Helvi", id)
+          Update("Helvi", id)
 
         info("Deleting Patient")
-          //Delete(id)
+          Delete(id)
       }
     }
   }
