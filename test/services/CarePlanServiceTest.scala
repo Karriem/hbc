@@ -41,55 +41,50 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getCarePlanTest: Unit = {
 
-          val value = obj.getCarePlan(2)
+          val value = obj.getCarePlan(124)
 
-          assert(value.patientId == 124)
+          assert(value.patientId == 2)
         }
 
         def updateCarePlanTest: Unit ={
 
           val repoList = care.list
-          val repo = repoList.filter(_.planId == 2)
-          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 124, repo.head.coordinator)
-          obj.updateCarePlan(careNew, 2)
+          val repo = repoList.filter(_.planId == 124)
+          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator)
+          obj.updateCarePlan(careNew, 124)
           val repoList3 = care.list
-          assert(repoList3.filter(_.planId == 2).head.description == "Cleaning house")
+          assert(repoList3.filter(_.planId == 124).head.description == "Cleaning house")
         }
 
         def getPatientTest : Unit ={
 
-          val value = obj.getPatient(1)
+          val value = obj.getPatient(128)
 
-          assert(value.firstName == "Bo")
+          assert(value.firstName == "Phakama")
         }
 
         def getPlanIssuedTest: Unit ={
 
-          val value = obj.getPlanIssued(2)
-          assert(value.firstName == "Nikki")
+          val value = obj.getPlanIssued(124)
+          assert(value.firstName == "Lou")
         }
 
         def getVisitTest: Unit ={
 
-          val value = obj.getVisit(1)
-          assert(value.planId == 2)
+          val value = obj.getVisit(20)
+          assert(value.patientId == 0)
         }
 
         info("createPlanTest")
         createPlanTest
-
-        info("getCarePlan")
+        info("getCarePlanTest")
         getCarePlanTest
-
         info("updateCarePlanTest")
         updateCarePlanTest
-
         info("getPatientTest")
         getPatientTest
-
         info("getPlanIssuedTest")
         getPlanIssuedTest
-
         info("getVisitTest")
         getVisitTest
       }

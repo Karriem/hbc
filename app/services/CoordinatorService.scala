@@ -8,21 +8,43 @@ import repository.PatientModel.PatientRepo
  */
 trait CoordinatorService {
 
+  def addCoordinator(co : Coordinator):Long
+
+  def createUser(user : User) :Long
+
+  def addCaregiver(giver : Caregiver) :Long
+
+  def addPatient(pat : Patient) : Long
+
+  def createCarePlan(care : CarePlan) :Long
+//----------------------------------------------------------
+  def updateCoordinator(co:Coordinator, id:Long)
+
+  def updateUser(user:User, id:Long)
+
+  def updateCaregiver(giver:Caregiver, id:Long)
+
+  def updatePatient(pat:Patient, id:Long)
+
+  def updateCarePlan(care:CarePlan, id:Long)
+
+  def deleteCoordinator(id:Long)
+
+  def deleteUser(id:Long)
+
+  def deleteCaregiver(id:Long)
+
+  def deletePatient(id:Long)
+
+  def deleteCarePlan(id:Long)
+
+  def getCaregiver(id:Long): Caregiver
+//-------------------------------------------------
   def getInstitution(id:Long): Institution
 
   def viewPatients(id:Long): Patient
 
   def viewAllPatient(): List[PatientRepo#TableElementType]
 
-  def createUser(user : User) :Long
-
   def getUser(id:Long) : User
-
-  def addCoordinator(co : Coordinator):Long
-
-  def createCarePlan(care : CarePlan) :Long
-
-  def addCaregiver(giver : Caregiver) :Long
-
-  def addPatient(pat : Patient) : Long
 }
