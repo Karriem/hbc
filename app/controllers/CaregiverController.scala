@@ -38,18 +38,4 @@ object CaregiverController extends Controller{
     val json = Json.toJson(user)
     Ok(json)
   }
-
-  /*def addPatient(pat : String) = Action.async(parse.json) {
-
-    request =>
-        val input = request.body
-        val patient = Json.fromJson[Patient](input).get
-        val patientObj = patient.copy(pat.toLong)
-        val pat = caregiverServ.addPatient(patientObj)
-
-        pat.map( p =>
-          Ok(Json.toJson(patientObj))
-        )
-    )
-  }*/
 }

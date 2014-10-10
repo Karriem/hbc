@@ -6,7 +6,7 @@ import play.api.libs.json.Json
 /**
  * Created by karriem on 10/8/14.
  */
-case class CoordinatorModel(coId:String,
+case class CoordinatorModel(coId:Long,
                             firstName:String,
                             lastName:String) {
 
@@ -19,7 +19,7 @@ object CoordinatorModel {
 
   def domain(model : CoordinatorModel) = {
 
-    Coordinator(model.coId.toLong,
+    Coordinator(model.coId,
       model.firstName,
       model.lastName)
   }

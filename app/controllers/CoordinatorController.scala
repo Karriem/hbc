@@ -1,7 +1,7 @@
 package controllers
 
 import domain._
-import model.{CoordinatorModel, CarePlanModel, UserModel}
+import model._
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 import services.CoordinatorService
@@ -96,96 +96,105 @@ object CoordinatorController extends Controller {
       )
   }
 
-  /*def addCaregiver(giver:String) = Action.async(parse.json) {
+  def addCaregiver(giver:String) = Action.async(parse.json) {
 
     request =>
       val input = request.body
-      val caregiver = Json.fromJson[Caregiver](input).get
-      val caregiverObj = caregiver.copy(giver.toLong)
-      val care = coorServ.addCaregiver(caregiverObj)
+      val caregiver = Json.fromJson[CaregiverModel](input).get
+      val giverObj = caregiver.getDomain()
+      //val caregiverObj = caregiver.copy(giver.toLong)
+      val service = coorServ.addCaregiver(giverObj)
+      val giver : Future[Long] = Future{service}
 
-      care.map(c =>
-        Ok(Json.toJson(caregiverObj))
+      giver.map(g =>
+        Ok(Json.toJson(g))
       )
-  }*/
+  }
 
-  /*def addPatient(pat:String) = Action.async(parse.json) {
+  def addPatient(pat:String) = Action.async(parse.json) {
 
     request =>
       val input = request.body
-      val patient = Json.fromJson[Patient](input).get
-      val patientObj = patient.copy(pat.toLong)
-      val pat = coorServ.addCaregiver(patientObj)
+      val patient = Json.fromJson[PatientModel](input).get
+      //val patientObj = patient.copy(pat.toLong)
+      val patObj = patient.getDomain()
+      val service = coorServ.addPatient(patObj)
+      val pat : Future[Long] = Future{service}
 
       pat.map(p =>
-        Ok(Json.toJson(patientObj))
+        Ok(Json.toJson(p))
       )
-  }*/
+  }
 
-  /*def updateCoordinator(coor:String, id:Long) = Action.async(parse.json){
+  def updateCoordinator(coor:String) = Action.async(parse.json){
 
     request =>
       val input = request.body
-      val coordinator = Json.fromJson[Coordinator](input).get
-      val coObj = coordinator.copy(coor.toLong)
-      val co = coorServ.updateCoordinator(coObj,id)
+      val coordinator = Json.fromJson[CoordinatorModel](input).get
+      val coObj = coordinator.getDomain()
+      val service = coorServ.updateCoordinator(coObj, coObj.coId)
+      val co : Future[Long] = Future{service}
 
-      co.map(c =>
-        Ok(Json.toJson(coObj))
+       co.map(c =>
+        Ok(Json.toJson(c))
       )
-  }*/
+  }
 
-  /*def updateUser(user:String, id:Long) = Action.async(parse.json){
+  def updateUser(user:String) = Action.async(parse.json){
 
     request =>
       val input = request.body
-      val userD = Json.fromJson[User](input).get
-      val userObj = userD.copy(user.toLong)
-      val us = coorServ.updateUser(userObj,id)
+      val userD = Json.fromJson[UserModel](input).get
+      val uObj = userD.getDomain()
+      val service = coorServ.updateUser(uObj,uObj.userId)
+      val us : Future[Long] = Future{service}
 
       us.map(u =>
-        Ok(Json.toJson(userObj))
+        Ok(Json.toJson(u))
       )
-  }*/
+  }
 
-  /*def updateCaregiver(care:String, id:Long) = Action.async(parse.json){
+  def updateCaregiver(care:String) = Action.async(parse.json){
 
     request =>
       val input = request.body
-      val caregiver = Json.fromJson[Caregiver](input).get
-      val giverObj = caregiver.copy(care.toLong)
-      val car = coorServ.updateCaregiver(giverObj,id)
+      val caregiver = Json.fromJson[CaregiverModel](input).get
+      val giverObj = caregiver.getDomain()
+      val service = coorServ.updateCaregiver(giverObj,giverObj.caregiverId)
+      val car : Future[Long] = Future{service}
 
       car.map(c =>
-        Ok(Json.toJson(giverObj))
+        Ok(Json.toJson(c))
       )
-  }*/
+  }
 
-  /*def updatePatient(pat:String, id:Long) = Action.async(parse.json){
+  def updatePatient(pat:String) = Action.async(parse.json){
 
     request =>
       val input = request.body
-      val patient = Json.fromJson[Patient](input).get
-      val patObj = patient.copy(pat.toLong)
-      val pati = coorServ.updatePatient(patObj,id)
+      val patient = Json.fromJson[PatientModel](input).get
+      val patObj = patient.getDomain()
+      val service = coorServ.updatePatient(patObj,patObj.patientId)
+      val pati : Future[Long] = Future{service}
 
       pati.map(p =>
-        Ok(Json.toJson(patObj))
+        Ok(Json.toJson(p))
       )
-  }*/
+  }
 
-  /*def updateCarePlan(plan:String, id:Long) = Action.async(parse.json){
+  def updateCarePlan(plan:String) = Action.async(parse.json){
 
     request =>
       val input = request.body
-      val careplan = Json.fromJson[CarePlan](input).get
-      val careplanObj = careplan.copy(plan.toLong)
-      val care = coorServ.updateCarePlan(careplanObj,id)
+      val careplan = Json.fromJson[CarePlanModel](input).get
+      val careplanObj = careplan.getDomain()
+      val service = coorServ.updateCarePlan(careplanObj,careplanObj.planId)
+      val care : Future[Long] = Future{service}
 
       care.map(c =>
         Ok(Json.toJson(careplanObj))
       )
-  }*/
+  }
 
   def deleteCoordinator(id:Long) = Action {
 

@@ -18,15 +18,15 @@ trait CoordinatorService {
 
   def createCarePlan(care : CarePlan) :Long
 //----------------------------------------------------------
-  def updateCoordinator(co:Coordinator, id:Long)
+  def updateCoordinator(co:Coordinator, id:Long) :Long
 
-  def updateUser(user:User, id:Long)
+  def updateUser(user:User, id:Long) : Long
 
-  def updateCaregiver(giver:Caregiver, id:Long)
+  def updateCaregiver(giver:Caregiver, id:Long) :Long
 
-  def updatePatient(pat:Patient, id:Long)
+  def updatePatient(pat:Patient, id:Long) :Long
 
-  def updateCarePlan(care:CarePlan, id:Long)
+  def updateCarePlan(care:CarePlan, id:Long) :Long
 
   def deleteCoordinator(id:Long)
 
