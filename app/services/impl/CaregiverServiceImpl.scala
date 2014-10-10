@@ -17,8 +17,11 @@ class CaregiverServiceImpl extends CaregiverService{
   val patRepo = TableQuery[PatientRepo]
   val userRepo = TableQuery[UserRepo]
 
+  val dataCon = Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin")
+
   override def getCareplan(id: Long): CarePlan = {
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+    dataCon.withSession { implicit session =>
 
       val careList = careRepo.list
 
@@ -29,7 +32,7 @@ class CaregiverServiceImpl extends CaregiverService{
 
   override def getPatientDetails(id: Long): Patient = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val patList = patRepo.list
       val careList = careRepo.list
@@ -42,7 +45,7 @@ class CaregiverServiceImpl extends CaregiverService{
 
   override def getUserDetails(id: Long): User =  {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val userList = userRepo.list
 
