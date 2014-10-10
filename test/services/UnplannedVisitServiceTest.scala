@@ -35,7 +35,7 @@ class UnplannedVisitServiceTest extends FeatureSpec with GivenWhenThen {
         val visitService: UnplannedVisitService = new UnplannedVisitServiceImpl()
 
         def testCreateUnplannedVisit(): Unit ={
-          visitService.createUnplannedVisit(unplannedVisitRecord, id, addressRecord , contactRecord)
+          visitService.createUnplannedVisit(unplannedVisitRecord/*, id, addressRecord , contactRecord*/)
           visitRepo foreach {case (v: UnplannedVisit) =>
               if(v.caregiverID == id){
                 assert(v.patientName == "Max")

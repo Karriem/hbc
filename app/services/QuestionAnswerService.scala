@@ -8,7 +8,7 @@ import repository.QuestionAnswerModel.QuestionAnswerRepo
  */
 trait QuestionAnswerService {
 
-  def createQuestionAndAnswers(diagnosis: Diagnosis,
+  def createQuestionAndAnswers(/*diagnosis: Diagnosis,*/
                                questionAnswerList: List[QuestionAnswerRepo#TableElementType]): Long
   def getQuestionAndAnswers(id: Long): List[QuestionAnswerRepo#TableElementType]
 
