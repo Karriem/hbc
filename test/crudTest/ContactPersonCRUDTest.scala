@@ -1,7 +1,5 @@
 package crudTest
 
-import java.util.Date
-
 import domain.{Demographic, Contact, Address, ContactPerson}
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
@@ -36,7 +34,7 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
         val contactAdd = Address("45 Samora", "45 Samora", "7785", Some(25), None, None, None, None, None )
         addressRepo.insert(contactAdd)
 
-        val contactPerson = ContactPerson(1, "Lola", "Fords")
+        val contactPerson = ContactPerson(1, "Lola", "Fords", 5)
         val id = con.returning (con.map (_.personId) ).insert(contactPerson)
 
         val contact = Contact(Some("0213433"), "08324545", "k@gbhosp.com", Some(id), None, None, None, None, None)

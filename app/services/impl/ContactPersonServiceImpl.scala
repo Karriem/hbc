@@ -1,6 +1,6 @@
 package services.impl
 
-import domain.{ContactPerson, Contact}
+import domain.{Institution, ContactPerson, Contact}
 import repository.ContactModel.ContactRepo
 import repository.ContactPersonModel.ContactPersonRepo
 import services.ContactPersonService
@@ -11,15 +11,18 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 class ContactPersonServiceImpl extends ContactPersonService{
 
+//  val instituteRepo = TableQuery[Institution]
   val contactRepo = TableQuery[ContactPersonRepo]
 
   override def getContact(id: Long): ContactPerson = {//List[ContactPersonRepo#TableElementType] = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val contact = contactRepo.filter(_.personId === id).list
+      //val person = contactRepo.list
+      //val institution = instituteRepo.list
 
-      println("Getting a contact person " + contact.head)
-      contact.head
+      val value = contactRepo.filter(_.instituteId === id).list
+      value.head
+
     }
     }
 

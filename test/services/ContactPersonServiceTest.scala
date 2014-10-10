@@ -23,8 +23,8 @@ class ContactPersonServiceTest extends FeatureSpec with GivenWhenThen {
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         def getContact: Unit = {
-          val value = contactservice.getContact(4)
-          assert(value.firstName == "Karriem")
+          val value = contactservice.getContact(5)
+          assert(value.firstName == "Lola")
         }
 
         def getAllContacts: Unit ={

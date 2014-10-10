@@ -8,7 +8,8 @@ import play.api.libs.json.Json
 case class ContactPerson (
                             personId:Long,
                             firstName:String,
-                            LastName:String
+                            LastName:String,
+                            instituteId: Long
                           )
 
 object ContactPersons{

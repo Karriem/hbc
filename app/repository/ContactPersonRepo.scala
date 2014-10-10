@@ -15,7 +15,8 @@ object ContactPersonModel {
       def personId = column[Long]("PERSON_ID", O.PrimaryKey, O.AutoInc)
       def firstName = column[String]("FIRST_NAME")
       def lastName = column[String]("LAST_NAME")
-      def * = (personId, firstName, lastName) <> (ContactPerson.tupled, ContactPerson.unapply)
+      def instituteId = column[Long]("INSTITUTION_ID")
+      def * = (personId, firstName, lastName, instituteId) <> (ContactPerson.tupled, ContactPerson.unapply)
   }
 
 }

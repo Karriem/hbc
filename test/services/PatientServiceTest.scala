@@ -28,53 +28,30 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen {
       val adherenceRepo = TableQuery[AdherenceRepo]
 
       val patientservice: PatientService = new PatientServiceImpl
-      val patient = Patient(4, DateTime.parse("2014-10-03").toDate, DateTime.parse("2014-10-03").toDate, "Buhle", "Ntshewula")
-      val adherence = Adherence("Laxatives", "take 1, 3 times a day", 15)
 
-      var id: Long = 0L
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-        def testCreatePatient: Unit = {
-          // id = patientservice.addPatient(patient, adherence)
-          //println("Patient" + id)
-          patientRepo foreach { case (p: Patient) =>
-            if (p.patientId == id) {
-              assert(p.patientId == 15)
-
-
-              /*adherence foreach { case (ad: Adherence) =>
-                  if (ad.patientId == id) {
-                    assert(ad.adType == "Laxatives")
-                  }*/
-
-            }
-          }
-
-        }
 
         def testGetDiagnosis {
 
-          val value = patientservice.getDiagnosis(31)
-          assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "Flu")
+          val value = patientservice.getDiagnosis(3)
+          assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "TB")
         }
 
         def testGetAdherence: Unit = {
 
-          val value = patientservice.getAdherence(110)
+          val value = patientservice.getAdherence(6)
           println("Adherence: " + value)
           assert(adherenceRepo.list.filter(_.patientId == value.patientId).head.adType == "M144")
         }
 
-        info("Testing create patient")
-        testCreatePatient
-
         info("Testing get diagnosis")
-        //testGetDiagnosis
+        testGetDiagnosis
 
         info("Testing get adherence")
-        //testGetAdherence
+        testGetAdherence
+      }
       }
     }
-  }
 }
 
 

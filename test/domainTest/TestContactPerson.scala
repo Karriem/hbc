@@ -14,7 +14,7 @@ class TestContactPerson extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val contactP = ContactPerson(7800, "Sandra", "Larson")
+      val contactP = ContactPerson(7800, "Sandra", "Larson", 6)
 
       assert(contactP.personId == 7800)
     }

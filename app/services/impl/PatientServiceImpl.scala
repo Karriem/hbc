@@ -19,7 +19,7 @@ class PatientServiceImpl extends  PatientService {
   val dailyReportRepo = TableQuery[DailyReportRepo]
   val adherenceRepo = TableQuery[AdherenceRepo]
 
-  override def addPatient(patient: Patient, adherence : Adherence) : Long={
+ /* override def addPatient(patient: Patient, adherence : Adherence) : Long={
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -31,7 +31,7 @@ class PatientServiceImpl extends  PatientService {
       //newAdherence
       addPatient
     }
-  }
+  }*/
 
 
   override def getDiagnosis(id: Long): Diagnosis = {//List[DiagnosisRepo#TableElementType] = {
