@@ -26,25 +26,6 @@ object CarePlanController extends Controller {
     Ok(json)
   }
 
-  /*def createCarePlan(care:String) = Action.async(parse.json) {
-    request =>
-      val input = request.body
-      val carePlan = Json.fromJson[CarePlan](input).get
-      val carePlanObj = carePlan.copy(care.toLong)
-      val plan = careServ.createPlan(carePlanObj)
-
-      plan.map(p =>
-        Ok(Json.toJson(carePlanObj))
-      )
-  }*/
-
-  /*def updateCarePlan(care:CarePlan, id:Long) = Action {
-
-    val plan = careServ.updateCarePlan(care, id)
-    val json = Json.toJson(plan)
-    Ok(json)
-  }*/
-
   def getPatient(id:Long) = Action {
 
     val pat = careServ.getPatient(id)

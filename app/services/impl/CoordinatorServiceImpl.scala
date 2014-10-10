@@ -118,11 +118,12 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def updateCoordinator(co: Coordinator, id: Long): Unit = {
+  override def updateCoordinator(co: Coordinator, id: Long): Long = {
 
     dataCon.withSession { implicit session =>
 
       coorRepo.filter(_.coId === id).update(co)
+      id
     }
   }
 
@@ -155,19 +156,21 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def updateCarePlan(care: CarePlan, id: Long): Unit = {
+  override def updateCarePlan(care: CarePlan, id: Long): Long = {
 
     dataCon.withSession { implicit session =>
 
       careRepo.filter(_.planId === id).update(care)
+      id
     }
   }
 
-  override def updateCaregiver(giver: Caregiver, id: Long): Unit = {
+  override def updateCaregiver(giver: Caregiver, id: Long): Long = {
 
     dataCon.withSession { implicit session =>
 
       givRepo.filter(_.caregiverId === id).update(giver)
+      id
     }
   }
 
@@ -182,19 +185,21 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def updatePatient(pat: Patient, id: Long): Unit = {
+  override def updatePatient(pat: Patient, id: Long): Long = {
 
     dataCon.withSession { implicit session =>
 
       patRepo.filter(_.patientId === id).update(pat)
+      id
     }
   }
 
-  override def updateUser(user: User, id: Long): Unit = {
+  override def updateUser(user: User, id: Long): Long = {
 
     dataCon.withSession { implicit session =>
 
       userRepo.filter(_.userId === id).update(user)
+      id
     }
   }
 

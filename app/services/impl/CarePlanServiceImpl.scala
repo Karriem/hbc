@@ -19,9 +19,11 @@ class CarePlanServiceImpl extends CarePlanService{
   val coRepo = TableQuery[CoordinatorRepo]
   val visitRepo = TableQuery[VisitRepo]
 
+  val dataCon = Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin")
+
   override def createPlan(care: CarePlan) :Long= {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val value = careRepo.returning (careRepo.map (_.planId)).insert(care)
       value
@@ -30,7 +32,7 @@ class CarePlanServiceImpl extends CarePlanService{
 
   override def getPatient(id: Long): Patient = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val patId = careRepo.list
       val patient = patRepo.list
@@ -43,7 +45,7 @@ class CarePlanServiceImpl extends CarePlanService{
 
   override def getPlanIssued(id: Long): Coordinator = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val coId = careRepo.list
       val pat = coRepo.list
@@ -56,7 +58,7 @@ class CarePlanServiceImpl extends CarePlanService{
 
   override def getVisit(id: Long): CarePlan = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val coId = careRepo.list
 
@@ -70,7 +72,7 @@ class CarePlanServiceImpl extends CarePlanService{
 
   override def updateCarePlan(care: CarePlan, id : Long): Unit = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       //val careList = careRepo.list
 
@@ -80,7 +82,7 @@ class CarePlanServiceImpl extends CarePlanService{
 
   override def getCarePlan(id: Long): CarePlan = {
 
-    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+    dataCon.withSession { implicit session =>
 
       val careList = careRepo.list
 

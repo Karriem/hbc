@@ -6,7 +6,7 @@ import play.api.libs.json.Json
 /**
  * Created by karriem on 10/8/14.
  */
-case class UserModel(userId:String,
+case class UserModel(userId:Long,
                      username:String,
                      password:String,
                      caregiverId:String,
@@ -40,7 +40,7 @@ object UserModel {
       value2 = model.coordinatorId.toLong
     }
 
-    User(model.userId.toLong,
+    User(model.userId,
       model.username,
       model.password,
       Some(value),

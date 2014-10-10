@@ -1,7 +1,7 @@
 package controllersTest
 
 import com.google.gson.Gson
-import model.{CoordinatorModel, CarePlanModel, UserModel}
+import model._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
@@ -22,7 +22,7 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Save User Object" in new WithApplication {
 
-      val user = UserModel("1", "ME", "No", "", "135")
+      val user = UserModel(1, "ME", "No", "", "135")
       val jsonstring = gson.toJson(user).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
@@ -48,11 +48,102 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Save Coordinator Object" in new WithApplication {
 
-      val co = CoordinatorModel("1", "Karriem", "Uchiha")
+      val co = CoordinatorModel(1, "Karriem", "Uchiha")
       val jsonstring = gson.toJson(co).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
         POST, "/coordinator/addco/:coordinator").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Save Caregiver Object" in new WithApplication {
+
+      val model = CaregiverModel(1, "Naruto", "Uzamaki")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        POST, "/coordinator/addgiver/:giver").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Save Patient Object" in new WithApplication {
+
+      val model = PatientModel(1, "2014-08-05", "2014-08-06", "Ichigo", "Kurosaki")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        POST, "/coordinator/addpat/:pat").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Update Coordinator Record" in new WithApplication {
+
+      val model = CoordinatorModel(151, "Natsu", "Dragneel")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        PUT, "/coordinator/upco/:coor").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Update User Record" in new WithApplication {
+
+      val model = UserModel(65, "BigB", "WolfAmongUs", "151", "")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        PUT, "/coordinator/upuser/:user").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Update Caregiver Record" in new WithApplication {
+
+      val model = CaregiverModel(145, "Yagami", "Light")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        PUT, "/coordinator/upgiver/:care").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Update Patient Record" in new WithApplication {
+
+      val model = PatientModel(145, "2014-10-10", "2014-10-12", "Gon", "Freecs")
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        PUT, "/coordinator/uppat/:pat").withBody(json)
+      )
+      status(result) must equalTo(OK)
+      Logger.debug(" The Result is " + result)
+      contentType(result) must beSome("application/json")
+    }
+
+    "Should Update Care Plan Record" in new WithApplication {
+
+      val model = CarePlanModel(128, "Check up", "2014-08-22", "2014-09-22", 133, 65)
+      val jsonstring = gson.toJson(model).stripMargin
+      val json = Json.parse(jsonstring)
+      val Some(result) = route(FakeRequest(
+        PUT, "/coordinator/upplan/:plan").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
