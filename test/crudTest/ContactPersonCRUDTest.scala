@@ -31,11 +31,12 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         //(con.ddl).create
-        val contactAdd = Address("45 Samora", "45 Samora", "7785", Some(25), None, None, None, None, None )
-        addressRepo.insert(contactAdd)
 
         val contactPerson = ContactPerson(1, "Lola", "Fords", 5)
         val id = con.returning (con.map (_.personId) ).insert(contactPerson)
+
+        val contactAdd = Address("45 Samora", "45 Samora", "7785", Some(id), None, None, None, None, None )
+        addressRepo.insert(contactAdd)
 
         val contact = Contact(Some("0213433"), "08324545", "k@gbhosp.com", Some(id), None, None, None, None, None)
         contactRepo.insert(contact)

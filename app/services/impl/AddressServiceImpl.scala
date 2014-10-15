@@ -1,9 +1,10 @@
 package services.impl
 
-import domain.Address
+import domain.{Institution, Address}
 import repository.AddressModel.AddressRepo
 import repository.ContactPersonModel.ContactPersonRepo
 import repository.CoordinatorModel.CoordinatorRepo
+import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
 import services.AddressService
 import scala.slick.driver.MySQLDriver.simple._
@@ -17,6 +18,7 @@ class AddressServiceImpl extends AddressService{
   val patientRepo = TableQuery[PatientRepo]
   val coordinatorRepo = TableQuery[CoordinatorRepo]
   val contactRepo = TableQuery[ContactPersonRepo]
+  val instituteRepo = TableQuery[InstitutionRepo]
 
   override def getCaregiverAddress(id: Long) : Address={
      Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
@@ -70,4 +72,14 @@ class AddressServiceImpl extends AddressService{
 
     }
     }
+
+  override def getInstituteAddress(id: Long): Address = {
+    Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
+
+      val institute = addressRepo.filter(_.instituteId === id).list
+
+      println("Institution address" + institute)
+      institute.head
+    }
+  }
 }

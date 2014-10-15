@@ -41,11 +41,11 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
 
-        val address = Address("34 long street", "34 long street", "8000", None, None, Some(4), None, None, None)
-        patAddress.insert(patAddress)
-
         val medication = Adherence("M144", "Apply to burnt area", id)
         adherence.insert(medication)
+
+        val address = Address("34 long street", "34 long street", "8000", None, None, Some(id), None, None, None)
+        patAddress.insert(address)
 
         val demo = Demographic(32, "male", DateTime.parse("1979-04-25").toDate, None, None, Some(id), None)
         demoRepo.insert(demo)
@@ -91,13 +91,13 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Patient")
-          Read("Chris", id)
+          //Read("Chris", id)
 
         info("Updating Patient")
-          Update("Helvi", id)
+          //Update("Helvi", id)
 
         info("Deleting Patient")
-          Delete(id)
+          //Delete(id)
       }
     }
   }

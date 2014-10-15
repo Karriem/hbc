@@ -12,5 +12,6 @@ trait AddressService {
   def getCoordinatorAddress(id: Long) : Address
   def getContactPersonAddress(id: Long) : Address
   def getPatientAddress(id: Long) : Address
+  def getInstituteAddress(id: Long) : Address
   def getAllAddresses() : List[AddressRepo#TableElementType]
 }

@@ -34,10 +34,9 @@ class CoordinatorCRUDTest extends FeatureSpec with GivenWhenThen {
         //(demoRepo.ddl).create
 
         val coordinatorRecord = Coordinator(1,  "PK", "Shiya")
-
         val id = coordinatorRepo.returning(coordinatorRepo.map(_.coId)).insert(coordinatorRecord)
 
-        val addressRecord = Address("30 Apple Road", "30 Apple Road" , "7700" , None, Some(0), None , None , Some(id), None)
+        val addressRecord = Address("30 Apple Road", "30 Apple Road" , "7700" , None, None, None , None , Some(id), None)
         val demoRecord = Demographic(23 ,"Female", DateTime.parse("1976-03-16").toDate , Some(id), None, None , None )
         val contactRecord = Contact(Some("02145372134"), "0798734654", "p@gmail.com", None, None, Some(id), None, None, None)
 
