@@ -17,7 +17,7 @@ object ScheduleController  extends Controller{
   implicit val timeSheet = Json.writes[TimeSheet]
 
   /*def createSchedule() = Action{
-    scheduleService
+    scheduleService.createSchedule()
   }*/
 
  def getTimeSheetDetails(id: Long) = Action{

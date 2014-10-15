@@ -19,21 +19,22 @@ class UnplannedVisitServiceImpl extends UnplannedVisitService {
   val contactRepo = TableQuery[ContactRepo]
   val care = TableQuery[CaregiverRepo]
 
-  override def createUnplannedVisit(visit: UnplannedVisit,
+  override def createUnplannedVisit(visit: UnplannedVisit/*,
                                      caregiverID: Long,
                                      address: Address,
-                                     contact: Contact): Unit = {
+                                     contact: Contact*/): Long = {
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-      val unplannedVisitRecord = UnplannedVisit(visit.unplannedVisitID, visit.visitDate, visit.patientName,
-      visit.patientLastName, caregiverID)
-      val visitID = visitRepo.returning(visitRepo.map(_.unplannedVisitID)).insert(unplannedVisitRecord)
+      //val unplannedVisitRecord = UnplannedVisit(visit.unplannedVisitID, visit.visitDate, visit.patientName,
+      //visit.patientLastName, caregiverID)
+      //val visitID = visitRepo.returning(visitRepo.map(_.unplannedVisitID)).insert(unplannedVisitRecord)
 
-      val addressRecord = Address("30 Chester Road", "30 Chester Road", "7700" , None, None, None ,None , None, Some(visitID))
+      return visitRepo.returning(visitRepo.map(_.unplannedVisitID)).insert(visit)
+      /*val addressRecord = Address("30 Chester Road", "30 Chester Road", "7700" , None, None, None ,None , None, Some(visitID))
       addressRepo.insert(addressRecord)
 
       val contactRecord = Contact(Some("021798000") , "0786119726", "n@gmail.com", None, None, None , None, None, Some(visitID))
-      contactRepo.insert(contactRecord)
+      contactRepo.insert(contactRecord)*/
     }
   }
 

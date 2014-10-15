@@ -8,10 +8,14 @@ import repository.MeasurementModel.MeasurementRepo
  */
 trait MeasurementService {
 
-  def createMeasurement(measurement: Measurement,
+  /*def createMeasurement(measurement: Measurement,
                          patientID: Long,
-                         caregiverID: Long): Long
+                         caregiverID: Long): Long*/
+
+  def createMeasurement (measurement: Measurement): Long
 
   def getMeasurements(id: Long): List[MeasurementRepo#TableElementType]
+
+  //def updateMeasurement(measurement: Measurement)
 
 }

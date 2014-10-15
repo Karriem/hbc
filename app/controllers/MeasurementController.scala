@@ -18,21 +18,27 @@ object MeasurementController extends Controller{
 
   implicit val measurementWrites = Json.writes[Measurement]
 
-  /*def createMeasurement(measurement: String,
-                         patientID: Long,
-                         caregiverID: Long) = Action.async(parse.json){
+  def createMeasuremen(measurement: String) = Action.async(parse.json){
     request =>
 
+      //,
+      //patientID: String,
+      //caregiverID: String
+
+      /*val measurement = param{0}
+      val patientID = param{1}
+      val caregiverID = param{2}*/
+
       val input = request.body
+      //println("Body", input)
       val measure = Json.fromJson[MeasurementModel](input).get
       val measurementDom = measure.getDomain()
-      val mObj = measurementDom.copy(measurementID = measurement.toLong)
+      //val mObj = measurementDom.copy(measurement = measurement)
+      val results : Future[Long] = Future{measurementServ.createMeasurement(measurementDom)}
 
-      val results : Future[Long] = Future{measurementServ.createMeasurement(mObj, patientID, caregiverID)}
-
-
-      results.map(result => Ok(Json.toJson(mObj)))
-  }*/
+      results.map(res =>
+        Ok(Json.toJson(res)))
+  }
 
  def getMeasurements(id: Long) = Action{
     val measurementsList = measurementServ.getMeasurements(id)

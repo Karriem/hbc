@@ -38,7 +38,7 @@ class MeasurementServiceTest extends FeatureSpec with GivenWhenThen{
         var id: Long = 0L
 
         def testCreateMeasurement(): Unit ={
-           id = mService.createMeasurement(measurementRecord, patID, careID)
+           id = mService.createMeasurement(measurementRecord/*, patID, careID*/)
            measureRepo foreach {case (m: Measurement) =>
                if(m.measurementID == id){
                  assert(m.weight == 65)

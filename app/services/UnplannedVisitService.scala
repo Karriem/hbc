@@ -8,10 +8,10 @@ import repository.UnplannedVisitModel.UnplannedVisitRepo
  */
 trait UnplannedVisitService {
 
-  def createUnplannedVisit(visit: UnplannedVisit,
+  def createUnplannedVisit(visit: UnplannedVisit/*,
                             caregiverID: Long,
                             address: Address,
-                            contact: Contact)
+                            contact: Contact*/) : Long
 
   def listAllUnplannedVisits(): List[UnplannedVisitRepo#TableElementType]
 
