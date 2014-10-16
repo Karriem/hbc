@@ -11,8 +11,8 @@ import scala.concurrent.Future
  */
 trait DiagnosisService {
 
-  def createDiagnosis(diagnosis: Diagnosis,
-                      disease: Disease,
+  def createDiagnosis(diagnosis: Diagnosis/*,
+                      disease: Disease*/,
                       questionAnswerList: List[QuestionAnswerRepo#TableElementType]): Long
 
   def getDisease(id: Long): Disease

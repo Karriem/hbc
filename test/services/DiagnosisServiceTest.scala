@@ -37,27 +37,28 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
       qList += qAndA
 
       def testCreateDiagnosis = {
-        id = diaService.createDiagnosis(diagnosis, disease, qList.toList)
+        id = diaService.createDiagnosis(diagnosis,/* disease,*/ qList.toList)
 
         Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
           diagnosisRepo foreach { case (d: Diagnosis) =>
             if(d.followUpDate == DateTime.parse("2014-07-07").toDate){
+              assert(d.eventType == "Workplace Routine")
 
-              diseasesRepo foreach { case (disease: Disease) =>
+              /*diseasesRepo foreach { case (disease: Disease) =>
                 if(disease.diagnosisId == id){
                   assert(disease.diseaseType == "Asthma")  // Test for disease within diagnosis
                 }
-              }
+              }*/
             }
           }
         }
 
       }
 
-      def testGetDisease = {
+      /*def testGetDisease = {
         val disease = diaService.getDisease(id)
         assert(disease.diseaseType == "Asthma")
-      }
+      }*/
 
       def testGetDiagnosis = {
         val diagnosis = diaService.getDiagnosis(id)
@@ -73,8 +74,8 @@ class DiagnosisServiceTest extends FeatureSpec with GivenWhenThen{
       testCreateDiagnosis
       info("Retrieving Diagnosis")
       testGetDiagnosis
-      info("Retrieving Disease")
-      testGetDisease
+      //info("Retrieving Disease")
+      //testGetDisease
       // testGetAllDiagnosisByCaregiver
     }
   }

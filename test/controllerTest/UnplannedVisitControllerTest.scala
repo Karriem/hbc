@@ -29,7 +29,7 @@ class UnplannedVisitControllerTest extends Specification {
       val json = Json.parse(jsonStr)
 
       val Some(result) = route(FakeRequest(
-        POST, "/unplannedVisit/create/:visit").withJsonBody(json)
+        POST, "/api/unplannedVisit/create/:visit").withJsonBody(json)
       )
 
       println(result)

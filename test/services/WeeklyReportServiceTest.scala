@@ -76,7 +76,7 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
           val caregiverID = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiver)
           val patientID = patientRepo.returning(patientRepo.map(_.patientId)).insert(patient)
 
-          val dID = diaService.createDiagnosis(diagnosis, disease, qList.toList)
+          val dID = diaService.createDiagnosis(diagnosis/*, disease*/, qList.toList)
           val dlyID = dailyReportService.createDailyReport(dailyReport, timeSheet, category, caregiverID, patientID, dID)
 
           val reportIDs =  new ListBuffer[Long]()
