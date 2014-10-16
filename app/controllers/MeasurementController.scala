@@ -21,19 +21,9 @@ object MeasurementController extends Controller{
   def createMeasuremen(measurement: String) = Action.async(parse.json){
     request =>
 
-      //,
-      //patientID: String,
-      //caregiverID: String
-
-      /*val measurement = param{0}
-      val patientID = param{1}
-      val caregiverID = param{2}*/
-
       val input = request.body
-      //println("Body", input)
       val measure = Json.fromJson[MeasurementModel](input).get
       val measurementDom = measure.getDomain()
-      //val mObj = measurementDom.copy(measurement = measurement)
       val results : Future[Long] = Future{measurementServ.createMeasurement(measurementDom)}
 
       results.map(res =>

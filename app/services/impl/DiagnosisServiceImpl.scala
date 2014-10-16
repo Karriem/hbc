@@ -23,16 +23,16 @@ class DiagnosisServiceImpl extends DiagnosisService{
   val qARepo = TableQuery[QuestionAnswerRepo]
 
   override def createDiagnosis(diagnosis: Diagnosis,
-                               disease: Disease,
+                               /*disease: Disease,*/
                                questionAnswerList: List[QuestionAnswerRepo#TableElementType]): Long ={
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val diagID = diagnosisRepo.returning(diagnosisRepo.map (_.diagnosisId) ).insert(diagnosis)
-      val updatedDisease = Disease(disease.diseaseId, disease.diseaseType, disease.symptoms, diagID)
+      //val updatedDisease = Disease(disease.diseaseId, disease.diseaseType, disease.symptoms, diagID)
 
-      val dID = diseaseRepo.returning(diseaseRepo.map (_.diseaseId) ).insert(updatedDisease)
+      //val dID = diseaseRepo.returning(diseaseRepo.map (_.diseaseId) ).insert(updatedDisease)
       questionAnswerList foreach { case (q: QuestionAnswer) =>
-        val updatedQuestion = QuestionAnswer(q.question, q.answer, diagID)
+        //val updatedQuestion = QuestionAnswer(q.question, q.answer, diagID)
         qARepo.insert(q)
       }
 

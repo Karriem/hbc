@@ -26,31 +26,22 @@ class MeasurementControllerTest extends Specification {
       val gson = new Gson()
 
       val measurementRecord = MeasurementModel("1", "2014-02-12", "65", "12", "25", "19", "19" )
-      val patID = "19"
-      val careID = "19"
+      //val patID = "19"
+      //val careID = "19"
 
       val measureJsonString = gson.toJson(measurementRecord).stripMargin
-      val pID = gson.toJson(patID).stripMargin
-      val cID = gson.toJson(careID).stripMargin
+      //val pID = gson.toJson(patID).stripMargin
+      //val cID = gson.toJson(careID).stripMargin
 
       val json = Json.parse(measureJsonString)
-      val json1 = Json.parse(pID)
-      val json2 = Json.parse(cID)
+      //val json1 = Json.parse(pID)
+      //val json2 = Json.parse(cID)
+      println("res", json)
 
-      /*var qList = new ListBuffer[String]
-      qList += measureJsonString
-      qList += pID
-      qList += cID*/
-
-      //val a = gson.toJson(qList.toList)
-
-      //val j = Json.parse(a)
       val Some(result) = route(FakeRequest(
-        POST, "/measurement/save/:m").withJsonBody(json)//.withJsonBody(json1).withJsonBody(json2)
+        POST, "/api/measurement/save/:m").withJsonBody(json)//.withJsonBody(json1).withJsonBody(json2)
       )
-      //result must beSome
-      //status(result.get) must equalTo(OK)
-      //contentType(result.get) must beSome.which(_ == "application/json")
+
       println(result)
       status(result) must equalTo(OK)
       //Logger.debug(" The Result is " + result)

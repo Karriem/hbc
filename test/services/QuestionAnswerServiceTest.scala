@@ -36,10 +36,10 @@ class QuestionAnswerServiceTest extends FeatureSpec with GivenWhenThen {
         var id : Long = 0L
 
         def testCreateQuestionsAnswer = {
-          id =  qAService.createQuestionAndAnswers(diagnosis, qList.toList)
+          id =  qAService.createQuestionAndAnswers(/*2L,*/ qList.toList)
           qARepo foreach { case (q: QuestionAnswer) =>
             if(q.question == "How long has the symptoms persisted?"){
-              assert(q.answer == "2 weeks" )
+              assert(q.answer == "2 weeks")
             }
           }
         }
