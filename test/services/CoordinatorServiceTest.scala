@@ -28,14 +28,14 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getInstitutionTest: Unit ={
 
-          val value = obj.getInstitution(4)
-          assert(value.instituteName == "Grabouw Hospital")
+          val value = obj.getInstitution(40)
+          assert(value.instituteName == "Parow Hospital")
         }
 
         def viewPatientsTest: Unit ={
 
-          val value = obj.viewPatients(1)
-          assert(value.firstName == "Bo")
+          val value = obj.viewPatients(45)
+          assert(value.firstName == "Chris")
         }
 
         def viewAllPatientTest: Unit ={
@@ -43,13 +43,13 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
           var list : List[PatientRepo#TableElementType] = List()
 
           list = obj.viewAllPatient()
-          assert(list.size == 3)
+          assert(list.size == 25)
         }
 
         def createUserTest: Unit ={
 
           val userRepo = TableQuery[UserRepo]
-          val userRecord = User(1, "root", "pass", Some(5), None)
+          val userRecord = User(1, "root", "pass", None, Some(5))
           val value = obj.createUser(userRecord)
 
           assert(userRepo.list.filter(_.userId == value).head.password == "pass")
@@ -57,8 +57,8 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getUserTest: Unit ={
 
-          val value = obj.getUser(0)
-          assert(value.username == "normal user")
+          val value = obj.getUser(5)
+          assert(value.username == "root")
         }
 
         def addCoordinatorTest: Unit ={
@@ -114,7 +114,7 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
         info("getUserTest")
         getUserTest
         info("createUserTest")
-       // createUserTest
+         createUserTest
         info("addCoordinatorTest")
         addCoordinatorTest
         info("createCarePlanTest")

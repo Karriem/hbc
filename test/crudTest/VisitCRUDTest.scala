@@ -95,13 +95,13 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Visit")
-        //Read(ti.toDate, visitID)
+        Read(ti.toDate, visitID)
 
         info("Updating Visit")
-       // Update(upWd.toDate, visitID)
+        Update(upWd.toDate, visitID)
 
         info("Deleting Visit")
-        //Delete(visitID)
+        Delete(visitID)
       }
     }
   }

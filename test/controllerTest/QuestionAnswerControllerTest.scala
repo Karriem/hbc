@@ -1,4 +1,4 @@
-package controllerTest
+/*package controllerTest
 
 import com.google.gson.Gson
 import domain.{QuestionAnswer, Diagnosis}
@@ -53,4 +53,4 @@ class QuestionAnswerControllerTest extends Specification {
 
   }
 
-}
+}*/

@@ -32,7 +32,7 @@ class UserCRUDTest extends FeatureSpec with GivenWhenThen {
         val caregiverRecord = Caregiver(1, "Max", "Crews")
         val careId = caregiverRepo.returning(caregiverRepo.map(_.caregiverId)).insert(caregiverRecord)
 
-        val userRecord = User(1, "root", "pass", Some(careId), Some(0))
+        val userRecord = User(1, "root", "pass", Some(careId), None)
         val userID = userRepo.returning(userRepo.map(_.userId)).insert(userRecord)
 
         def Read(desc: String, uName: String, id: Long) = {

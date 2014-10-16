@@ -96,7 +96,7 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
         info("Updating Disease")
         Update("Puking", idDis)
         info("Deleting Disease")
-        //Delete(idDis)
+        Delete(idDis)
       }
     }
   }
