@@ -1,9 +1,6 @@
 package services
 
-import domain.Patient
-import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
-import repository.PatientModel.PatientRepo
 import services.impl.CaregiverServiceImpl
 
 import scala.slick.driver.MySQLDriver.simple._
@@ -25,27 +22,20 @@ class CaregiverServiceTest extends FeatureSpec with GivenWhenThen {
 
         def getCarePlanTest ={
 
-          val obj = careObj.getCareplan(2)
-          assert(obj.description == "TB Treatment")
+          val obj = careObj.getCareplan(124)
+          assert(obj.description == "Cleaning house")
         }
 
         def getPatientDetailsTest = {
 
-          val obj = careObj.getPatientDetails(1)
-          assert(obj.firstName == "Bo")
+          val obj = careObj.getPatientDetails(128)
+          assert(obj.firstName == "Phakama")
         }
 
         def getUserDetailsTest ={
 
-          val obj = careObj.getUserDetails(10)
-          assert(obj.username == "normal user")
-        }
-
-        def addPatientTest = {
-          val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-2").toDate, "MIMI", "No")
-          val value = careObj.addPatient(patRecord)
-          val repo = TableQuery[PatientRepo]
-          assert(repo.list.filter(_.patientId == value).head.firstName == "MIMI")
+          val obj = careObj.getUserDetails(138)
+          assert(obj.username == "root")
         }
 
         info("GetCarePlanTest")
@@ -54,8 +44,6 @@ class CaregiverServiceTest extends FeatureSpec with GivenWhenThen {
         getPatientDetailsTest
         info("GetUserDetailsTest")
         getUserDetailsTest
-        info("AddPatientTest")
-        addPatientTest
       }
     }
   }

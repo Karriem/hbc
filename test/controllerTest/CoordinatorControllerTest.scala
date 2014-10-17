@@ -1,4 +1,4 @@
-package controllersTest
+package controllerTest
 
 import com.google.gson.Gson
 import model._
@@ -26,7 +26,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(user).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/createuser/:user").withBody(json)
+        POST, "/api/coordinator/createuser/:user").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -39,7 +39,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(plan).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/createplan/:plan").withBody(json)
+        POST, "/api/coordinator/createplan/:plan").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -52,7 +52,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(co).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/addco/:coordinator").withBody(json)
+        POST, "/api/coordinator/addco/:coordinator").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -65,7 +65,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/addgiver/:giver").withBody(json)
+        POST, "/api/coordinator/addgiver/:giver").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -78,7 +78,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        POST, "/coordinator/addpat/:pat").withBody(json)
+        POST, "/api/coordinator/addpat/:pat").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -91,7 +91,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        PUT, "/coordinator/upco/:coor").withBody(json)
+        PUT, "/api/coordinator/upco/:coor").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -104,7 +104,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        PUT, "/coordinator/upuser/:user").withBody(json)
+        PUT, "/api/coordinator/upuser/:user").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -117,7 +117,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        PUT, "/coordinator/upgiver/:care").withBody(json)
+        PUT, "/api/coordinator/upgiver/:care").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -130,7 +130,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        PUT, "/coordinator/uppat/:pat").withBody(json)
+        PUT, "/api/coordinator/uppat/:pat").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -143,7 +143,7 @@ class CoordinatorControllerTest extends Specification {
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
-        PUT, "/coordinator/upplan/:plan").withBody(json)
+        PUT, "/api/coordinator/upplan/:plan").withBody(json)
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -153,7 +153,7 @@ class CoordinatorControllerTest extends Specification {
     "Should Delete a Coordinator Record" in new WithApplication {
 
       val Some(co) = route(FakeRequest(
-        DELETE, "/coordinator/delco/230")
+        DELETE, "/api/coordinator/delco/230")
       )
       status(co) must equalTo(OK)
       Logger.debug(" The Result is " + co)
@@ -163,7 +163,7 @@ class CoordinatorControllerTest extends Specification {
     "Should Delete a Caregiver Record" in new WithApplication {
 
       val Some(result) = route(FakeRequest(
-        DELETE, "/coordinator/delgiver/344")
+        DELETE, "/api/coordinator/delgiver/344")
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)
@@ -173,7 +173,7 @@ class CoordinatorControllerTest extends Specification {
     "Should Delete a Patient Record" in new WithApplication {
 
       val Some(pat) = route(FakeRequest(
-        DELETE, "/coordinator/delpat/376")
+        DELETE, "/api/coordinator/delpat/376")
       )
       status(pat) must equalTo(OK)
       Logger.debug(" The Result is " + pat)
@@ -183,7 +183,7 @@ class CoordinatorControllerTest extends Specification {
     "Should Delete a CarePlan Record" in new WithApplication {
 
       val Some(result) = route(FakeRequest(
-        DELETE, "/coordinator/delcare/235")
+        DELETE, "/api/coordinator/delcare/235")
       )
       status(result) must equalTo(OK)
       Logger.debug(" The Result is " + result)

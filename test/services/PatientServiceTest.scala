@@ -1,10 +1,7 @@
 package services
 
-import domain.{Adherence, Patient}
-import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.AdherenceModel.AdherenceRepo
-import repository.CarePlanModel.CarePlanRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.PatientModel.PatientRepo
 import services.impl.PatientServiceImpl
@@ -33,13 +30,13 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen {
 
         def testGetDiagnosis {
 
-          val value = patientservice.getDiagnosis(3)
-          assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "TB")
+          val value = patientservice.getDiagnosis(5)
+          assert(diagnosisRepo.list.filter(_.dailyReportId == value.dailyReportId).head.diagnosisType == "Burn wounds")
         }
 
         def testGetAdherence: Unit = {
 
-          val value = patientservice.getAdherence(6)
+          val value = patientservice.getAdherence(404)
           println("Adherence: " + value)
           assert(adherenceRepo.list.filter(_.patientId == value.patientId).head.adType == "M144")
         }

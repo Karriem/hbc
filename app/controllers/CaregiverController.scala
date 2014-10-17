@@ -25,6 +25,13 @@ object CaregiverController extends Controller{
     Ok(json)
   }
 
+  def getPlanPatient(id:Long) = Action {
+
+    val careplan = caregiverServ.getPlanPatient(id)
+    val json = Json.toJson(careplan)
+    Ok(json)
+  }
+
   def getPatient(id:Long) = Action {
 
     val patient =  caregiverServ.getPatientDetails(id)

@@ -1,9 +1,9 @@
 package services
 
-import org.scalatest.{GivenWhenThen, FeatureSpec}
-import repository.ContactModel.ContactRepo
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.ContactPersonModel.ContactPersonRepo
 import services.impl.ContactPersonServiceImpl
+
 import scala.slick.driver.MySQLDriver.simple._
 
 
@@ -23,8 +23,8 @@ class ContactPersonServiceTest extends FeatureSpec with GivenWhenThen {
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         def getContact: Unit = {
-          val value = contactservice.getContact(5)
-          assert(value.firstName == "Lola")
+          val value = contactservice.getContact(41)
+          assert(value.firstName == "MR")
         }
 
         def getAllContacts: Unit ={

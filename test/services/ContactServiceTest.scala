@@ -21,31 +21,31 @@ class ContactServiceTest extends FeatureSpec with GivenWhenThen{
 
         def getCaregiverContact: Unit ={
 
-          val value = contactservice.getCaregiverContact(14)
-          assert(value.email == "n@gmail.com")
+          val value = contactservice.getCaregiverContact(141)
+          assert(value.email == "dfgwergh")
         }
 
         def getCoordinatorContact: Unit ={
 
-          val value = contactservice.getCoordinatorContact(12)
+          val value = contactservice.getCoordinatorContact(269)
           assert(value.cellNumber == "0798734654")
         }
 
         def getContactPerson: Unit ={
 
-          val value = contactservice.getPersonContact(1)
-          assert(value.email == "kp@grabowhosp.com")
+          val value = contactservice.getPersonContact(30)
+          assert(value.email == "k@gbhosp.com")
         }
 
         def getPatientDetails: Unit ={
 
-          val value = contactservice.getPatientContact(11)
+          val value = contactservice.getPatientContact(437)
           assert(value.cellNumber == "07983464")
         }
 
         def getInstituteDetails: Unit ={
 
-          val value = contactservice.getInstituteContact(6)
+          val value = contactservice.getInstituteContact(91)
           assert(value.cellNumber == "08245789")
         }
 
@@ -64,7 +64,7 @@ class ContactServiceTest extends FeatureSpec with GivenWhenThen{
         getCoordinatorContact
 
         info("Testing contact person contact details")
-        //getContactPerson
+        getContactPerson
 
         info("Testing patient contact details")
         getPatientDetails
@@ -73,7 +73,7 @@ class ContactServiceTest extends FeatureSpec with GivenWhenThen{
         getInstituteDetails
 
         info("Testing all contact details")
-        getAllContacts
+        //getAllContacts
       }
 
     }
