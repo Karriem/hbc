@@ -8,24 +8,29 @@ import play.api.libs.json.Json
  */
 case class DailyReportModel(dailyReportId:Long,
                             servicesRendered:String,
-                            weeklyReportId:Option[String],
+                            weeklyReportId:String,
                             caregiverId:String,
-                            patientId:String) /*{
-  def getDomain() :DailyReport = DailyReportModel.domain(this) }*/
+                            patientId:String) {
+  def getDomain() :DailyReport = DailyReportModel.domain(this) }
 
 object DailyReportModel{
   implicit lazy val dailyReportFmt = Json.format[DailyReportModel]
 
-  /* def domain(model:DailyReportModel )={
+  def domain(model:DailyReportModel )={
     var value : Long = 0l
 
     if (model.weeklyReportId == ""){
       value
     }
+    else
+    if(model.weeklyReportId != ""){
+      value = model.weeklyReportId.toLong
+    }
+
     DailyReport(model.dailyReportId,
-                model.servicesRendered,
-                Some(value),
-                (model.caregiverId).toLong,
-                (model.patientId).toLong)
-  }*/
+      model.servicesRendered,
+      Some(value),
+      (model.caregiverId).toLong,
+      (model.patientId).toLong)
+  }
 }

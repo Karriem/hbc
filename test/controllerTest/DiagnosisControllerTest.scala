@@ -24,7 +24,7 @@ class DiagnosisControllerTest extends Specification{
     "Should save diagnosis objects" in new WithApplication {
       val gson = new Gson()
 
-      val diag = DiagnosisModel("1", "Asthmatic", "Antibiotics", "2014-07-07", 1L, "Workplace Routine")
+      val diag = DiagnosisModel("1", "Asthmatic", "Antibiotics", "2014-07-07", "", "Workplace Routine")
 
       //val disease = DiseaseModel(1L, "Asthma", "Excessive Coughing", 1L)
 
