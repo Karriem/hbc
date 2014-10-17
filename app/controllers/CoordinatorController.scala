@@ -30,16 +30,24 @@ object CoordinatorController extends Controller {
     Ok(json)
   }
 
-  def getUser(id:Long) = Action {
+  def getUser(id:String) = Action {
 
     val user = coorServ.getUser(id)
     val json = Json.toJson(user)
     Ok(json)
   }
 
+  def checkCredentials(username:String, password:String) = Action {
+
+    val id = coorServ.checkCredentials(username, password)
+    val json = Json.toJson(id)
+    Ok(id)
+  }
+
   def createUser(user:String) = Action.async(parse.json){
     request =>
       val input = request.body
+      println(input)
       val userModel = Json.fromJson[UserModel](input).get
       val userObj = userModel.getDomain()
       val u : Future[Long] = Future{coorServ.createUser(userObj)}
@@ -102,7 +110,6 @@ object CoordinatorController extends Controller {
       val input = request.body
       val caregiver = Json.fromJson[CaregiverModel](input).get
       val giverObj = caregiver.getDomain()
-      //val caregiverObj = caregiver.copy(giver.toLong)
       val service = coorServ.addCaregiver(giverObj)
       val giver : Future[Long] = Future{service}
 
@@ -116,7 +123,6 @@ object CoordinatorController extends Controller {
     request =>
       val input = request.body
       val patient = Json.fromJson[PatientModel](input).get
-      //val patientObj = patient.copy(pat.toLong)
       val patObj = patient.getDomain()
       val service = coorServ.addPatient(patObj)
       val pat : Future[Long] = Future{service}

@@ -46,5 +46,7 @@ trait CoordinatorService {
 
   def viewAllPatient(): List[PatientRepo#TableElementType]
 
-  def getUser(id:Long) : User
+  def getUser(id:String) : String
+
+  def checkCredentials(username:String, password:String) : String
 }

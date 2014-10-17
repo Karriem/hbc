@@ -1,10 +1,9 @@
 package services.impl
 
-import domain.{Institution, ContactPerson, Contact}
-import repository.ContactModel.ContactRepo
+import domain.ContactPerson
 import repository.ContactPersonModel.ContactPersonRepo
 import services.ContactPersonService
-import scala.collection.mutable.ListBuffer
+
 import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by phakama on 2014/09/23.
@@ -19,8 +18,8 @@ class ContactPersonServiceImpl extends ContactPersonService{
 
       //val person = contactRepo.list
       //val institution = instituteRepo.list
-
-      val value = contactRepo.filter(_.instituteId === id).list
+      val list = contactRepo.list
+      val value = list.filter(_.instituteId == id)
       value.head
 
     }

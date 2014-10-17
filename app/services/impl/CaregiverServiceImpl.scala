@@ -25,7 +25,7 @@ class CaregiverServiceImpl extends CaregiverService{
 
       val careList = careRepo.list
 
-      val careplan = careList.filter(_.planId == id).head
+      val careplan = careList.filter(_.planId  == id).head
       careplan
     }
   }
@@ -51,6 +51,17 @@ class CaregiverServiceImpl extends CaregiverService{
 
       val user = userList.filter(_.caregiverId.getOrElse() == id).head
       user
+    }
+  }
+
+  override def getPlanPatient(id: Long): CarePlan = {
+
+    dataCon.withSession { implicit session =>
+
+      val careList = careRepo.list
+
+      val careplan = careList.filter(_.patientId  == id).head
+      careplan
     }
   }
 }

@@ -4,8 +4,9 @@ import domain.Measurement
 import model.MeasurementModel
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
-import services.{MeasurementService, QuestionAnswerService}
-import services.impl.{MeasurementServiceImpl, QuestionAnswerServiceImpl}
+import services.MeasurementService
+import services.impl.MeasurementServiceImpl
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -18,13 +19,22 @@ object MeasurementController extends Controller{
 
   implicit val measurementWrites = Json.writes[Measurement]
 
-  def createMeasuremen(measurement: String) = Action.async(parse.json){
+  def createMeasurement(measurement: String) = Action.async(parse.json){
     request =>
 
       val input = request.body
-      val measure = Json.fromJson[MeasurementModel](input).get
+      val o = (input \ "object").as[String]
+      val pid = (input \ "patid").as[Long]
+      val cid = (input \ "careid").as[Long]
+      val json = Json.parse(o)
+
+      val measure = Json.fromJson[MeasurementModel](json).get
       val measurementDom = measure.getDomain()
-      val results : Future[Long] = Future{measurementServ.createMeasurement(measurementDom)}
+
+      val mObj = Measurement(measurementDom.measurementID, measurementDom.dateTaken,
+        measurementDom.weight, measurementDom.bloodPressure, measurementDom.temperature, pid, cid)
+
+      val results : Future[Long] = Future{measurementServ.createMeasurement(mObj)}
 
       results.map(res =>
         Ok(Json.toJson(res)))

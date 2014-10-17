@@ -5,53 +5,193 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /careplans/:id              controllers.CarePlanController.listCarePlan(id:Long)
-
+GET     /dbsetup                    controllers.Application.dbSetup
 
 # Diagnosis
 
-# POST    /diagnosis/create/:dia/:di/:qa        controllers.DiagnosisController.create(dia, di, q)
-GET       /diagnosis/getDiagnosis/:id           controllers.DiagnosisController.getDiagnosis(id: Long)
-GET       /diagnosis/getDisease/:id             controllers.DiagnosisController.getDisease(id: Long)
-GET       /diagnosis/getCaregiversDiagnosis/:id controllers.DiagnosisController.diagnosisPerCaregiver(id: Long)
+POST    /api/diagnosis/create/:dia                  controllers.DiagnosisController.createDiagnosis(dia: String)
+
+GET    /api/diagnosis/getDiagnosis/:id              controllers.DiagnosisController.getDiagnosis(id: Long)
+
+GET    /api/diagnosis/getDisease/:id                controllers.DiagnosisController.getDisease(id: Long)
+
+GET    /api/diagnosis/getCaregiversDiagnosis/:id    controllers.DiagnosisController.diagnosisPerCaregiver(id: Long)
 
 # Measurement
 
-# POST    /measurement/create/:m/:pID/:cID      controllers.MeasurementController.createMeasurement(m, pID, cID)
-GET       /measurement/getMeasurements/:id      controllers.MeasurementController.getMeasurements(id: Long)
+GET    /api/measurement/getMeasurements/:id         controllers.MeasurementController.getMeasurements(id: Long)
+
+POST   /api/measurement/create/:m                   controllers.MeasurementController.createMeasurement(m: String)
 
 # Unplanned Visit
 
-# POST  /unplannedVisit/create                  controllers.UnplannedVisitController.createUnplannedVisit()
-GET     /unplannedVisit/listVisits              controllers.UnplannedVisitController.getUnplannedVisits
+POST   /api/unplannedVisit/create/:visit            controllers.UnplannedVisitController.createUnplannedVisit(visit: String)
+
+GET    /api/unplannedVisit/listVisits               controllers.UnplannedVisitController.getUnplannedVisits
 
 
 # Daily Report
-# POST /dailyReport/create                      controllers.DailyReportController.create()
-GET    /dailyReport/timesheet/:id               controllers.DailyReportController.getTimeSheetDetails(id: Long)
-GET    /dailyReport/category/:id                controllers.DailyReportController.getCategory(id: Long)
-GET    /dailyReport/diagnosis/:id               controllers.DailyReportController.getDiagnosis(id: Long)
-GET    /dailyReport/patientsReports/:id         controllers.DailyReportController.getReportByPatient(id: Long)
-GET    /dailyReport/caregiversReports/:id      controllers.DailyReportController.getReportByCaregiver(id: Long)
-GET    /dailyReport/allReports               controllers.DailyReportController.getAllReports
+
+# POST /api/dailyReport/create                      controllers.DailyReportController.create()
+
+GET    /api/dailyReport/timesheet/:id               controllers.DailyReportController.getTimeSheetDetails(id: Long)
+
+GET    /api/dailyReport/category/:id                controllers.DailyReportController.getCategory(id: Long)
+
+GET    /api/dailyReport/diagnosis/:id               controllers.DailyReportController.getDiagnosis(id: Long)
+
+GET    /api/dailyReport/patientsReports/:id         controllers.DailyReportController.getReportByPatient(id: Long)
+
+GET    /api/dailyReport/caregiversReports/:id       controllers.DailyReportController.getReportByCaregiver(id: Long)
+
+GET    /api/dailyReport/allReports                  controllers.DailyReportController.getAllReports
 
 # QuestionAnswer
 
-# POST   /questionAnswer/create/:id             controllers.QuestionAnswerController.createQuestionAnswer()
-GET     /questionAnswer/getPerDiagnosis/:id     controllers.QuestionAnswerController.getQuestionAnswer(id: Long)
+POST   /api/questionAnswer/create/:qA               controllers.QuestionAnswerController.createQuestionAnswer(qA: String)
+
+GET    /api/questionAnswer/getPerDiagnosis/:id      controllers.QuestionAnswerController.getQuestionAnswer(id: Long)
 
 # Schedule
 
-# POST  /schedule/create/                       controllers.ScheduleController.createSchedule()
-GET     /schedule/getTimeSheet/:id              controllers.ScheduleController.getTimeSheetDetails(id: Long)
-GET     /schedule/patientSchedule/:id           controllers.ScheduleController.getSchedulePerPatient(id: Long)
-GET     /schedule/caregiverSchedule/:id         controllers.ScheduleController.getSchedulePerCaregiver(id: Long)
+# POST  /api/schedule/create/                       controllers.ScheduleController.createSchedule()
+
+GET     /api/schedule/getTimeSheet/:id              controllers.ScheduleController.getTimeSheetDetails(id: Long)
+
+GET     /api/schedule/patientSchedule/:id           controllers.ScheduleController.getSchedulePerPatient(id: Long)
+
+GET     /api/schedule/caregiverSchedule/:id         controllers.ScheduleController.getSchedulePerCaregiver(id: Long)
 
 # Weekly Report
 
-# POST /weeklyReport/create/                    controllers.WeeklyReportController.create
-GET    /weeklyReport/totalVisits/:id            controllers.WeeklyReportController.getTotalVisits(id: Long)
-GET    /weeklyReport/referralCheck/:id          controllers.WeeklyReportController.checkForReferral(id: Long)
-GET    /weeklyReport/allDailyReports/:id        controllers.WeeklyReportController.getAllDailyReports(id: Long)
+# POST /api/weeklyReport/create/                    controllers.WeeklyReportController.create
+
+GET    /api/weeklyReport/totalVisits/:id            controllers.WeeklyReportController.getTotalVisits(id: Long)
+
+GET    /api/weeklyReport/referralCheck/:id          controllers.WeeklyReportController.checkForReferral(id: Long)
+
+GET    /api/weeklyReport/allDailyReports/:id        controllers.WeeklyReportController.getAllDailyReports(id: Long)
+
+# Care Plan
+
+GET     /api/careplan/getplan/:id                   controllers.CarePlanController.getCarePlan(id:Long)
+
+GET     /api/careplan/getpat/:id                    controllers.CarePlanController.getPatient(id:Long)
+
+GET     /api/careplan/getissued/:id                 controllers.CarePlanController.getWhoIssuedPlan(id:Long)
+
+GET     /api/careplan/getvisit/:id                  controllers.CarePlanController.getVisit(id:Long)
+
+# Caregiver
+
+GET     /api/caregiver/getplan/:id                  controllers.CaregiverController.getCarePlan(id:Long)
+
+GET     /api/caregiver/getplanpatient/:id           controllers.CaregiverController.getPlanPatient(id: Long)
+
+GET     /api/caregiver/getpat/:id                   controllers.CaregiverController.getPatient(id:Long)
+
+GET     /api/caregiver/getuser/:id                  controllers.CaregiverController.getUser(id:Long)
+
+# Coordinator
+
+GET     /api/coordinator/getins/:id                 controllers.CoordinatorController.getInstitution(id:Long)
+
+GET     /api/coordinator/getuser/:id                controllers.CoordinatorController.getUser(id:String)
+
+GET     /api/coordinator/check/:username/:password  controllers.CoordinatorController.checkCredentials(username:String, password:String)
+
+GET     /api/coordinator/getpat/:id                 controllers.CoordinatorController.getPatient(id:Long)
+
+GET     /api/coordinator/getcare/:id                controllers.CoordinatorController.getCaregiver(id:Long)
+
+GET     /api/coordinator/allpat/                    controllers.CoordinatorController.viewAllPatients
+
+DELETE     /api/coordinator/delco/:id               controllers.CoordinatorController.deleteCoordinator(id:Long)
+
+DELETE     /api/coordinator/delgiver/:id            controllers.CoordinatorController.deleteCaregiver(id:Long)
+
+DELETE     /api/coordinator/delpat/:id              controllers.CoordinatorController.deletePatient(id:Long)
+
+DELETE    /api/coordinator/delcare/:id              controllers.CoordinatorController.deleteCarePlan(id:Long)
+
+POST    /api/coordinator/createuser/:user           controllers.CoordinatorController.createUser(user:String)
+
+POST    /api/coordinator/createplan/:plan           controllers.CoordinatorController.createCarePlan(plan:String)
+
+POST    /api/coordinator/addco/:coordinator         controllers.CoordinatorController.addCoordinator(coordinator:String)
+
+POST    /api/coordinator/addgiver/:giver            controllers.CoordinatorController.addCaregiver(giver:String)
+
+POST    /api/coordinator/addpat/:pat                controllers.CoordinatorController.addPatient(pat:String)
+
+PUT     /api/coordinator/upco/:coor                 controllers.CoordinatorController.updateCoordinator(coor:String)
+
+PUT     /api/coordinator/upuser/:user               controllers.CoordinatorController.updateUser(user:String)
+
+PUT     /api/coordinator/upgiver/:care              controllers.CoordinatorController.updateCaregiver(care:String)
+
+PUT     /api/coordinator/uppat/:pat                 controllers.CoordinatorController.updatePatient(pat:String)
+
+PUT     /api/coordinator/upplan/:plan               controllers.CoordinatorController.updateCarePlan(plan:String)
+
 # Map static resources from the /public folder to the /assets URL path
+
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# Contact person
+
+GET     /api/contactPerson/contactInstitution/:id    controllers.ContactPersonController.getContactPerson(id: Long)
+
+GET     /api/contactPerson/contactInstitution        controllers.ContactPersonController.getAllContacts
+
+GET     /api/address/caregiverAddress/:id            controllers.AddressController.listCaregiverAddress(id: Long)
+
+GET     /api/address/coordinatorAddress/:id          controllers.AddressController.listCoordinatorAddress(id: Long)
+
+GET     /api/address/contactPersonAddress/:id        controllers.AddressController.listContactPersonAddress(id: Long)
+
+GET     /api/address/caregiverAddress/:id            controllers.AddressController.listCaregiverAddress(id: Long)
+
+GET     /api/address/instiruteAddress/:id            controllers.AddressController.listPatientAddress(id: Long)
+
+GET     /api/address/allAddresses                    controllers.AddressController.listAllAddresses
+
+# Contacts
+
+GET     /api/contact/caregiverContact/:id            controllers.ContactController.getCaregiverContact(id: Long)
+
+GET     /api/contact/contactPerson/:id               controllers.ContactController.getContactPerson(id: Long)
+
+GET     /api/contact/coordinatorContact/:id          controllers.ContactController.getCoordnatorContact(id: Long)
+
+GET     /api/contact/patientContact/:id              controllers.ContactController.getPatientContact(id: Long)
+
+GET     /api/contact/instituteContact/:id            controllers.ContactController.getInstituteContact(id: Long)
+
+GET     /api/contact/allContacts/                    controllers.ContactController.getAllContacts
+
+# Demographics
+
+GET     /api/demographics/caregiverDemos/:id        controllers.DemographicController.getCaregiverDemos(id: Long)
+
+GET     /api/demographics/contactPersonDemos/:id    controllers.DemographicController.getContactPersonDemos(id: Long)
+
+GET     /api/demographics/coordinatorDemos/:id      controllers.DemographicController.getCoordinatorDemos(id: Long)
+
+GET     /api/demographics/personDemos/:id           controllers.DemographicController.getPatientDemos(id: Long)
+
+GET     /api/demographics/personDemos/:id           controllers.DemographicController.getPatientDemos(id: Long)
+
+GET     /api/demographics/allDemos                  controllers.DemographicController.getAllDemos
+
+# Patient
+
+GET     /api/patient/patientAdherence/:id           controllers.PatientController.getAdherence(id: Long)
+
+GET     /api/patient/patientDiagnosis/:id           controllers.PatientController.geDiagnosis(id: Long)
+
+# Contact person
+
+GET     /api/contactPerson/contactInstitution/:id   controllers.ContactPersonController.getContactPerson(id: Long)
+
+GET     /api/contactPerson/contactInstitution       controllers.ContactPersonController.getAllContacts

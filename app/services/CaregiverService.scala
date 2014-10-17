@@ -9,6 +9,8 @@ trait CaregiverService {
 
     def getCareplan(id:Long) : CarePlan
 
+    def getPlanPatient(id: Long) : CarePlan
+
     def getPatientDetails(id:Long): Patient
 
     def getUserDetails(id:Long): User

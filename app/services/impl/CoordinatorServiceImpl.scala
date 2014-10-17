@@ -13,6 +13,7 @@ import repository.PatientModel.PatientRepo
 import repository.UserModel.UserRepo
 import services.CoordinatorService
 import scala.slick.driver.MySQLDriver.simple._
+import org.mindrot.jbcrypt.BCrypt
 
 /**
  * Created by karriem on 9/18/14.
@@ -43,14 +44,20 @@ class CoordinatorServiceImpl extends CoordinatorService{
     }
   }
 
-  override def getUser(id: Long): User = {
+  override def checkCredentials(username:String, password:String): String = {
 
     dataCon.withSession { implicit session =>
 
+      var id = 1L
       val userList = userRepo.list
+      //val encryptPass = BCrypt.hashpw(password, BCrypt.gensalt())
 
-      val coor = userList.filter(_.coordinatorId.getOrElse() == id).head
-      coor
+      userList foreach { case (u: User) =>
+        if (u.username == username && BCrypt.checkpw(password, u.password)) {
+          id = u.userId
+        }
+      }
+      id.toString
     }
   }
 
@@ -58,7 +65,23 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
     dataCon.withSession { implicit session =>
 
-      val value = userRepo.returning (userRepo.map (_.userId)).insert(user)
+      val list = userRepo.list
+
+      var value = 1L
+
+      list foreach { case (u :User) =>
+
+          if (u.username == user.username){
+                   value = 0L
+          }
+      }
+
+      if (value == 1) {
+        val encryptPass = BCrypt.hashpw(user.password, BCrypt.gensalt())
+        val newUser = User(user.userId, user.username, encryptPass, user.caregiverId, user.coordinatorId)
+
+        value = userRepo.returning(userRepo.map(_.userId)).insert(newUser)
+      }
       value
     }
   }
@@ -219,6 +242,17 @@ class CoordinatorServiceImpl extends CoordinatorService{
     dataCon.withSession { implicit session =>
 
       careRepo.filter(_.planId === id).delete
+    }
+  }
+
+  override def getUser(id: String): String = {
+
+    dataCon.withSession { implicit session =>
+
+      val userList = userRepo.list
+
+      val coor = userList.filter(_.userId == id.toLong).map(_.username).head
+      coor
     }
   }
 }

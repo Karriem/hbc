@@ -25,7 +25,6 @@ class AddressServiceImpl extends AddressService{
 
       val listAd = addressRepo.filter(_.caregiverId === id).list
 
-      println("Address for a Caregiver: " + listAd)
        listAd.head
 
     }
@@ -36,7 +35,6 @@ class AddressServiceImpl extends AddressService{
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
       val addressList = addressRepo.list
-      println("All addresses: " + addressList)
       addressList
     }
   }
@@ -46,7 +44,6 @@ class AddressServiceImpl extends AddressService{
 
       val coord = addressRepo.filter(_.coordinatorId === id).list
 
-      println("Coordinator address" + coord)
       coord.head
 
     }
@@ -57,7 +54,6 @@ class AddressServiceImpl extends AddressService{
 
       val contact = addressRepo.filter(_.personId === id).list
 
-      println("Contact person address" + contact)
       contact.head
     }
     }
@@ -67,7 +63,6 @@ class AddressServiceImpl extends AddressService{
 
       val patient = addressRepo.filter(_.patientId === id).list
 
-      println("Patient address" + patient)
       patient.head
 
     }

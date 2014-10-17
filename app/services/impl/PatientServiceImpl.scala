@@ -1,12 +1,12 @@
 package services.impl
 
-import domain.{Adherence, CarePlan, Patient, Diagnosis}
+import domain.{Adherence, Diagnosis}
 import repository.AdherenceModel.AdherenceRepo
-import repository.CarePlanModel.CarePlanRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.PatientModel.PatientRepo
 import services.PatientService
+
 import scala.slick.driver.MySQLDriver.simple._
 
 /**
@@ -43,7 +43,6 @@ class PatientServiceImpl extends  PatientService {
       val diagList = diagnosis.filter(_.dailyReportId == id).map(_.dailyReportId).head
       val diagnosisList = diag.filter(_.dailyReportId == Option(diagList))
 
-      println("Diagnosis: " + diagnosisList)
       diagnosisList.head
 
     }
