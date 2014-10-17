@@ -1,14 +1,16 @@
 package controllers
 
-import domain.{TimeSheet, Schedule}
+import domain.{Patient, Caregiver, TimeSheet, Schedule}
 import model._
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
+import repository.PatientModel.PatientRepo
 import services.ScheduleService
 import services.impl.ScheduleServiceImpl
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.slick.lifted.TableQuery
 
 /**
  * Created by tonata on 10/8/14.
@@ -19,25 +21,33 @@ object ScheduleController  extends Controller{
 
   implicit val scheduleWrites = Json.writes[Schedule]
   implicit val timeSheet = Json.writes[TimeSheet]
+  val repo = TableQuery[PatientRepo]
 
   def createSchedule(schedule: String) = Action.async(parse.json){
     request =>
       val input = request.body
-      val schModel = Json.fromJson[ScheduleModel](input).get
-      val schduleObj = schModel.getDomain()
 
-      val caregiverModel = Json.fromJson[Long](input).get
-      val caregivObj = caregiverModel.toLong
+      val sch = (input \ "schedule").as[String]
+      val time = (input \ "timesheet").as[String]
+      val patID = (input \ "patid").as[Long]
+      val careID = (input \ "careid").as[Long]
 
-      val patientModel = Json.fromJson[Long](input).get
-      val patientObj = patientModel.toLong
+      val jsonSch = Json.parse(sch)
+      val timeJson = Json.parse(time)
 
-      val timeModel = Json.fromJson[TimeSheetModel](input).get
+      val schModel = Json.fromJson[ScheduleModel](jsonSch).get
+      val scheduleObj = schModel.getDomain()
+
+      val timeModel = Json.fromJson[TimeSheetModel](timeJson).get
       val timeObj = timeModel.getDomain()
 
-      val sch : Future[Long] = Future{scheduleService.createSchedule(schduleObj, caregivObj, patientObj, timeObj)}
+      val sObj = Schedule(scheduleObj.scheduleId , scheduleObj.patientId, scheduleObj.caregiverId)
 
-      sch.map(use =>
+      val tObj = TimeSheet(timeObj.workDay, timeObj.timeIn, timeObj.timeOut , timeObj.visitId, timeObj.dailyReportId, timeObj.scheduleId)
+
+      val results : Future[Long] = Future{scheduleService.createSchedule(sObj, careID, patID,  tObj)}
+
+      results.map(use =>
       Ok(Json.toJson(use))
       )
   }
