@@ -1,8 +1,8 @@
 package controllers
 
 
-import domain.UnplannedVisit
-import model.UnplannedVisitModel
+import domain.{Contact, Address, UnplannedVisit}
+import model.{ContactModel, AddressModel, UnplannedVisitModel}
 import play.api.libs.json.Json
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -21,15 +21,41 @@ object UnplannedVisitController extends Controller{
   implicit val qAWrites = Json.writes[UnplannedVisit]
 
   def createUnplannedVisit(visit: String) = Action.async(parse.json){
-      request =>
+    request =>
 
       val input = request.body
-      val visits = Json.fromJson[UnplannedVisitModel](input).get
-      val visitObj = visits.getDomain()
-      val results : Future[Long] = Future{unplannedVisitServ.createUnplannedVisit(visitObj)}
+      val visit = (input \ "visit").as[String]
+      val address = (input \ "address").as[String]
+      val contact = (input \ "contact").as[String]
 
-        results.map(res =>
-          Ok(Json.toJson(res)))
+      val jsonVisit = Json.parse(visit)
+      val jsonAddress = Json.parse(address)
+      val jsonContact = Json.parse(contact)
+
+      val visits = Json.fromJson[UnplannedVisitModel](jsonVisit).get
+      val visitObj = visits.getDomain()
+
+      val addressObj = Json.fromJson[AddressModel](jsonAddress).get
+      val addressDom = addressObj.getDomain()
+
+      val contactObj = Json.fromJson[ContactModel](jsonContact).get
+      val contactDom = contactObj.getDomain()
+
+      val aObj = Address(addressDom.streetAddress, addressDom.postalAddress, addressDom.postalCode,
+        addressDom.personId, addressDom.instituteId, addressDom.patientId,
+        addressDom.caregiverId, addressDom.coordinatorId, addressDom.unplannedVisitID)
+
+      val cObj = Contact(contactDom.homeTel, contactDom.cellNumber, contactDom.email,
+        contactDom.personId, contactDom.instituteId, contactDom.coordinatorId, contactDom.patientId,
+        contactDom.caregiverId, contactDom.unplannedVisitID)
+
+      val vObj = UnplannedVisit(visitObj.unplannedVisitID, visitObj.visitDate, visitObj.patientName,
+        visitObj.patientLastName, visitObj.caregiverID)
+
+      val results : Future[Long] = Future{unplannedVisitServ.createUnplannedVisit(vObj, aObj, cObj)}
+
+      results.map(res =>
+        Ok(Json.toJson(res)))
   }
 
   def getUnplannedVisits = Action {

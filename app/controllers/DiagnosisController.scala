@@ -60,6 +60,8 @@ object DiagnosisController extends Controller {
     val diagnosisObj = Json.fromJson[DiagnosisModel](json).get
     val diagnosisDom = diagnosisObj.getDomain()
 
+    println(diagnosisDom)
+
     val dObj = Diagnosis(diagnosisDom.diagnosisId, diagnosisDom.diagnosisType,
                          diagnosisDom.treatment, diagnosisDom.followUpDate, diagnosisDom.dailyReportId,
                           diagnosisDom.eventType)
