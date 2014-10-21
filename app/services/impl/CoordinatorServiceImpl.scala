@@ -50,7 +50,6 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
       var id = 1L
       val userList = userRepo.list
-      //val encryptPass = BCrypt.hashpw(password, BCrypt.gensalt())
 
       userList foreach { case (u: User) =>
         if (u.username == username && BCrypt.checkpw(password, u.password)) {
@@ -67,16 +66,16 @@ class CoordinatorServiceImpl extends CoordinatorService{
 
       val list = userRepo.list
 
-      var value = 1L
+      var value = 0L
 
       list foreach { case (u :User) =>
 
           if (u.username == user.username){
-                   value = 0L
+                   value = 1L
           }
       }
 
-      if (value == 1) {
+      if (value == 0L) {
         val encryptPass = BCrypt.hashpw(user.password, BCrypt.gensalt())
         val newUser = User(user.userId, user.username, encryptPass, user.caregiverId, user.coordinatorId)
 

@@ -47,7 +47,6 @@ object CoordinatorController extends Controller {
   def createUser(user:String) = Action.async(parse.json){
     request =>
       val input = request.body
-      println(input)
       val userModel = Json.fromJson[UserModel](input).get
       val userObj = userModel.getDomain()
       val u : Future[Long] = Future{coorServ.createUser(userObj)}

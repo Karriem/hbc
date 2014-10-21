@@ -26,7 +26,7 @@ object ContactController extends  Controller
     Ok(json)
   }
 
-  def getCoordnatorContact(id: Long) = Action{
+  def getCoordinatorContact(id: Long) = Action{
 
     val json = Json.toJson(contactservice.getCoordinatorContact(id))
     Ok(json)

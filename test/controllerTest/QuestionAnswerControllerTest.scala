@@ -1,27 +1,19 @@
-/*package controllerTest
-
-import java.util
+package controllerTest
 
 import com.google.gson.Gson
-import domain.{QuestionAnswer, Diagnosis}
 import model.QuestionAnswerModel
-import org.joda.time.DateTime
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import play.api.libs.json.Json
-import play.api.test.Helpers._
 import play.api.test.{FakeRequest, WithApplication}
-import repository.QuestionAnswerModel.QuestionAnswerRepo
-import services.QuestionAnswerService
-import services.impl.QuestionAnswerServiceImpl
-
+import java.util
 import scala.collection.mutable.ListBuffer
-import scala.slick.lifted.TableQuery
+import play.api.test.Helpers._
 
-/**
+/*
  * Created by tonata on 10/10/14.
- */
+*/
 @RunWith(classOf[JUnitRunner])
 class QuestionAnswerControllerTest extends Specification {
 
@@ -83,4 +75,4 @@ class QuestionAnswerControllerTest extends Specification {
 
   }
 
-}*/
+}

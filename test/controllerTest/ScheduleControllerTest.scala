@@ -23,8 +23,8 @@ class ScheduleControllerTest  extends Specification {
       val gson = new Gson()
 
       val scheduleRecord = ScheduleModel(13, "53", "45")
-      val patID = 60  // make sure records exists
-      val careID = 82
+      val patID = 133  // make sure records exists
+      val careID = 141
 
       val wd = new DateTime(2014 , 2, 8, 0, 0)
       val ti = new DateTime(2014 , 2, 8, 8, 30)
