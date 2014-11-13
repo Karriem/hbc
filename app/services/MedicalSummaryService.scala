@@ -6,7 +6,7 @@ import repository.MeasurementModel.MeasurementRepo
 /**
  * Created by tonata on 2014/10/08.
  */
-trait MeasurementService {
+trait MedicalSummaryService {
 
   def createMeasurement (measurement: MedicalSummary): Long
 
