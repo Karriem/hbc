@@ -1,7 +1,5 @@
 package model
 
-import java.util.Date
-
 import domain.MedicalSummary
 import org.joda.time.DateTime
 import play.api.libs.json.Json
@@ -15,7 +13,11 @@ case class MeasurementModel (measurementID: String,
                              bloodPressure: String,
                              temperature: String,
                              patientID: String,
-                             caregiverID: String)
+                             caregiverID: String,
+                             allergy:String,
+                             finalDiagnosis:String,
+                             reportsAttached:Boolean,
+                             referToCHC:String)
 { def getDomain() : MedicalSummary = MeasurementModel.domain(this)}
 
 object MeasurementModel {
@@ -28,6 +30,10 @@ object MeasurementModel {
                 model.bloodPressure.toDouble,
                 model.temperature.toDouble,
                 model.patientID.toLong,
-                model.caregiverID.toLong)
+                model.caregiverID.toLong,
+                model.allergy,
+                model.finalDiagnosis,
+                model.reportsAttached,
+                model.referToCHC)
   }
 }

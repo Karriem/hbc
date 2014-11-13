@@ -8,7 +8,9 @@ import play.api.libs.json.Json
  */
 case class CategoryModel (description:String,
                           level:String,
-                          dailyReportId:Long){
+                          dailyReportId:Long,
+                          hbcPackage:String,
+                          score:Int){
   def getDomain() : Category = CategoryModel.domain(this) }
 
 object CategoryModel{
@@ -18,6 +20,8 @@ object CategoryModel{
 
     Category(model.description,
               model.level,
-              model.dailyReportId)
+              model.dailyReportId,
+              model.hbcPackage,
+              model.score)
   }
 }

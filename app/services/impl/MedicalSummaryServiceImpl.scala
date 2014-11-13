@@ -4,14 +4,14 @@ import domain.MedicalSummary
 import repository.CaregiverModel.CaregiverRepo
 import repository.MedicalSummaryModel.MedicalSummaryRepo
 import repository.PatientModel.PatientRepo
-import services.MeasurementService
+import services.MedicalSummaryService
 
 import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by tonata on 2014/10/08.
  */
-class MeasurementServiceImpl extends MeasurementService {
+class MedicalSummaryServiceImpl extends MedicalSummaryService {
 
   val measureRepo = TableQuery[MedicalSummaryRepo]
   val care = TableQuery[CaregiverRepo]

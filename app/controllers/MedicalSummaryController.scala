@@ -4,8 +4,8 @@ import domain.MedicalSummary
 import model.MeasurementModel
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
-import services.MeasurementService
-import services.impl.MeasurementServiceImpl
+import services.MedicalSummaryService
+import services.impl.MedicalSummaryServiceImpl
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -13,9 +13,9 @@ import scala.concurrent.Future
 /**
  * Created by tonata on 10/8/14.
  */
-object MeasurementController extends Controller{
+object MedicalSummaryController extends Controller{
 
-  val measurementServ: MeasurementService = new MeasurementServiceImpl()
+  val measurementServ: MedicalSummaryService = new MedicalSummaryServiceImpl()
 
   implicit val measurementWrites = Json.writes[MedicalSummary]
 

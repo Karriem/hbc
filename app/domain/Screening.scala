@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 case class Screening (
                         screeningId:Long,
                         screener:String,
-                        description:String
+                        illnessType:String
                        )
 
 
