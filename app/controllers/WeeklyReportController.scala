@@ -61,7 +61,8 @@ object WeeklyReportController extends Controller  {
 
       val repObj = WeeklyReport(reportDom.weeklyReportId, reportDom.weekStartDate, reportDom.weekEndDate,
         reportDom.discharges, reportDom.visits, reportDom.monthlyReportID)
-      val rObj = Referral(referralDom.referralId,referralDom.referralDate, referralDom.weeklyReportId )
+      val rObj = Referral(referralDom.referralId,referralDom.referralDate, referralDom.weeklyReportId, referralDom.patientId,
+                          referralDom.medicalSummaryId, referralDom.requirements, referralDom.coordinatorId, referralDom.institueID)
 
       val results : Future[Long] = Future{weeklyReportService.createWeeklyReport(repObj, rObj, idList.toList)}
 

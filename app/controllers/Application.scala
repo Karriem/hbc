@@ -14,7 +14,7 @@ import repository.DemographicModel.DemographicRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.DiseaseModel.DiseaseRepo
 import repository.InstituteModel.InstitutionRepo
-import repository.MeasurementModel.MeasurementRepo
+import repository.MedicalSummaryModel.MedicalSummaryRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
 import repository.PatientModel.PatientRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
@@ -39,7 +39,7 @@ object Application extends Controller {
   val refRepo = TableQuery[ReferralRepo]
   val qaRepo = TableQuery[QuestionAnswerRepo]
   val monthlyRepo = TableQuery[MonthlyReportRepo]
-  val measRepo = TableQuery[MeasurementRepo]
+  val measRepo = TableQuery[MedicalSummaryRepo]
   val disRepo = TableQuery[DiseaseRepo]
   val diagRepo = TableQuery[DiagnosisRepo]
   val dailyRepo = TableQuery[DailyReportRepo]

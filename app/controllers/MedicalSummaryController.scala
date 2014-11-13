@@ -1,7 +1,7 @@
 package controllers
 
 import domain.MedicalSummary
-import model.MeasurementModel
+import model.MedicalSummaryModel
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 import services.MedicalSummaryService
@@ -28,11 +28,12 @@ object MedicalSummaryController extends Controller{
       val cid = (input \ "careid").as[Long]
       val json = Json.parse(o)
 
-      val measure = Json.fromJson[MeasurementModel](json).get
+      val measure = Json.fromJson[MedicalSummaryModel](json).get
       val measurementDom = measure.getDomain()
 
-      val mObj = MedicalSummary(measurementDom.measurementID, measurementDom.dateTaken,
-        measurementDom.weight, measurementDom.bloodPressure, measurementDom.temperature, pid, cid)
+      val mObj = MedicalSummary(measurementDom.medicalSummaryID, measurementDom.dateTaken,
+        measurementDom.weight, measurementDom.bloodPressure, measurementDom.temperature, pid, cid,
+        measurementDom.allergy, measurementDom.finalDiagnosis, measurementDom.reportsAttached, measurementDom.referToCHC)
 
       val results : Future[Long] = Future{measurementServ.createMeasurement(mObj)}
 

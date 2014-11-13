@@ -12,7 +12,7 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 object MedicalSummaryModel {
 
-  class MedicalSummaryRepo(tag: Tag) extends Table[MedicalSummary] (tag, "MEASUREMENT"){
+  class MedicalSummaryRepo(tag: Tag) extends Table[MedicalSummary] (tag, "MEDICALSUMMARY"){
 
     def medicalSummaryID = column[Long]("MEASUREMENT_ID", O.PrimaryKey, O.AutoInc)
     def dateTaken = column[Date]("DATE_TAKEN")

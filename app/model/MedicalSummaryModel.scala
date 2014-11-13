@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 /**
  * Created by tonata on 10/8/14.
  */
-case class MeasurementModel (measurementID: String,
+case class MedicalSummaryModel (measurementID: String,
                              dateTaken: String,
                              weight: String,
                              bloodPressure: String,
@@ -18,12 +18,12 @@ case class MeasurementModel (measurementID: String,
                              finalDiagnosis:String,
                              reportsAttached:Boolean,
                              referToCHC:String)
-{ def getDomain() : MedicalSummary = MeasurementModel.domain(this)}
+{ def getDomain() : MedicalSummary = MedicalSummaryModel.domain(this)}
 
-object MeasurementModel {
-  implicit lazy val measurementsFmt = Json.format[MeasurementModel]
+object MedicalSummaryModel {
+  implicit lazy val measurementsFmt = Json.format[MedicalSummaryModel]
 
-  def domain (model: MeasurementModel ) ={
+  def domain (model: MedicalSummaryModel ) ={
     MedicalSummary(model.measurementID.toLong,
                 DateTime.parse(model.dateTaken).toDate,
                 model.weight.toDouble,

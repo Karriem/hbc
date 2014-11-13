@@ -14,7 +14,7 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 object CBReferralModel {
 
-  class CBReferralRepo(tag:Tag) extends Table[CBReferral](tag,"CBREFERRAL"){
+  class CBReferralRepo(tag:Tag) extends Table[CBReferral](tag,"COMMUNITYBASEDREFERRAL"){
 
     def cbReferralId = column[Long]("CB_REFERRAL_ID", O.AutoInc, O.PrimaryKey)
     def place = column[String]("PLACE")

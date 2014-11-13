@@ -51,7 +51,7 @@ object DailyReportController extends Controller {
         reportDom.caregiverId, reportDom.patientId)
       val tObj = TimeSheet(timeSheetDom.workDay, timeSheetDom.timeIn, timeSheetDom.timeOut,
         timeSheetDom.visitId, timeSheetDom.dailyReportId, timeSheetDom.scheduleId)
-      val cObj = Category(catDom.description, catDom.level, catDom.dailyReportId)
+      val cObj = Category(catDom.description, catDom.level, catDom.dailyReportId, catDom.hbcPackage, catDom.score)
 
       val results : Future[Long] = Future{dailyReportService.createDailyReport(rObj,tObj, cObj,diagnosisID)}
 
