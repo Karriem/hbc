@@ -2,7 +2,7 @@ package model
 
 import java.util.Date
 
-import domain.Measurement
+import domain.MedicalSummary
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 
@@ -16,13 +16,13 @@ case class MeasurementModel (measurementID: String,
                              temperature: String,
                              patientID: String,
                              caregiverID: String)
-{ def getDomain() : Measurement = MeasurementModel.domain(this)}
+{ def getDomain() : MedicalSummary = MeasurementModel.domain(this)}
 
 object MeasurementModel {
   implicit lazy val measurementsFmt = Json.format[MeasurementModel]
 
   def domain (model: MeasurementModel ) ={
-    Measurement(model.measurementID.toLong,
+    MedicalSummary(model.measurementID.toLong,
                 DateTime.parse(model.dateTaken).toDate,
                 model.weight.toDouble,
                 model.bloodPressure.toDouble,

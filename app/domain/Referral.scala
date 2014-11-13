@@ -10,7 +10,12 @@ import play.api.libs.json.Json
 case class Referral (
                       referralId:Long,
                       referralDate:Date,
-                      weeklyReportId:Option[Long]
+                      weeklyReportId:Option[Long],
+                      patientId:Long,
+                      instituteId:Long,
+                      medicalSummaryId:Long,
+                      requirements:String,
+                      coordinatorId:Long
                       )
 
 object Referrals{

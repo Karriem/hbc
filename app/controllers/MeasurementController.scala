@@ -1,6 +1,6 @@
 package controllers
 
-import domain.Measurement
+import domain.MedicalSummary
 import model.MeasurementModel
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
@@ -17,7 +17,7 @@ object MeasurementController extends Controller{
 
   val measurementServ: MeasurementService = new MeasurementServiceImpl()
 
-  implicit val measurementWrites = Json.writes[Measurement]
+  implicit val measurementWrites = Json.writes[MedicalSummary]
 
   def createMeasurement(measurement: String) = Action.async(parse.json){
     request =>
@@ -31,7 +31,7 @@ object MeasurementController extends Controller{
       val measure = Json.fromJson[MeasurementModel](json).get
       val measurementDom = measure.getDomain()
 
-      val mObj = Measurement(measurementDom.measurementID, measurementDom.dateTaken,
+      val mObj = MedicalSummary(measurementDom.measurementID, measurementDom.dateTaken,
         measurementDom.weight, measurementDom.bloodPressure, measurementDom.temperature, pid, cid)
 
       val results : Future[Long] = Future{measurementServ.createMeasurement(mObj)}

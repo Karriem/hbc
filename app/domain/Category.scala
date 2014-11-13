@@ -8,7 +8,9 @@ import play.api.libs.json.Json
 case class Category (
                       description:String,
                       level:String,
-                      dailyReportId:Long
+                      dailyReportId:Long,
+                      hbcPackage:String,
+                      score:Int
                       )
 
 object Categorys{

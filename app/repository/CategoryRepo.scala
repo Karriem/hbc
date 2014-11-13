@@ -15,7 +15,9 @@ object CategoryModel {
       def description = column[String]("DESCRIPTION")
       def level = column[String]("LEVEL")
       def dailyReportId = column[Long]("DAILY_REPORT_ID")
-      def * = (description, level, dailyReportId) <> (Category.tupled, Category.unapply)
+      def hbcPackage = column[String]("HBC_PACKAGE")
+      def score = column[Int]("SCORE")
+      def * = (description, level, dailyReportId, hbcPackage, score) <> (Category.tupled, Category.unapply)
 
       val dailyReport = foreignKey("DAILYREPORT_FK", dailyReportId, TableQuery[DailyReportRepo])(_.dailyReportId)
   }

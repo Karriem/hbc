@@ -12,7 +12,11 @@ case class Patient (
                        dateOfContact:Date,
                        dateOfEvaluation:Date,
                        firstName:String,
-                       LastName:String
+                       lastName:String,
+                       nextOfKin:String,
+                       religion:String,
+                       language:String,
+                       carePlanDesc:String
                      )
 
 object Patients{

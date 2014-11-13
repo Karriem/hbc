@@ -18,7 +18,11 @@ object PatientModel {
       def dateOfEvaluation = column[Date]("DATE_OF_EVALUATION")
       def firstName = column[String]("FIRST_NAME")
       def lastName = column[String]("LAST_NAME")
-      def * = (patientId, dateOfContact, dateOfEvaluation, firstName, lastName) <> (Patient.tupled, Patient.unapply)
+      def nextOfKin = column[String]("NEXT_OF_KIN")
+      def religion = column[String]("RELIGION")
+      def language = column[String]("LANGUAGE")
+      def carePlanDesc = column[String]("CARE_PLAN_DESC")
+      def * = (patientId, dateOfContact, dateOfEvaluation, firstName, lastName, nextOfKin, religion, language, carePlanDesc) <> (Patient.tupled, Patient.unapply)
 
     implicit val JavaUtilDateMapper =
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (

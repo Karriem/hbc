@@ -8,7 +8,8 @@ import play.api.libs.json.Json
 case class Adherence(
                        adType:String,
                        instructions:String,
-                       patientId:Long
+                       patientId:Long,
+                       referralId:Long
                        )
 
 object Adherences{

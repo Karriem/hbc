@@ -1,6 +1,6 @@
 package services.impl
 
-import domain.Measurement
+import domain.MedicalSummary
 import repository.CaregiverModel.CaregiverRepo
 import repository.MeasurementModel.MeasurementRepo
 import repository.PatientModel.PatientRepo
@@ -25,7 +25,7 @@ class MeasurementServiceImpl extends MeasurementService {
     }
   }
 
-  override def createMeasurement(measurement: Measurement): Long ={
+  override def createMeasurement(measurement: MedicalSummary): Long ={
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
       return measureRepo.returning(measureRepo.map(_.measurementID)).insert(measurement)
     }

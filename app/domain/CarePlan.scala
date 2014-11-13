@@ -9,11 +9,13 @@ import play.api.libs.json.Json
  */
 case class CarePlan (
                         planId:Long,
-                        description:String,
+                        intervention:String,
                         startDate:Date,
-                        endDate:Date,
+                        timeFrame:Date,
                         patientId:Long,
-                        coordinator:Long
+                        coordinator:Long,
+                        problem:String,
+                        caregiverId:Long
                       )
 
 object CarePlans{

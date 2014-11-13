@@ -2,6 +2,7 @@ package repository
 
 import domain.Adherence
 import repository.PatientModel.PatientRepo
+import repository.ReferralModel.ReferralRepo
 
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -16,9 +17,11 @@ object AdherenceModel {
       def mType = column[String]("ADHERENCE_TYPE")
       def instructions = column[String]("INSTRUCTIONS")
       def patientId = column[Long]("PATIENT_ID")
-      def * = (mType, instructions, patientId) <> (Adherence.tupled, Adherence.unapply)
+      def referralId = column[Long]("REFERRAL_ID")
+      def * = (mType, instructions, patientId, referralId) <> (Adherence.tupled, Adherence.unapply)
 
       val patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
+      val referral = foreignKey("REFERRAL_FK", referralId, TableQuery[ReferralRepo])(_.referralId)
   }
 
 }

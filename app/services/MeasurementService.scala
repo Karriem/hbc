@@ -1,6 +1,6 @@
 package services
 
-import domain.Measurement
+import domain.MedicalSummary
 import repository.MeasurementModel.MeasurementRepo
 
 /**
@@ -8,7 +8,7 @@ import repository.MeasurementModel.MeasurementRepo
  */
 trait MeasurementService {
 
-  def createMeasurement (measurement: Measurement): Long
+  def createMeasurement (measurement: MedicalSummary): Long
 
   def getMeasurements(id: Long): List[MeasurementRepo#TableElementType]
 
