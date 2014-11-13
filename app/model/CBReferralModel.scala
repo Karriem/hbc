@@ -15,7 +15,8 @@ case class CBReferralModel (cbReferralId:Long,
                             healthCondition:String,
                             screeningId:Long,
                             reading:String,
-                            action:String){
+                            action:String,
+                            institueID: Long){
 
   def domain() : CBReferral = CBReferralModel.getDomain(this)
 }
@@ -33,7 +34,8 @@ object CBReferralModel{
                model.healthCondition,
                model.screeningId,
                model.reading,
-               model.action)
+               model.action,
+               model.institueID)
   }
 }
 

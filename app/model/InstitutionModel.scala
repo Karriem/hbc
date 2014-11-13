@@ -9,8 +9,8 @@ import play.api.libs.json.Json
 case class InstitutionModel(instituteId:Long,
                             instituteType:String,
                             instituteName:String,
-                            coordinatorId:Option[Long],
-                            referralId:Long) {
+                            coordinatorId:Option[Long]
+                            ) {
 
  def getDomain(): Institution = InstitutionModel.domain(this)
 }
@@ -24,7 +24,7 @@ object InstitutionModel {
     Institution(model.instituteId,
       model.instituteType,
       model.instituteName,
-      model.coordinatorId,
-      model.referralId)
+      model.coordinatorId
+      )
   }
 }

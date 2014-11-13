@@ -11,10 +11,10 @@ case class ReferralModel(referralId:Long,
                          referralDate:String,
                          weeklyReportId:String,
                          patientId:Long,
-                         instituteId:Long,
                          medicalSummaryId:Long,
                          requirements:String,
-                         coordinatorId:Long){
+                         coordinatorId:Long,
+                         instituteId:Long){
   def getDomain() : Referral = ReferralModel.domain(this) }
 
 object ReferralModel{
@@ -37,9 +37,9 @@ object ReferralModel{
              DateTime.parse(model.referralDate).toDate,
              Some(value),
              model.patientId,
-             model.instituteId,
              model.medicalSummaryId,
              model.requirements,
-             model.coordinatorId)
+             model.coordinatorId,
+      model.instituteId)
   }
 }
