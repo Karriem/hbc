@@ -11,7 +11,12 @@ case class PatientModel(patientId:Long,
                    dateOfContact:String,
                    dateOfEvaluation:String,
                    firstName:String,
-                   LastName:String){
+                   LastName:String,
+                   nextOfKin:String,
+                   nextOfKinTel:String,
+                   religion:String,
+                   language:String,
+                   carePlanDesc:String){
 
   def getDomain(): Patient = PatientModel.domain(this)
 
@@ -27,6 +32,11 @@ object PatientModel {
       DateTime.parse(model.dateOfContact).toDate,
       DateTime.parse(model.dateOfEvaluation).toDate,
       model.firstName,
-      model.LastName)
+      model.LastName,
+      model.nextOfKin,
+      model.nextOfKinTel,
+      model.religion,
+      model.language,
+      model.carePlanDesc)
   }
 }

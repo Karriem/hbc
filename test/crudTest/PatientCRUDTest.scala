@@ -31,17 +31,16 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
       val demoRepo = TableQuery[DemographicRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-
-        //if (pat.exists === false) {
-         // (pat.ddl).create
-        //}
-        //(adherence.ddl).create
+        (pat.ddl).create
+        (adherence.ddl).create
+        (demoRepo.ddl).create
 
         info("Creating Patient")
-        val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson")
+        val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson" ,
+                                "Tom", "0784559100" , "Christian", "English", "CPR")
         val id = pat.returning (pat.map (_.patientId) ).insert(patRecord)
 
-        val medication = Adherence("M144", "Apply to burnt area", id)
+        val medication = Adherence("M144", "Apply to burnt area", id, 1L)
         adherence.insert(medication)
 
         val address = Address("34 long street", "34 long street", "8000", None, None, Some(id), None, None, None)
@@ -91,13 +90,13 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Patient")
-          //Read("Chris", id)
+          Read("Chris", id)
 
         info("Updating Patient")
-          //Update("Helvi", id)
+          Update("Helvi", id)
 
         info("Deleting Patient")
-          //Delete(id)
+          Delete(id)
       }
     }
   }

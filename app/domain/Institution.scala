@@ -9,8 +9,7 @@ case class Institution (
                          instituteId:Long,
                          instituteType:String,
                          instituteName:String,
-                         coordinatorId:Option[Long],
-                         referralId:Long
+                         coordinatorId:Option[Long]
                          )
 
 object Institutions{

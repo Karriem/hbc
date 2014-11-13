@@ -14,7 +14,7 @@ class TestAdherence extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val adherence = Adherence("Antibiotics" , "Drink 3 times a day", 85)
+      val adherence = Adherence("Antibiotics" , "Drink 3 times a day", 85, 45)
 
       assert(adherence.instructions == "Drink 3 times a day")
 

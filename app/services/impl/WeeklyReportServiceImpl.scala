@@ -28,7 +28,8 @@ class WeeklyReportServiceImpl extends WeeklyReportService {
       val updatedWReport = WeeklyReport(report.weeklyReportId , report.weekStartDate, report.weekEndDate, report.discharges, visits, report.monthlyReportID)
       val wID = weeklyReportREpo.returning(weeklyReportREpo.map (_.weeklyReportId)).insert(updatedWReport)
 
-      val updatedReferral = Referral(referral.referralId, referral.referralDate, Option(wID))
+      val updatedReferral = Referral(referral.referralId, referral.referralDate, Option(wID), referral.patientId, referral.medicalSummaryId,
+                                      referral.requirements, referral.coordinatorId, referral.institueID)
       val rID = referralRepo.returning(referralRepo.map (_.referralId)).insert(updatedReferral)
 
       dailyReportid foreach { case (id: Long) =>

@@ -19,7 +19,8 @@ class TestPatient extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val pat = Patient(1, doc.toDate, dov.toDate, "Jaul", "Pam")
+      val pat = Patient(1, doc.toDate, dov.toDate, "Jaul", "Pam",
+        "Tom", "0784559100" , "Christian", "English", "CPR")
 
       assert(pat.dateOfEvaluation == dov.toDate)
 

@@ -17,11 +17,9 @@ object InstituteModel {
     def instituteType = column[String]("INSTITUTE_TYPE")
     def instituteName = column[String]("INSTITUTE_NAME")
     def coordinatorId = column[Option[Long]]("COORDINATOR")
-    def referralId = column[Long]("REFERRAL_ID")
-    def * = (instituteId, instituteType, instituteName, coordinatorId, referralId) <> (Institution.tupled, Institution.unapply)
+    def * = (instituteId, instituteType, instituteName, coordinatorId) <> (Institution.tupled, Institution.unapply)
 
     val coordinator = foreignKey("COORDINATOR_FK", coordinatorId, TableQuery[CoordinatorRepo])(_.coId)
-    val referral = foreignKey("REFERRAL_FK", referralId, TableQuery[ReferralRepo])(_.referralId)
   }
 
 }

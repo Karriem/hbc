@@ -3,6 +3,7 @@ package repository
 import java.util.Date
 
 import domain.CBReferral
+import repository.InstituteModel.InstitutionRepo
 import repository.PatientModel.PatientRepo
 import repository.ScreeningModel.ScreeningRepo
 
@@ -23,10 +24,12 @@ object CBReferralModel {
     def screeningId = column[Long]("SCREENING_ID")
     def reading = column[String]("READING")
     def action = column[String]("ACTION")
-    def * = (cbReferralId, place, patientId, dateTaken, healthCondition, screeningId, reading, action) <> (CBReferral.tupled, CBReferral.unapply)
+    def institutionID = column[Long]("INSTITUTION_ID")
+    def * = (cbReferralId, place, patientId, dateTaken, healthCondition, screeningId, reading, action, institutionID) <> (CBReferral.tupled, CBReferral.unapply)
 
     val patient = foreignKey("PATIENT_FK", patientId, TableQuery[PatientRepo])(_.patientId)
     val screening = foreignKey("SCREENING_FK", screeningId, TableQuery[ScreeningRepo])(_.screeningId)
+    val institue = foreignKey("INSTITUTION_FK", institutionID, TableQuery[InstitutionRepo])(_.instituteId)
 
     implicit val JavaUtilDateMapper =
       MappedColumnType .base[java.util.Date, java.sql.Timestamp] (

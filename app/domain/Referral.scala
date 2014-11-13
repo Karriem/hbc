@@ -12,10 +12,10 @@ case class Referral (
                       referralDate:Date,
                       weeklyReportId:Option[Long],
                       patientId:Long,
-                      instituteId:Long,
                       medicalSummaryId:Long,
                       requirements:String,
-                      coordinatorId:Long
+                      coordinatorId:Long,
+                      institueID: Long
                       )
 
 object Referrals{

@@ -15,7 +15,8 @@ case class CBReferral (
                         healthCondition:String,
                         screeningId:Long,
                         reading:String,
-                        action:String
+                        action:String,
+                        institueID: Long
                         )
 
 

@@ -14,6 +14,7 @@ case class Patient (
                        firstName:String,
                        lastName:String,
                        nextOfKin:String,
+                       nextOfKinTel:String,
                        religion:String,
                        language:String,
                        carePlanDesc:String

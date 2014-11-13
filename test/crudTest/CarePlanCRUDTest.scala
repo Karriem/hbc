@@ -1,9 +1,10 @@
 package crudTest
 
-import domain.{Coordinator, Patient, CarePlan}
+import domain.{Caregiver, Coordinator, Patient, CarePlan}
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
+import repository.CaregiverModel.CaregiverRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.PatientModel.PatientRepo
 
@@ -24,24 +25,28 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
       Given("Given a Connection to the Database Through a Repository")
 
       val care = TableQuery[CarePlanRepo]
+      val caregiverRepo = TableQuery[CaregiverRepo]
       val pat = TableQuery[PatientRepo]
       val co = TableQuery[CoordinatorRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
-        //(care.ddl).create
+        (care.ddl).create
         //(co.ddl).create
         //(pat.ddl).create
 
         info("Creating a Care Plan")
-        val patient = Patient(1, DateTime.parse("2014-05-02").toDate, DateTime.parse("2014-02-10").toDate, "Bo", "Micheals")
+        val patient = Patient(1, DateTime.parse("2014-05-02").toDate, DateTime.parse("2014-02-10").toDate, "Bo", "Micheals",
+                              "Tom", "0784559100" , "Christian", "English", "CPR")
         val coor = Coordinator(1, "Lou", "Smith")
+        val caregiverRec = Caregiver(1L, "Mary", "Louw")
         //patient.copy(patient)
 
-        val idp = pat.returning (pat.map (_.patientId))insert(patient)
-        val idc = co.returning (co.map (_.coId) )insert(coor)
+        val idp = pat.returning (pat.map (_.patientId)).insert(patient)
+        val idc = co.returning (co.map (_.coId) ).insert(coor)
+        val idCare = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiverRec)
 
-        val careplan = CarePlan(1, "Caring for elder", DateTime.parse("2014-05-05").toDate, DateTime.parse("2014-05-05").toDate, idp, idc)
+        val careplan = CarePlan(1, "Caring for elder", DateTime.parse("2014-05-05").toDate, DateTime.parse("2014-05-05").toDate, idp, idc, "Problem", idCare)
         val id = care.returning (care.map (_.planId)).insert(careplan)
 
 
@@ -61,7 +66,7 @@ class CarePlanCRUDTest extends FeatureSpec with GivenWhenThen {
           care.filter(_.planId === id).map(_.description).update(desc)
           care foreach { case (careplan: CarePlan) =>
             if (careplan.planId == id) {
-                  assert(careplan.description == desc)
+                  assert(careplan.intervention == desc)
             }
           }
         }

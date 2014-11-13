@@ -2,7 +2,7 @@ package services.impl
 
 import domain.MedicalSummary
 import repository.CaregiverModel.CaregiverRepo
-import repository.MeasurementModel.MeasurementRepo
+import repository.MedicalSummaryModel.MedicalSummaryRepo
 import repository.PatientModel.PatientRepo
 import services.MeasurementService
 
@@ -13,12 +13,12 @@ import scala.slick.driver.MySQLDriver.simple._
  */
 class MeasurementServiceImpl extends MeasurementService {
 
-  val measureRepo = TableQuery[MeasurementRepo]
+  val measureRepo = TableQuery[MedicalSummaryRepo]
   val care = TableQuery[CaregiverRepo]
   val pat = TableQuery[PatientRepo]
 
 
-  override def getMeasurements(id: Long): List[MeasurementRepo#TableElementType] = {
+  override def getMeasurements(id: Long): List[MedicalSummaryRepo#TableElementType] = {
     // parameter id - patientID
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
       return measureRepo.filter(_.patientID === id).list
@@ -27,7 +27,7 @@ class MeasurementServiceImpl extends MeasurementService {
 
   override def createMeasurement(measurement: MedicalSummary): Long ={
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-      return measureRepo.returning(measureRepo.map(_.measurementID)).insert(measurement)
+      return measureRepo.returning(measureRepo.map(_.medicalSummaryID)).insert(measurement)
     }
   }
 

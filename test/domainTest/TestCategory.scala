@@ -14,9 +14,9 @@ class TestCategory extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val cat = Category("Cat 1" , "1" , 8000)
+      val cat = Category("Min assistance" , "2" , 8000 , "Moderate HBC Needed" , 17)
 
-      assert(cat.description == "Cat 1")
+      assert(cat.description == "Min assistance")
 
     }
   }

@@ -11,7 +11,7 @@ case class CarePlan (
                         planId:Long,
                         intervention:String,
                         startDate:Date,
-                        timeFrame:Date,
+                        endDate:Date,
                         patientId:Long,
                         coordinator:Long,
                         problem:String,

@@ -4,6 +4,7 @@ import domain._
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CaregiverModel.CaregiverRepo
+import repository.CategoryModel.CategoryRepo
 import repository.DailyReportModel.DailyReportRepo
 import repository.PatientModel.PatientRepo
 import repository.WeeklyReportModel.WeeklyReportRepo
@@ -28,6 +29,7 @@ feature("Save Daily Report") {
     val weeklyReport = TableQuery[WeeklyReportRepo]
     val caregiver = TableQuery[CaregiverRepo]
     val patient = TableQuery[PatientRepo]
+    val cat = TableQuery[CategoryRepo]
 
     Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -35,22 +37,27 @@ feature("Save Daily Report") {
       //(dailyReport.ddl).create
       //(caregiver.ddl).create
      // (patient.ddl).create
+      (cat.ddl).create
 
       val wSDate = new DateTime(2014, 3, 12, 0, 0)
       val wEDate = new DateTime(2014, 3, 19, 0, 0)
 
-      val weeklyRecord = WeeklyReport(1L, wSDate.toDate, wEDate.toDate, "No transfer", 3, Some(1L))
-      val wReportID = weeklyReport.returning(weeklyReport.map(_.weeklyReportId)).insert(weeklyRecord)
+      //val weeklyRecord = WeeklyReport(1L, wSDate.toDate, wEDate.toDate, "No transfer", 3, Some(1L))
+      //val wReportID = weeklyReport.returning(weeklyReport.map(_.weeklyReportId)).insert(weeklyRecord)
 
       val caregiverRecord = Caregiver(1, "Nobu", "Tyokozo")
       val careID = caregiver.returning(caregiver.map(_.caregiverId)).insert(caregiverRecord)
 
-      val patientRecord = Patient(1, DateTime.parse("2014-12-25").toDate, DateTime.parse("2014-12-25").toDate, "Phakama", "Ntshewula")
+      val patientRecord = Patient(1, DateTime.parse("2014-12-25").toDate, DateTime.parse("2014-12-25").toDate, "Phakama", "Ntshewula",
+                                  "Tom", "0784559100" , "Christian", "English", "CPR")
       val patID = patient.returning(patient.map(_.patientId)).insert(patientRecord)
 
       info("Creating Daily Report")
-      val dreportRecord = DailyReport(1, "Cleaned the patient", Option(wReportID), careID, patID)
+      val dreportRecord = DailyReport(1, "Cleaned the patient", None, careID, patID)
       val dReportID = dailyReport.returning(dailyReport.map(_.dailyReportId)).insert(dreportRecord)
+
+      val catRecord = Category("Independent", "1", dReportID  , "Screen Train Family" , 14)
+      cat.insert(catRecord)
 
       def Read(patientName:String, id:Long) = {
         dailyReport foreach { case (report: DailyReport) =>

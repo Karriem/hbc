@@ -10,12 +10,14 @@ import domain._
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CarePlanModel.CarePlanRepo
+import repository.CaregiverModel.CaregiverRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.PatientModel.PatientRepo
 import repository.TimeSheetModel.TimeSheetRepo
 import repository.VisitModel.VisitRepo
 
 import scala.slick.driver.MySQLDriver.simple._
+import scala.slick.lifted.TableQuery
 
 class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
@@ -31,6 +33,7 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
       val timesheetRepo = TableQuery[TimeSheetRepo]
       val coordinatorRepo = TableQuery[CoordinatorRepo]
       val patRepo = TableQuery[PatientRepo]
+      val caregiverRepo = TableQuery[CaregiverRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
@@ -44,14 +47,16 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
 
         val upWd =  new DateTime(2014, 3, 23, 0 , 0)
 
-
         val coordinator = Coordinator(1,  "Nikki", "Shiyagaya")
+        val caregiverRec = Caregiver(1L, "Mary", "Louw")
+        val idCare = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiverRec)
         val coID = coordinatorRepo.returning(coordinatorRepo.map(_.coId)).insert(coordinator)
 
-        val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak")
+        val patRecord = Patient(1, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "tonata", "nak",
+                                "Tom", "0784559100" , "Christian", "English", "CPR")
         val patID = patRepo.returning(patRepo.map(_.patientId)).insert(patRecord)
 
-        val carePlanRec = CarePlan(1, "TB Treatment", DateTime.parse("2014-08-22").toDate , DateTime.parse("2014-09-22").toDate , patID, coID)
+        val carePlanRec = CarePlan(1, "TB Treatment", DateTime.parse("2014-08-22").toDate , DateTime.parse("2014-09-22").toDate , patID, coID , "Problem", idCare)
         val planID = careplanRepo.returning(careplanRepo .map(_.planId)).insert(carePlanRec)
 
         val visitRec = Visit(1, DateTime.parse("2014-09-12").toDate, planID)

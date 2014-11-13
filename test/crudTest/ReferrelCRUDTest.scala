@@ -2,11 +2,14 @@ package crudTest
 
 import java.util.Date
 
-import domain.{WeeklyReport, Coordinator, Institution, Referral}
+import domain._
 import org.joda.time.DateTime
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import repository.CaregiverModel.CaregiverRepo
 import repository.CoordinatorModel.CoordinatorRepo
 import repository.InstituteModel.InstitutionRepo
+import repository.MedicalSummaryModel.MedicalSummaryRepo
+import repository.PatientModel.PatientRepo
 import repository.ReferralModel.ReferralRepo
 import repository.WeeklyReportModel.WeeklyReportRepo
 
@@ -29,12 +32,23 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
       val referalRepo = TableQuery[ReferralRepo]
       val coordinatorRepo = TableQuery[CoordinatorRepo]
       val weeklyReport = TableQuery[WeeklyReportRepo]
+      val pat = TableQuery[PatientRepo]
+      val care = TableQuery[CaregiverRepo]
+      val measureRepo = TableQuery[MedicalSummaryRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         //(instituteRepo.ddl).create
-        //(referalRepo.ddl).create
+        (referalRepo.ddl).create
 
         info("Creating a Referral")
+
+        val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson" ,
+          "Tom", "0784559100" , "Christian", "English", "CPR")
+        val patID = pat.returning (pat.map (_.patientId) ).insert(patRecord)
+
+        val caregiverRecord = Caregiver(1,  "Nikki", "Shiyagaya")
+        val careID = care.returning(care.map(_.caregiverId)).insert(caregiverRecord)
+
         val refDate = DateTime.parse("2014-05-23")
         val updatedRefDate = DateTime.parse("2014-07-23")
         val wSDate = new DateTime(2014, 3, 12, 0, 0)
@@ -46,19 +60,22 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         val coordinatorRecord = Coordinator(1, "Phakama", "Ntwsehula")
         val coId = coordinatorRepo.returning (coordinatorRepo.map (_.coId) ).insert (coordinatorRecord)
 
-        val refRecord = Referral(1, refDate.toDate, Some(wReportID))
-        val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
-
-        val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId), refID)
+        val instituteRecord = Institution (1, "Hospital", "Grabouw Hospital", Some(coId))
         val institueId = instituteRepo.returning (instituteRepo.map (_.instituteId) ).insert (instituteRecord)
+
+        val summaryRecord = MedicalSummary(1L, DateTime.parse("2014-02-12").toDate, 65, 12, 25,patID, careID, "Dust Allergy",
+          "Final Diag", false, "")
+        val mID = measureRepo.returning(measureRepo.map(_.medicalSummaryID)).insert(summaryRecord)
+
+        val refRecord = Referral(1, refDate.toDate, Some(wReportID), patID , mID, "req", coId, institueId)
+        val refID = referalRepo.returning(referalRepo.map(_.referralId)).insert(refRecord)
 
         def Read(referrelDate: Date, id: Long) = {
           referalRepo foreach { case (r: Referral) =>
             if (r.referralId == id) {
               assert(r.referralDate == referrelDate )
-
               instituteRepo foreach  { case (institute: Institution) =>
-                if(institute.referralId == id) {
+                if(institute.instituteId == r.institueID) {
                   assert(institute.instituteName == "Grabouw Hospital")
                 }
               }

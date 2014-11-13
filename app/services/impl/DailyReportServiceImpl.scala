@@ -36,7 +36,7 @@ class DailyReportServiceImpl extends DailyReportService {
       val updatedTimesheet = TimeSheet(timesheet.workDay, timesheet.timeIn, timesheet.timeOut, None, Option(diaID), None)
       timesheetRepo.insert(updatedTimesheet)
 
-      val updatedCat = Category(category.description, category.level, diaID)
+      val updatedCat = Category(category.description, category.level, diaID, category.hbcPackage, category.score)
       categoryRepo.insert(updatedCat)
 
       diagnosisRepo.filter(_.diagnosisId === diagnosisID).map(_.dailyReportId).update(Option(diaID))

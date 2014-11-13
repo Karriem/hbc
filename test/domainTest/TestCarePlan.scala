@@ -19,10 +19,9 @@ class TestCarePlan extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val plan = CarePlan(2000, "Helping out", startDate.toDate, endDate.toDate, 1000, 5000)
+      val plan = CarePlan(2000, "Helping out", startDate.toDate, endDate.toDate, 1000, 5000, "Problem", 1)
 
       assert(plan.startDate == startDate.toDate)
-      assert(plan.endDate == endDate.toDate)
 
     }
   }
