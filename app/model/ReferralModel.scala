@@ -9,7 +9,12 @@ import play.api.libs.json.Json
  */
 case class ReferralModel(referralId:Long,
                          referralDate:String,
-                         weeklyReportId:String){
+                         weeklyReportId:String,
+                         patientId:Long,
+                         instituteId:Long,
+                         medicalSummaryId:Long,
+                         requirements:String,
+                         coordinatorId:Long){
   def getDomain() : Referral = ReferralModel.domain(this) }
 
 object ReferralModel{
@@ -30,6 +35,11 @@ object ReferralModel{
 
     Referral(model.referralId,
              DateTime.parse(model.referralDate).toDate,
-             Some(value))
+             Some(value),
+             model.patientId,
+             model.instituteId,
+             model.medicalSummaryId,
+             model.requirements,
+             model.coordinatorId)
   }
 }

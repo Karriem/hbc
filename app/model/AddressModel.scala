@@ -20,7 +20,7 @@ case class AddressModel( streetAddress:String,
 object AddressModel{
   implicit lazy val addressFmt = Json.format[AddressModel]
 
-  def domain(model: AddressModel )={
+  def domain(model: AddressModel ) ={
 
     var value : Long = 0
     var value1 : Long = 0
