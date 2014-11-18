@@ -36,9 +36,9 @@ class PatientServiceTest extends FeatureSpec with GivenWhenThen {
 
         def testGetAdherence: Unit = {
 
-          val value = patientservice.getAdherence(404)
+          val value = patientservice.getAdherence(5)
           println("Adherence: " + value)
-          assert(adherenceRepo.list.filter(_.patientId == value.patientId).head.adType == "M144")
+          assert(adherenceRepo.list.filter(_.patientId == value.patientId).head.adType == "Chronic")
         }
 
         info("Testing get diagnosis")

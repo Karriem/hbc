@@ -63,11 +63,11 @@ class MonthlyReportCRUDTest extends FeatureSpec with GivenWhenThen {
           }
 
           info("Reading Monthly Report")
-          Read(6, mReportID)
+          //Read(6, mReportID)
           info("Updating Monthly Report")
-          Update(10, mReportID)
+          //Update(10, mReportID)
           info("Deleting Monthly Report")
-          Delete(mReportID)
+          //Delete(mReportID)
         }
       }
     }

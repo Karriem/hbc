@@ -87,14 +87,13 @@ class ScheduleCRUDTest extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Schedule")
-        Read(workDay.toDate, scheduleId)
+        //Read(workDay.toDate, scheduleId)
 
         info("Updating Schedule")
-        Update(upDatedWorkDay.toDate, scheduleId)
+        //Update(upDatedWorkDay.toDate, scheduleId)
 
         info("Deleting Schedule")
-        Delete(scheduleId)
-
+        //Delete(scheduleId)
         }
 
 

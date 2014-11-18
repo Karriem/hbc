@@ -79,12 +79,14 @@ class DiseaseCRUDTest extends FeatureSpec with GivenWhenThen {
           dis foreach { case (disease: Disease) => {
             if (disease.diseaseId == id) {
               dis.filter(_.diseaseId === id).delete
-            }
-            diag foreach { case (diagnosis: Diagnosis) => {
-              if (diagnosis.diagnosisId == disease.diagnosisId) {
-                diag.filter(_.diagnosisId === id).delete
+              diag foreach { case (diagnosis: Diagnosis) => {
+                if (diagnosis.diagnosisId == disease.diagnosisId) {
+                  diag.filter(_.diagnosisId === idDiag).delete
+                }
               }
             }
+              //dis.filter(_.diseaseId === id).delete
+
             }
           }
           }

@@ -35,7 +35,7 @@ class DailyReportControllerTest extends Specification {
 
       val timeSheet = TimeSheetModel(str1, str2, str3 ,"", "", "")
 
-      val category = CategoryModel("Critical", "2", 1L)
+      val category = CategoryModel("Critical", "2", 1L, "Stuff", 2)
 
       val reportStr = gson.toJson(dailyReport).stripMargin
       val timeSheetStr = gson.toJson(timeSheet ).stripMargin

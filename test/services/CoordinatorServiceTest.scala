@@ -81,10 +81,10 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
         def createCarePlanTest: Unit ={
 
           val careRepo = TableQuery[CarePlanRepo]
-          val careplan = CarePlan(1, "Caring for elder", DateTime.parse("2014-05-05").toDate, DateTime.parse("2014-05-05").toDate, 5, 1)
+          val careplan = CarePlan(1, "Caring for elder", DateTime.parse("2014-05-05").toDate, DateTime.parse("2014-05-05").toDate, 5, 1, "Death", 250)
           val value = obj.createCarePlan(careplan)
 
-          assert(careRepo.list.filter(_.planId == value).head.description == "Caring for elder")
+          assert(careRepo.list.filter(_.planId == value).head.intervention == "Caring for elder")
         }
 
         def addCaregiverTest: Unit ={
@@ -99,7 +99,7 @@ class CoordinatorServiceTest extends FeatureSpec with GivenWhenThen {
         def addPatientTest: Unit ={
 
           val patRepo = TableQuery[PatientRepo]
-          val patRecord = Patient(1, DateTime.parse("2014-08-05").toDate, DateTime.parse("2014-08-2").toDate, "TYes", "a")
+          val patRecord = Patient(1, DateTime.parse("2014-08-05").toDate, DateTime.parse("2014-08-2").toDate, "TYes", "a",  "Stuff", "24548844", "Stuff", "Japanese", "Things")
           val value = obj.addPatient(patRecord)
 
           assert(patRepo.list.filter(_.patientId == value).head.firstName == "TYes")

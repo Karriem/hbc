@@ -34,11 +34,15 @@ class VisitCRUDTest  extends FeatureSpec with GivenWhenThen{
       val coordinatorRepo = TableQuery[CoordinatorRepo]
       val patRepo = TableQuery[PatientRepo]
       val caregiverRepo = TableQuery[CaregiverRepo]
+      //val cbReferralRepo = TableQuery[CBReferralRepo]
+      //val clientRepo = TableQuery[ClientAssessmentRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
         //(visitRepo.ddl).create
         //(careplanRepo.ddl).create
+        //(cbReferralRepo.ddl).create
+        //(clientRepo.ddl).create
 
         info("Creating Visit")
         val wd = new DateTime(2013, 12, 12, 0 ,0)

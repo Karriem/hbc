@@ -1,7 +1,7 @@
 package controllerTest
 
 import com.google.gson.Gson
-import model.MeasurementModel
+import model.MedicalSummaryModel
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
@@ -14,14 +14,14 @@ import play.api.test.{FakeRequest, WithApplication}
  * Created by tonata on 10/8/14.
  */
 @RunWith(classOf[JUnitRunner])
-class MeasurementControllerTest extends Specification {
+class MedicalSummaryControllerTest extends Specification {
 
   "Controllers" should{
     "Should save measurement object" in new WithApplication{
 
       val gson = new Gson()
 
-      val measurementRecord = MeasurementModel("1", "2014-02-12", "65", "12", "25", "19", "19" )
+      val measurementRecord = MedicalSummaryModel("1", "2014-02-12", "65", "12", "25", "19", "19", "Stuff", "Things", false, "Things")
       val patID = 25
       val careID = 45
 

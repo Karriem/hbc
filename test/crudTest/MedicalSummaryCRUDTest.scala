@@ -28,7 +28,7 @@ class MedicalSummaryCRUDTest extends FeatureSpec with GivenWhenThen{
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
 
        info("Creating Measurement")
-       (measureRepo.ddl).create
+       //(measureRepo.ddl).create
 
         val caregiverRecord = Caregiver(1,  "Nikki", "Shiyagaya")
         val careID = care.returning(care.map(_.caregiverId)).insert(caregiverRecord)

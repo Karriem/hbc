@@ -2,19 +2,18 @@ package services
 
 import domain._
 import org.joda.time.DateTime
-import org.scalatest.{GivenWhenThen, FeatureSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CaregiverModel.CaregiverRepo
 import repository.DiagnosisModel.DiagnosisRepo
 import repository.MonthlyReportModel.MonthlyReportRepo
 import repository.PatientModel.PatientRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
 import repository.WeeklyReportModel.WeeklyReportRepo
-import services.impl.{WeeklyReportServiceImpl, DiagnosisServiceImpl, DailyReportServiceImpl}
+import services.impl.{DailyReportServiceImpl, DiagnosisServiceImpl, WeeklyReportServiceImpl}
 
 import scala.collection.mutable.ListBuffer
-import scala.slick.lifted.TableQuery
 import scala.slick.driver.MySQLDriver.simple._
-import repository.MonthlyReportModel.MonthlyReportRepo
+import scala.slick.lifted.TableQuery
 
 /**
  * Created by tonata on 2014/09/23.
@@ -38,7 +37,7 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
         val fDate = DateTime.parse("2014-07-07")
 
         val refDate = DateTime.parse("2013-02-20")
-        val referral = Referral (1L, refDate.toDate, None)
+        val referral = Referral (1L, refDate.toDate, None, 350, 2, "Stuff", 250, 5)
 
         val mDate = new DateTime(2014, 12, 1, 0, 0)
         val monthlyRecord = MonthlyReport(4, mDate.toDate, 2, 6, 10, 4, 3)
@@ -49,11 +48,11 @@ class WeeklyReportServiceTest extends FeatureSpec with GivenWhenThen {
 
         val timeSheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, None)
 
-        val category = Category("Critical", "2", 1L)
+        val category = Category("Critical", "2", 1L, "Things", 3)
 
         val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
-        val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
+        val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime", "Stuff", "24548844", "Stuff", "Japanese", "Things")
 
         val reportService : DailyReportService = new DailyReportServiceImpl()
 

@@ -31,9 +31,9 @@ class PatientCRUDTest extends FeatureSpec with GivenWhenThen {
       val demoRepo = TableQuery[DemographicRepo]
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
-        (pat.ddl).create
-        (adherence.ddl).create
-        (demoRepo.ddl).create
+        //(pat.ddl).create
+        //(adherence.ddl).create
+        //(demoRepo.ddl).create
 
         info("Creating Patient")
         val patRecord = Patient(7, DateTime.parse("2014-05-20").toDate, DateTime.parse("2014-08-02").toDate, "Chris", "Johnson" ,

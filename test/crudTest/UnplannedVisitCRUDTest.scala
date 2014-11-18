@@ -73,12 +73,11 @@ class UnplannedVisitCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Unplanned Visit")
-        Read("Payne", visitID)
+        //Read("Payne", visitID)
         info("Updating Unplanned Visit")
-        Update("Norman", visitID)
+        //Update("Norman", visitID)
         info("Deleting Unplanned Visit")
-        Delete(visitID)
-
+        //Delete(visitID)
       }
     }
   }

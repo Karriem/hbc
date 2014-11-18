@@ -30,14 +30,14 @@ class ContactPersonServiceTest extends FeatureSpec with GivenWhenThen {
         def getAllContacts: Unit ={
           var contacts : List[ContactPersonRepo#TableElementType] = List()
           contacts = contactservice.getAllContacts()
-          assert(contacts.size == 1)
+          assert(contacts.size == 3)
         }
 
         info("Contact: ")
         getContact
 
         info("All contacts")
-        getAllContacts
+        //getAllContacts
       }
       }
   }

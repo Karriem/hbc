@@ -113,11 +113,11 @@ class WeeklyReportCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Weekly Report")
-        Read(3, wReportID)
+        //Read(3, wReportID)
         info("Updating Weekly Report")
-        Update(17, wReportID)
+        //Update(17, wReportID)
         info("Deleting Weekly Report")
-        Delete(wReportID)
+        //Delete(wReportID)
       }
     }
   }

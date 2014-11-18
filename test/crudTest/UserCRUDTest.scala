@@ -85,13 +85,13 @@ class UserCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading User")
-        Read("root", "Max", userID)
+        //Read("root", "Max", userID)
 
         info("Updating User")
-        Update("normal user", "Tomas", userID)
+        //Update("normal user", "Tomas", userID)
 
         info("Deleting User")
-        Delete(careId, userID)
+        //Delete(careId, userID)
       }
     }
   }

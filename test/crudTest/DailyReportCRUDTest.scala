@@ -101,13 +101,13 @@ feature("Save Daily Report") {
         searchDelete(id)
       }
       info("Reading Daily Report")
-      Read("Phakama", dReportID)
+      //Read("Phakama", dReportID)
 
       info("Updating Daily Report")
-      Update("Cooking for the patient", dReportID)
+      //Update("Cooking for the patient", dReportID)
 
       info("Deleting Daily Report")
-      Delete(dReportID)
+      //Delete(dReportID)
     }
   }
   }

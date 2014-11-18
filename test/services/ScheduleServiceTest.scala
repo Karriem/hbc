@@ -38,7 +38,7 @@ class ScheduleServiceTest extends FeatureSpec with GivenWhenThen {
         val caregiver = Caregiver(1L, "Tonata", "Nakashololo")
         val caregiverID = caregiverRepo.returning(caregiverRepo.map (_.caregiverId)).insert(caregiver)
 
-        val patient = Patient(1L, DateTime.parse("2013-12-2").toDate, DateTime.parse("2014-04-12").toDate, "Helvi", "Kalenga")
+        val patient = Patient(1L, DateTime.parse("2013-12-2").toDate, DateTime.parse("2014-04-12").toDate, "Helvi", "Kalenga", "Stuff", "24548844", "Stuff", "Japanese", "Things")
         val patientID = patientRepo.returning(patientRepo.map (_.patientId)).insert(patient)
 
         val timesheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, Option(1L))

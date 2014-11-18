@@ -4,9 +4,7 @@ import domain._
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import repository.CaregiverModel.CaregiverRepo
-import repository.CategoryModel.CategoryRepo
 import repository.DailyReportModel.DailyReportRepo
-import repository.DiagnosisModel.DiagnosisRepo
 import repository.PatientModel.PatientRepo
 import repository.QuestionAnswerModel.QuestionAnswerRepo
 import repository.TimeSheetModel.TimeSheetRepo
@@ -40,16 +38,16 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
 
       val flwUpDate = DateTime.parse("2014-07-07")
 
-      val dailyReport = DailyReport(1l, "Cleaned Burn wounds", None, 1L, 1L)
+      val dailyReport = DailyReport(1l, "Administed Medication", None, 1L, 1L)
 
       val timeSheet = TimeSheet(wd.toDate, ti.toDate, to.toDate, None, None, None)
 
-      val category = Category("Critical", "2", 1L)
+      val category = Category("Critical", "2", 1L, "Things", 3)
 
       val caregiver = Caregiver(1L, "Nathan", "Nakashololo")
 
 
-      val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime")
+      val patient = Patient(1L, DateTime.parse("2013-03-14").toDate, DateTime.parse("2014-03-14").toDate , "Leratho", "Kanime",  "Stuff", "24548844", "Stuff", "Japanese", "Things")
 
 
       val reportService : DailyReportService = new DailyReportServiceImpl()
@@ -80,11 +78,11 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
           reportService.createDailyReport(dailyReport, timeSheet, category /*, caregiverID, patientID*/, dID)
 
           dailyReportRepo foreach { case (report: DailyReport) =>
-            if(report.servicesRendered == "Cleaned Burn wounds" ){
+            if(report.servicesRendered == "Administed Medication" ){
               id = report.dailyReportId
               careID = report.caregiverId
               patID = report.patientId
-              assert(report.servicesRendered == "Cleaned Burn wounds")
+              assert(report.servicesRendered == "Administed Medication")
             }
           }
         }
@@ -111,7 +109,9 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
           val patientsReports = reportService.getReportByPatient(patID)
           patientsReports foreach { case (r: DailyReport) =>
             val services = r.servicesRendered
-            assert(services == "Cleaned Burn wounds")
+            if (services == "Provided Medication") {
+              assert(services == "Provided Medication")
+            }
           }
         }
 
@@ -119,7 +119,9 @@ class DailyReportServiceTest extends FeatureSpec with GivenWhenThen{
           val caregiverReports = reportService.getReportByCaregiver(careID)
           caregiverReports foreach { case (r: DailyReport) =>
             val services = r.servicesRendered
-            assert(services == "Cleaned Burn wounds")
+            if (services == "Administed Medication") {
+              assert(services == "Administed Medication")
+            }
           }
         }
 

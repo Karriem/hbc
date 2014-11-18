@@ -14,7 +14,7 @@ class TestInstitution extends FeatureSpec with GivenWhenThen {
 
     scenario(" Create Tables in the Database ") {
       Given("Given a Connection to the Database Through a Repository")
-      val institue = Institution(8, "Clinic" , "Grabouw Clinic" , Some(0), 4)
+      val institue = Institution(8, "Clinic" , "Grabouw Clinic" , Some(0))
 
       assert(institue.instituteName == "Grabouw Clinic")
 

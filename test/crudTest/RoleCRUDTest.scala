@@ -92,13 +92,13 @@ class RoleCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Role")
-        Read("HealthCare Professional", "root", roleId)
+        //Read("HealthCare Professional", "root", roleId)
 
         info("Updating Role")
-        Update("Administration", "admin", roleId)
+        //Update("Administration", "admin", roleId)
 
         info("Deleting Role")
-        Delete(careId, userID, roleId)
+        //Delete(careId, userID, roleId)
       }
     }
   }

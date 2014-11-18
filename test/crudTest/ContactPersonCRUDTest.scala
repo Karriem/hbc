@@ -74,11 +74,11 @@ class ContactPersonCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Contact Person")
-        Read("Fords", id)
+        //Read("Fords", id)
         info("Updating Contact Person")
-        Update("Karen", id)
+        //Update("Karen", id)
         info("Deleting Contact Person")
-        Delete(id)
+        //Delete(id)
       }
     }
   }

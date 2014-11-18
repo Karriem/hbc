@@ -35,7 +35,7 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Save Care Plan Object" in new WithApplication {
 
-      val plan = CarePlanModel(1, "Yes We Can", "2014-05-05", "2014-05-05", 350, 250)
+      val plan = CarePlanModel(1, "Yes We Can", "2014-05-05", "2014-05-05", 350, 250, "Death", 200)
       val jsonstring = gson.toJson(plan).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
@@ -74,7 +74,7 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Save Patient Object" in new WithApplication {
 
-      val model = PatientModel(1, "2014-08-05", "2014-08-06", "Ichigo", "Kurosaki")
+      val model = PatientModel(1, "2014-08-05", "2014-08-06", "Ichigo", "Kurosaki", "Stuff", "24548844", "Stuff", "Japanese", "Things")
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
@@ -126,7 +126,7 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Update Patient Record" in new WithApplication {
 
-      val model = PatientModel(145, "2014-10-10", "2014-10-12", "Gon", "Freecs")
+      val model = PatientModel(145, "2014-10-10", "2014-10-12", "Gon", "Freecs", "Ging Freecs", "0215369847", "Things", "Japanese", "Stuff")
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(
@@ -139,7 +139,7 @@ class CoordinatorControllerTest extends Specification {
 
     "Should Update Care Plan Record" in new WithApplication {
 
-      val model = CarePlanModel(128, "Check up", "2014-08-22", "2014-09-22", 133, 65)
+      val model = CarePlanModel(128, "Check up", "2014-08-22", "2014-09-22", 133, 65, "Death", 200)
       val jsonstring = gson.toJson(model).stripMargin
       val json = Json.parse(jsonstring)
       val Some(result) = route(FakeRequest(

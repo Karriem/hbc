@@ -92,13 +92,13 @@ class CaregiverCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Caregiver Details ")
-         Read(23, id, "0786119726", "30 Chester Road")
+         //Read(23, id, "0786119726", "30 Chester Road")
 
         info("Updating Caregiver Details")
-        Update("Maxine" , id, 27 , "0823349090", "402 Apple Street")
+        //Update("Maxine" , id, 27 , "0823349090", "402 Apple Street")
 
         info("Deleting Caregiver")
-        Delete(id)
+        //Delete(id)
       }
     }
   }

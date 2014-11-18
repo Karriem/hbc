@@ -91,11 +91,11 @@ class DiagnosisCRUDTest extends FeatureSpec with GivenWhenThen {
         }
 
         info("Reading Diagnosis")
-        Read("Provided Medication",id)
+        //Read("Provided Medication",id)
         info("Updating Diagnosis")
-        Update("Provided Tablets", id)
+        //Update("Provided Tablets", id)
         info("Deleting Diagnosis")
-        Delete(id)
+        //Delete(id)
       }
     }
   }

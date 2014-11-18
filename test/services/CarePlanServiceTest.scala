@@ -32,47 +32,47 @@ class CarePlanServiceTest extends FeatureSpec with GivenWhenThen {
 
         def createPlanTest: Unit ={
 
-          val careplan = CarePlan(1, "Healing", DateTime.parse("2014-12-12").toDate, DateTime.parse("2014-12-13").toDate , 5, 1)
+          val careplan = CarePlan(1, "Healing", DateTime.parse("2014-12-12").toDate, DateTime.parse("2014-12-13").toDate , 5, 1, "Death", 250)
 
           val value = obj.createPlan(careplan)
-          println("id" + value)
-          assert(care.list.filter(_.planId == value).head.description == "Healing")
+
+          assert(care.list.filter(_.planId == value).head.intervention == "Healing")
         }
 
         def getCarePlanTest: Unit = {
 
-          val value = obj.getCarePlan(124)
+          val value = obj.getCarePlan(3)
 
-          assert(value.patientId == 2)
+          assert(value.patientId == 3)
         }
 
         def updateCarePlanTest: Unit ={
 
           val repoList = care.list
-          val repo = repoList.filter(_.planId == 124)
-          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator)
-          obj.updateCarePlan(careNew, 124)
+          val repo = repoList.filter(_.planId == 5)
+          val careNew = CarePlan(repo.head.planId, "Cleaning house", repo.head.startDate, repo.head.endDate, 2, repo.head.coordinator, "Death", 250)
+          obj.updateCarePlan(careNew, 5)
           val repoList3 = care.list
-          assert(repoList3.filter(_.planId == 124).head.description == "Cleaning house")
+          assert(repoList3.filter(_.planId == 5).head.intervention == "Cleaning house")
         }
 
         def getPatientTest : Unit ={
 
-          val value = obj.getPatient(128)
+          val value = obj.getPatient(5)
 
-          assert(value.firstName == "Phakama")
+          assert(value.firstName == "Bo")
         }
 
         def getPlanIssuedTest: Unit ={
 
-          val value = obj.getPlanIssued(124)
-          assert(value.firstName == "Lou")
+          val value = obj.getPlanIssued(4)
+          assert(value.firstName == "Nikki")
         }
 
         def getVisitTest: Unit ={
 
-          val value = obj.getVisit(20)
-          assert(value.patientId == 0)
+          val value = obj.getVisit(1)
+          assert(value.patientId == 2)
         }
 
         info("createPlanTest")

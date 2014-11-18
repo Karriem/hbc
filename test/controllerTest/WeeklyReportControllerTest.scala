@@ -22,7 +22,7 @@ class WeeklyReportControllerTest extends Specification{
 
       val weekly = WeeklyReportModel(1L, "2014-11-7", "2014-11-14", "No transfer", "3" , "")
 
-      val referral = ReferralModel(1L, "2013-02-20", "")
+      val referral = ReferralModel(1L, "2013-02-20", "80", 200, 2, "Things", 350, 50)
 
       val dList = "ids" + "#" + "2" + "#" + "4" + "#" + "6" + "#"
 

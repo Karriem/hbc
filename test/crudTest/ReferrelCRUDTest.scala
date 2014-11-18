@@ -38,7 +38,7 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
 
       Database.forURL("jdbc:mysql://localhost:3306/test", driver = "com.mysql.jdbc.Driver", user = "root", password = "admin").withSession { implicit session =>
         //(instituteRepo.ddl).create
-        (referalRepo.ddl).create
+        //(referalRepo.ddl).create
 
         info("Creating a Referral")
 
@@ -105,11 +105,11 @@ class ReferrelCRUDTest extends FeatureSpec with GivenWhenThen{
         }
 
         info("Reading Referral")
-        Read(refDate.toDate, refID)
+        //Read(refDate.toDate, refID)
         info("Updating Referral")
-        Update(updatedRefDate.toDate, refID)
+        //Update(updatedRefDate.toDate, refID)
         info("Deleting Referral")
-        Delete(refID)
+        //Delete(refID)
 
       }
     }
